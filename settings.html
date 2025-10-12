@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人设置 - 一日三餐恋</title>
+    <style>
+        :root {
+            --primary: #FF6B8B;
+            --secondary: #FFA07A;
+            --accent: #FFD166;
+            --light: #FFF9F0;
+            --dark: #4A4A4A;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: var(--shadow);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .settings-container {
+            margin-top: 20px;
+        }
+        
+        .settings-group {
+            margin-bottom: 25px;
+        }
+        
+        .settings-group-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .setting-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .setting-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .setting-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: rgba(255, 107, 139, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+            font-size: 18px;
+        }
+        
+        .setting-text {
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .setting-value {
+            font-size: 14px;
+            color: #999;
+            margin-right: 10px;
+        }
+        
+        .menu-arrow {
+            color: #ccc;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .logout-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #f5f5f5;
+            color: #666;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 30px;
+        }
+        
+        .logout-btn:hover {
+            background-color: #eaeaea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">个人设置</div>
+            <div class="nav-icon">←</div>
+        </div>
+        
+        <div class="settings-container">
+            <div class="settings-group">
+                <div class="settings-group-title">账号信息</div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">👤</div>
+                    <div class="setting-text">昵称</div>
+                    <div class="setting-value">兔兔</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">📧</div>
+                    <div class="setting-text">邮箱</div>
+                    <div class="setting-value">tutu@example.com</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">📱</div>
+                    <div class="setting-text">手机号</div>
+                    <div class="setting-value">138****1234</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">🔒</div>
+                    <div class="setting-text">修改密码</div>
+                    <div class="menu-arrow">></div>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-group-title">偏好设置</div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">🌙</div>
+                    <div class="setting-text">深色模式</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">🔔</div>
+                    <div class="setting-text">推送通知</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">📍</div>
+                    <div class="setting-text">自动记录位置</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">🌐</div>
+                    <div class="setting-text">语言</div>
+                    <div class="setting-value">简体中文</div>
+                    <div class="menu-arrow">></div>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-group-title">情侣设置</div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">💑</div>
+                    <div class="setting-text">情侣信息</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">📅</div>
+                    <div class="setting-text">纪念日提醒</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">🔗</div>
+                    <div class="setting-text">解除绑定</div>
+                    <div class="menu-arrow">></div>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-group-title">数据管理</div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">💾</div>
+                    <div class="setting-text">数据备份</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">📥</div>
+                    <div class="setting-text">导入数据</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">📤</div>
+                    <div class="setting-text">导出数据</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">🗑️</div>
+                    <div class="setting-text">清除缓存</div>
+                    <div class="setting-value">125 MB</div>
+                    <div class="menu-arrow">></div>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-group-title">其他</div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">📖</div>
+                    <div class="setting-text">用户协议</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">🔐</div>
+                    <div class="setting-text">隐私政策</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">ℹ️</div>
+                    <div class="setting-text">关于我们</div>
+                    <div class="setting-value">v1.0.0</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-icon">💬</div>
+                    <div class="setting-text">意见反馈</div>
+                    <div class="menu-arrow">></div>
+                </div>
+            </div>
+            
+            <button class="logout-btn">退出登录</button>
+        </div>
+    </div>
+    
+    <script>
+        // 设置项点击事件
+        const settingItems = document.querySelectorAll('.setting-item');
+        settingItems.forEach(item => {
+            // 如果包含toggle-switch，不要触发点击事件
+            if (!item.querySelector('.toggle-switch')) {
+                item.addEventListener('click', function() {
+                    const text = this.querySelector('.setting-text').textContent;
+                    alert(`打开${text}设置`);
+                });
+            }
+        });
+        
+        // 退出登录
+        document.querySelector('.logout-btn').addEventListener('click', function() {
+            if (confirm('确定要退出登录吗？')) {
+                alert('已退出登录');
+            }
+        });
+        
+        // 返回按钮
+        document.querySelector('.nav-icon').addEventListener('click', function() {
+            window.history.back();
+        });
+    </script>
+</body>
+</html>
