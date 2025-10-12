@@ -39,24 +39,9 @@
             font-weight: bold;
         }
         
-        .controls {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .control-btn {
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
+        .page-count {
             font-size: 14px;
-            transition: all 0.3s;
-        }
-        
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            opacity: 0.9;
         }
         
         .page-nav {
@@ -103,108 +88,104 @@
             background: white;
             color: #FF6B8B;
             font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         
         .workspace {
-            position: relative;
             height: calc(100vh - 120px);
-            overflow: auto;
+            overflow-y: auto;
+            overflow-x: hidden;
             padding: 20px;
+            scroll-behavior: smooth;
         }
         
-        .card {
-            position: absolute;
+        .workspace::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .workspace::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+        
+        .workspace::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 139, 0.3);
+            border-radius: 4px;
+        }
+        
+        .workspace::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 107, 139, 0.5);
+        }
+        
+        .page-card {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            min-width: 480px;
-            min-height: 500px;
-            resize: both;
-            transition: box-shadow 0.3s;
-        }
-        
-        .card.dragging {
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-            cursor: move;
-        }
-        
-        .card:hover {
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .card-header {
-            background: linear-gradient(135deg, #FF6B8B, #FFA07A);
-            color: white;
-            padding: 12px 15px;
-            cursor: move;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            user-select: none;
-        }
-        
-        .card-title {
-            font-size: 14px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .card-actions {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .card-action-btn {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-bottom: 30px;
             transition: all 0.3s;
         }
         
-        .card-action-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .page-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
         
-        .card-body {
+        .page-card.highlight {
+            animation: highlight 1s ease-out;
+        }
+        
+        @keyframes highlight {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 139, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 20px rgba(255, 107, 139, 0);
+            }
+            100% {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            }
+        }
+        
+        .page-card-header {
+            background: linear-gradient(135deg, #FF6B8B, #FFA07A);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .page-card-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .page-card-badge {
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .page-card-body {
             width: 100%;
-            height: calc(100% - 48px);
+            height: 1000px;
             overflow: hidden;
         }
         
-        .card-frame {
+        .page-frame {
             width: 100%;
             height: 100%;
             border: none;
-        }
-        
-        .card.minimized {
-            height: 48px !important;
-            min-height: 48px;
-            resize: none;
-        }
-        
-        .card.minimized .card-body {
-            display: none;
+            display: block;
         }
         
         @media (max-width: 768px) {
-            .card {
-                min-width: 320px;
-            }
-            
-            .controls {
-                flex-wrap: wrap;
+            .page-card-body {
+                height: 700px;
             }
         }
     </style>
@@ -212,15 +193,11 @@
 <body>
     <div class="header">
         <div class="header-top">
-            <div class="logo">一日三餐恋 - 可拖拽页面展示</div>
-            <div class="controls">
-                <button class="control-btn" onclick="resetLayout()">重置布局</button>
-                <button class="control-btn" onclick="showAll()">显示全部</button>
-                <button class="control-btn" onclick="minimizeAll()">最小化全部</button>
-            </div>
+            <div class="logo">一日三餐恋 - 所有页面展示</div>
+            <div class="page-count">共 10 个页面</div>
         </div>
         <div class="page-nav" id="pageNav">
-            <div class="page-nav-item" data-page="home">
+            <div class="page-nav-item active" data-page="home">
                 <span>🏠</span>
                 <span>首页</span>
             </div>
@@ -263,208 +240,208 @@
         </div>
     </div>
     
-    <div class="workspace" id="workspace"></div>
+    <div class="workspace" id="workspace">
+        <div class="page-card" id="card-home" data-page="home">
+            <div class="page-card-header">
+                <div class="page-card-title">
+                    <span>🏠</span>
+                    <span>首页</span>
+                </div>
+                <div class="page-card-badge">home.html</div>
+            </div>
+            <div class="page-card-body">
+                <iframe class="page-frame" src="home.html"></iframe>
+            </div>
+        </div>
+        
+        <div class="page-card" id="card-add-record" data-page="add-record">
+            <div class="page-card-header">
+                <div class="page-card-title">
+                    <span>➕</span>
+                    <span>添加记录</span>
+                </div>
+                <div class="page-card-badge">add-record.html</div>
+            </div>
+            <div class="page-card-body">
+                <iframe class="page-frame" src="add-record.html"></iframe>
+            </div>
+        </div>
+        
+        <div class="page-card" id="card-records" data-page="records">
+            <div class="page-card-header">
+                <div class="page-card-title">
+                    <span>📝</span>
+                    <span>用餐记录</span>
+                </div>
+                <div class="page-card-badge">records.html</div>
+            </div>
+            <div class="page-card-body">
+                <iframe class="page-frame" src="records.html"></iframe>
+            </div>
+        </div>
+        
+        <div class="page-card" id="card-anniversary" data-page="anniversary">
+            <div class="page-card-header">
+                <div class="page-card-title">
+                    <span>🎉</span>
+                    <span>纪念日管理</span>
+                </div>
+                <div class="page-card-badge">anniversary.html</div>
+            </div>
+            <div class="page-card-body">
+                <iframe class="page-frame" src="anniversary.html"></iframe>
+            </div>
+        </div>
+        
+        <div class="page-card" id="card-add-anniversary" data-page="add-anniversary">
+            <div class="page-card-header">
+                <div class="page-card-title">
+                    <span>📅</span>
+                    <span>添加纪念日</span>
+                </div>
+                <div class="page-card-badge">add-anniversary.html</div>
+            </div>
+            <div class="page-card-body">
+                <iframe class="page-frame" src="add-anniversary.html"></iframe>
+            </div>
+        </div>
+        
+        <div class="page-card" id="card-recipes" data-page="recipes">
+            <div class="page-card-header">
+                <div class="page-card-title">
+                    <span>📖</span>
+                    <span>情侣菜谱</span>
+                </div>
+                <div class="page-card-badge">recipes.html</div>
+            </div>
+            <div class="page-card-body">
+                <iframe class="page-frame" src="recipes.html"></iframe>
+            </div>
+        </div>
+        
+        <div class="page-card" id="card-stats" data-page="stats">
+            <div class="page-card-header">
+                <div class="page-card-title">
+                    <span>📊</span>
+                    <span>数据统计</span>
+                </div>
+                <div class="page-card-badge">stats.html</div>
+            </div>
+            <div class="page-card-body">
+                <iframe class="page-frame" src="stats.html"></iframe>
+            </div>
+        </div>
+        
+        <div class="page-card" id="card-journey" data-page="journey">
+            <div class="page-card-header">
+                <div class="page-card-title">
+                    <span>🗺️</span>
+                    <span>美食轨迹</span>
+                </div>
+                <div class="page-card-badge">journey.html</div>
+            </div>
+            <div class="page-card-body">
+                <iframe class="page-frame" src="journey.html"></iframe>
+            </div>
+        </div>
+        
+        <div class="page-card" id="card-profile" data-page="profile">
+            <div class="page-card-header">
+                <div class="page-card-title">
+                    <span>👤</span>
+                    <span>个人中心</span>
+                </div>
+                <div class="page-card-badge">profile.html</div>
+            </div>
+            <div class="page-card-body">
+                <iframe class="page-frame" src="profile.html"></iframe>
+            </div>
+        </div>
+        
+        <div class="page-card" id="card-settings" data-page="settings">
+            <div class="page-card-header">
+                <div class="page-card-title">
+                    <span>⚙️</span>
+                    <span>个人设置</span>
+                </div>
+                <div class="page-card-badge">settings.html</div>
+            </div>
+            <div class="page-card-body">
+                <iframe class="page-frame" src="settings.html"></iframe>
+            </div>
+        </div>
+    </div>
     
     <script>
-        const pages = [
-            { id: 'home', title: '🏠 首页', src: 'home.html', width: 600, height: 800 },
-            { id: 'add-record', title: '➕ 添加记录', src: 'add-record.html', width: 600, height: 800 },
-            { id: 'records', title: '📝 用餐记录', src: 'records.html', width: 600, height: 800 },
-            { id: 'anniversary', title: '🎉 纪念日管理', src: 'anniversary.html', width: 600, height: 800 },
-            { id: 'add-anniversary', title: '📅 添加纪念日', src: 'add-anniversary.html', width: 600, height: 800 },
-            { id: 'recipes', title: '📖 情侣菜谱', src: 'recipes.html', width: 600, height: 800 },
-            { id: 'stats', title: '📊 数据统计', src: 'stats.html', width: 600, height: 800 },
-            { id: 'journey', title: '🗺️ 美食轨迹', src: 'journey.html', width: 600, height: 800 },
-            { id: 'profile', title: '👤 个人中心', src: 'profile.html', width: 600, height: 800 },
-            { id: 'settings', title: '⚙️ 个人设置', src: 'settings.html', width: 600, height: 800 }
-        ];
-        
-        const workspace = document.getElementById('workspace');
         const pageNav = document.getElementById('pageNav');
-        let zIndexCounter = 1;
-        
-        // 创建卡片
-        function createCard(page, x, y) {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.id = `card-${page.id}`;
-            card.style.left = x + 'px';
-            card.style.top = y + 'px';
-            card.style.width = page.width + 'px';
-            card.style.height = page.height + 'px';
-            card.style.zIndex = zIndexCounter++;
-            
-            card.innerHTML = `
-                <div class="card-header">
-                    <div class="card-title">${page.title}</div>
-                    <div class="card-actions">
-                        <button class="card-action-btn" onclick="minimizeCard('${page.id}')" title="最小化">−</button>
-                        <button class="card-action-btn" onclick="closeCard('${page.id}')" title="关闭">×</button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <iframe class="card-frame" src="${page.src}"></iframe>
-                </div>
-            `;
-            
-            workspace.appendChild(card);
-            makeDraggable(card);
-            updateNavState(page.id, true);
-            
-            // 点击卡片时提升层级
-            card.addEventListener('mousedown', function() {
-                bringToFront(card);
-            });
-            
-            return card;
-        }
-        
-        // 使卡片可拖拽
-        function makeDraggable(card) {
-            const header = card.querySelector('.card-header');
-            let isDragging = false;
-            let currentX, currentY, initialX, initialY;
-            
-            header.addEventListener('mousedown', function(e) {
-                if (e.target.classList.contains('card-action-btn')) return;
-                
-                isDragging = true;
-                card.classList.add('dragging');
-                
-                initialX = e.clientX - card.offsetLeft;
-                initialY = e.clientY - card.offsetTop;
-                
-                document.addEventListener('mousemove', drag);
-                document.addEventListener('mouseup', stopDrag);
-            });
-            
-            function drag(e) {
-                if (!isDragging) return;
-                
-                e.preventDefault();
-                currentX = e.clientX - initialX;
-                currentY = e.clientY - initialY;
-                
-                card.style.left = currentX + 'px';
-                card.style.top = currentY + 'px';
-            }
-            
-            function stopDrag() {
-                isDragging = false;
-                card.classList.remove('dragging');
-                document.removeEventListener('mousemove', drag);
-                document.removeEventListener('mouseup', stopDrag);
-            }
-        }
-        
-        // 提升卡片层级
-        function bringToFront(card) {
-            card.style.zIndex = zIndexCounter++;
-        }
-        
-        // 最小化卡片
-        function minimizeCard(id) {
-            const card = document.getElementById(`card-${id}`);
-            if (card) {
-                card.classList.toggle('minimized');
-            }
-        }
-        
-        // 关闭卡片
-        function closeCard(id) {
-            const card = document.getElementById(`card-${id}`);
-            if (card) {
-                card.remove();
-                updateNavState(id, false);
-            }
-        }
-        
-        // 更新导航状态
-        function updateNavState(pageId, isActive) {
-            const navItem = pageNav.querySelector(`[data-page="${pageId}"]`);
-            if (navItem) {
-                if (isActive) {
-                    navItem.classList.add('active');
-                } else {
-                    navItem.classList.remove('active');
-                }
-            }
-        }
-        
-        // 切换卡片显示
-        function toggleCard(id) {
-            const card = document.getElementById(`card-${id}`);
-            if (card) {
-                // 如果卡片已存在，取消最小化并提升到最前面
-                if (card.classList.contains('minimized')) {
-                    card.classList.remove('minimized');
-                }
-                bringToFront(card);
-                
-                // 滚动到卡片位置
-                const cardRect = card.getBoundingClientRect();
-                const workspaceRect = workspace.getBoundingClientRect();
-                workspace.scrollTo({
-                    left: card.offsetLeft - 50,
-                    top: card.offsetTop - 50,
-                    behavior: 'smooth'
-                });
-            } else {
-                // 如果卡片不存在，创建新卡片
-                const page = pages.find(p => p.id === id);
-                const x = Math.random() * Math.max(100, window.innerWidth - 700) + 50;
-                const y = Math.random() * Math.max(100, window.innerHeight - 900) + 50;
-                createCard(page, x, y);
-            }
-        }
-        
-        // 重置布局
-        function resetLayout() {
-            workspace.innerHTML = '';
-            pageNav.querySelectorAll('.page-nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            initLayout();
-        }
-        
-        // 显示全部
-        function showAll() {
-            workspace.innerHTML = '';
-            pageNav.querySelectorAll('.page-nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            pages.forEach((page, index) => {
-                const x = (index % 2) * 620 + 20;
-                const y = Math.floor(index / 2) * 820 + 20;
-                createCard(page, x, y);
-            });
-        }
-        
-        // 最小化全部
-        function minimizeAll() {
-            document.querySelectorAll('.card').forEach(card => {
-                card.classList.add('minimized');
-            });
-        }
-        
-        // 初始化布局
-        function initLayout() {
-            // 创建前3个页面
-            createCard(pages[0], 20, 20);
-            createCard(pages[1], 640, 20);
-            createCard(pages[2], 20, 840);
-        }
+        const workspace = document.getElementById('workspace');
         
         // 导航项点击事件
         pageNav.querySelectorAll('.page-nav-item').forEach(item => {
             item.addEventListener('click', function() {
                 const pageId = this.getAttribute('data-page');
-                toggleCard(pageId);
+                
+                // 更新导航激活状态
+                pageNav.querySelectorAll('.page-nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // 滚动到对应的页面卡片
+                const targetCard = document.getElementById(`card-${pageId}`);
+                if (targetCard) {
+                    // 计算偏移量，使卡片显示在视图顶部（考虑header高度）
+                    const headerHeight = 120;
+                    const cardTop = targetCard.offsetTop;
+                    
+                    workspace.scrollTo({
+                        top: cardTop - 20,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 添加高亮动画
+                    targetCard.classList.add('highlight');
+                    setTimeout(() => {
+                        targetCard.classList.remove('highlight');
+                    }, 1000);
+                }
             });
         });
         
-        // 页面加载时初始化
-        initLayout();
+        // 监听滚动，更新当前激活的导航项
+        let scrollTimeout;
+        workspace.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                updateActiveNav();
+            }, 100);
+        });
+        
+        function updateActiveNav() {
+            const scrollTop = workspace.scrollTop;
+            const cards = document.querySelectorAll('.page-card');
+            
+            let activeCard = null;
+            cards.forEach(card => {
+                const cardTop = card.offsetTop - 100;
+                const cardBottom = cardTop + card.offsetHeight;
+                
+                if (scrollTop >= cardTop && scrollTop < cardBottom) {
+                    activeCard = card;
+                }
+            });
+            
+            if (activeCard) {
+                const pageId = activeCard.getAttribute('data-page');
+                pageNav.querySelectorAll('.page-nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                const activeNav = pageNav.querySelector(`[data-page="${pageId}"]`);
+                if (activeNav) {
+                    activeNav.classList.add('active');
+                }
+            }
+        }
     </script>
 </body>
 </html>
