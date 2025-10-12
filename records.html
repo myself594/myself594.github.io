@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用餐记录 - 一日三餐恋</title>
+    <style>
+        :root {
+            --primary: #FF6B8B;
+            --secondary: #FFA07A;
+            --accent: #FFD166;
+            --light: #FFF9F0;
+            --dark: #4A4A4A;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: var(--shadow);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .records-container {
+            margin-top: 20px;
+        }
+        
+        .record-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            background-color: #f5f5f5;
+            border-radius: 20px;
+            font-size: 14px;
+            white-space: nowrap;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .advanced-filters {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        .filter-group-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #666;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .filter-option {
+            padding: 6px 12px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-option:hover {
+            border-color: var(--primary);
+        }
+        
+        .filter-option.selected {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .record-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .record-item {
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .record-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .record-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .record-date {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .record-meal-type {
+            background-color: rgba(255, 107, 139, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .record-content {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .record-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+        
+        .record-details {
+            flex: 1;
+        }
+        
+        .record-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .record-location {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .record-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
+        .record-tag {
+            background-color: rgba(255, 107, 139, 0.1);
+            color: var(--primary);
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">用餐记录</div>
+            <div class="nav-icon">←</div>
+        </div>
+        
+        <div class="records-container">
+            <div class="record-filters">
+                <button class="filter-btn active">全部</button>
+                <button class="filter-btn">早餐</button>
+                <button class="filter-btn">午餐</button>
+                <button class="filter-btn">晚餐</button>
+                <button class="filter-btn">在家烹饪</button>
+                <button class="filter-btn">外出就餐</button>
+            </div>
+            
+            <div class="advanced-filters">
+                <div class="filter-group">
+                    <div class="filter-group-title">用餐场景</div>
+                    <div class="filter-options">
+                        <div class="filter-option selected">全部</div>
+                        <div class="filter-option">纪念日</div>
+                        <div class="filter-option">约会</div>
+                        <div class="filter-option">探店</div>
+                        <div class="filter-option">旅行</div>
+                        <div class="filter-option">节日</div>
+                        <div class="filter-option">庆祝</div>
+                        <div class="filter-option">日常</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <div class="filter-group-title">用餐地点</div>
+                    <div class="filter-options">
+                        <div class="filter-option selected">家里</div>
+                        <div class="filter-option">餐厅</div>
+                        <div class="filter-option">外卖</div>
+                        <div class="filter-option">旅行中</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="record-list">
+                <div class="record-item">
+                    <div class="record-header">
+                        <div class="record-date">10月15日</div>
+                        <div class="record-meal-type">午餐</div>
+                    </div>
+                    <div class="record-content">
+                        <div class="record-image">📷</div>
+                        <div class="record-details">
+                            <div class="record-title">公司附近新开的日料</div>
+                            <div class="record-location">📍 北京市朝阳区 · 日料店</div>
+                            <div class="record-tags">
+                                <div class="record-tag">探店</div>
+                                <div class="record-tag">约会</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="record-item">
+                    <div class="record-header">
+                        <div class="record-date">10月15日</div>
+                        <div class="record-meal-type">早餐</div>
+                    </div>
+                    <div class="record-content">
+                        <div class="record-image">📷</div>
+                        <div class="record-details">
+                            <div class="record-title">爱心煎蛋三明治</div>
+                            <div class="record-location">🏠 家里 · 兔兔下厨</div>
+                            <div class="record-tags">
+                                <div class="record-tag">日常</div>
+                                <div class="record-tag">在家烹饪</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="record-item">
+                    <div class="record-header">
+                        <div class="record-date">10月14日</div>
+                        <div class="record-meal-type">晚餐</div>
+                    </div>
+                    <div class="record-content">
+                        <div class="record-image">📷</div>
+                        <div class="record-details">
+                            <div class="record-title">自制火锅</div>
+                            <div class="record-location">🏠 家里 · 共同下厨</div>
+                            <div class="record-tags">
+                                <div class="record-tag">日常</div>
+                                <div class="record-tag">在家烹饪</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="record-item">
+                    <div class="record-header">
+                        <div class="record-date">10月13日</div>
+                        <div class="record-meal-type">晚餐</div>
+                    </div>
+                    <div class="record-content">
+                        <div class="record-image">📷</div>
+                        <div class="record-details">
+                            <div class="record-title">海底捞火锅</div>
+                            <div class="record-location">📍 北京市朝阳区 · 海底捞</div>
+                            <div class="record-tags">
+                                <div class="record-tag">约会</div>
+                                <div class="record-tag">纪念日</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="record-item">
+                    <div class="record-header">
+                        <div class="record-date">10月12日</div>
+                        <div class="record-meal-type">午餐</div>
+                    </div>
+                    <div class="record-content">
+                        <div class="record-image">📷</div>
+                        <div class="record-details">
+                            <div class="record-title">麦当劳汉堡套餐</div>
+                            <div class="record-location">📍 北京市朝阳区 · 麦当劳</div>
+                            <div class="record-tags">
+                                <div class="record-tag">日常</div>
+                                <div class="record-tag">快餐</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 筛选按钮功能
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // 高级筛选选项
+        const filterOptions = document.querySelectorAll('.filter-option');
+        filterOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // 如果是"全部"选项，清除其他选项
+                if (this.textContent === '全部') {
+                    const group = this.closest('.filter-group');
+                    group.querySelectorAll('.filter-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                } else {
+                    // 取消"全部"选项
+                    const group = this.closest('.filter-group');
+                    const allOption = Array.from(group.querySelectorAll('.filter-option')).find(opt => opt.textContent === '全部');
+                    if (allOption) {
+                        allOption.classList.remove('selected');
+                    }
+                    this.classList.toggle('selected');
+                }
+            });
+        });
+        
+        // 记录项点击事件
+        const recordItems = document.querySelectorAll('.record-item');
+        recordItems.forEach(item => {
+            item.addEventListener('click', function() {
+                alert('查看记录详情');
+            });
+        });
+    </script>
+</body>
+</html>
