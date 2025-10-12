@@ -181,13 +181,11 @@
         }
         
         .form-actions {
-            display: flex;
-            gap: 15px;
             margin-top: 30px;
         }
         
         .btn {
-            flex: 1;
+            width: 100%;
             padding: 15px;
             border: none;
             border-radius: 10px;
@@ -208,15 +206,6 @@
             box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
         }
         
-        .btn-secondary {
-            background-color: #f5f5f5;
-            color: #666;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #eaeaea;
-        }
-        
         .info-box {
             background-color: rgba(255, 209, 102, 0.1);
             border-left: 3px solid #FFD166;
@@ -225,6 +214,38 @@
             margin-top: 10px;
             font-size: 14px;
             color: #666;
+        }
+        
+        .reminder-info-box {
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.08), rgba(255, 160, 122, 0.08));
+            border-left: 3px solid var(--primary);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .reminder-info-box strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .reminder-example {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background-color: white;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .reminder-example-icon {
+            font-size: 16px;
         }
     </style>
 </head>
@@ -287,6 +308,15 @@
                     <div class="reminder-option">提前3天</div>
                     <div class="reminder-option">提前7天</div>
                 </div>
+                <div class="reminder-info-box">
+                    <div>
+                        <strong>📱 提醒方式：</strong>系统会在首页顶部显示醒目的纪念日提醒卡片，让你不会错过任何重要时刻
+                    </div>
+                    <div class="reminder-example">
+                        <span class="reminder-example-icon">🎉</span>
+                        <span>示例："明天是你们在一起100天纪念日"</span>
+                    </div>
+                </div>
             </div>
             
             <div class="form-group">
@@ -295,7 +325,6 @@
             </div>
             
             <div class="form-actions">
-                <button type="button" class="btn btn-secondary" id="cancel-btn">取消</button>
                 <button type="submit" class="btn btn-primary">保存纪念日</button>
             </div>
         </form>
@@ -342,14 +371,7 @@
             };
             
             console.log('纪念日数据:', formData);
-            alert('纪念日添加成功！');
-        });
-        
-        // 取消按钮
-        document.getElementById('cancel-btn').addEventListener('click', function() {
-            if (confirm('确定要取消吗？未保存的内容将丢失')) {
-                window.history.back();
-            }
+            alert('纪念日添加成功！\n\n提醒将在首页顶部的纪念日卡片中显示');
         });
         
         // 返回按钮
