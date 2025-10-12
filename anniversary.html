@@ -12,6 +12,8 @@
             --light: #FFF9F0;
             --dark: #4A4A4A;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --urgent: #FF5252;
+            --warning: #FFB74D;
         }
         
         * {
@@ -25,6 +27,7 @@
             background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
+            padding-bottom: 80px;
         }
         
         .container {
@@ -42,6 +45,7 @@
             align-items: center;
             padding: 15px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
         }
         
         .logo {
@@ -56,59 +60,133 @@
             color: #999;
         }
         
-        .anniversary-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px 0;
-        }
-        
-        .add-anniversary-btn {
+        .stats-card {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
             color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 10px 20px;
-            font-size: 14px;
-            cursor: pointer;
             box-shadow: var(--shadow);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.85;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 30px;
+            padding: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-tab {
+            flex: 1;
+            text-align: center;
+            padding: 8px 0;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .filter-tab.active {
+            background-color: white;
+            box-shadow: var(--shadow);
+            color: var(--primary);
+        }
+        
+        .section-divider {
+            margin: 25px 0 15px;
             display: flex;
             align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
-        }
-        
-        .add-anniversary-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .anniversary-filters {
-            display: flex;
             gap: 10px;
-            margin-bottom: 20px;
-            overflow-x: auto;
         }
         
-        .anniversary-filter-btn {
-            padding: 8px 16px;
-            background-color: #f5f5f5;
-            border-radius: 20px;
+        .section-divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+        }
+        
+        .section-divider-text {
             font-size: 14px;
+            color: #999;
+            font-weight: 500;
             white-space: nowrap;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s;
-        }
-        
-        .anniversary-filter-btn.active {
-            background-color: var(--primary);
-            color: white;
         }
         
         .anniversary-list {
             display: grid;
             gap: 15px;
+        }
+        
+        .add-anniversary-card {
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.05), rgba(255, 160, 122, 0.05));
+            border-radius: 12px;
+            padding: 18px 20px;
+            position: relative;
+            border: 1.5px solid rgba(255, 107, 139, 0.2);
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .add-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: 300;
+        }
+        
+        .add-content {
+            flex: 1;
+        }
+        
+        .add-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 2px;
+        }
+        
+        .add-description {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .add-arrow {
+            font-size: 16px;
+            color: var(--primary);
         }
         
         .anniversary-item {
@@ -123,34 +201,34 @@
         
         .anniversary-item:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
         }
         
         .anniversary-item.urgent {
-            background: linear-gradient(135deg, rgba(255, 209, 102, 0.1), rgba(255, 160, 122, 0.1));
-            border-left: 4px solid #FFD166;
+            background: linear-gradient(135deg, rgba(255, 82, 82, 0.08), rgba(255, 183, 77, 0.08));
+            border-left-color: var(--urgent);
         }
         
         .anniversary-item.upcoming {
-            background: linear-gradient(135deg, rgba(255, 107, 139, 0.05), rgba(255, 160, 122, 0.05));
-            border-left: 4px solid var(--accent);
+            background: linear-gradient(135deg, rgba(255, 209, 102, 0.08), rgba(255, 160, 122, 0.08));
+            border-left-color: var(--warning);
         }
         
         .anniversary-item.passed {
             opacity: 0.7;
-            background: linear-gradient(135deg, rgba(200, 200, 200, 0.05), rgba(180, 180, 180, 0.05));
-            border-left: 4px solid #ccc;
+            background: rgba(245, 245, 245, 0.5);
+            border-left-color: #ccc;
         }
         
-        .anniversary-status {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            font-size: 12px;
-            padding: 4px 8px;
-            border-radius: 10px;
-            background-color: rgba(255, 107, 139, 0.1);
-            color: var(--primary);
+        .anniversary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .anniversary-title-section {
+            flex: 1;
         }
         
         .anniversary-title {
@@ -160,71 +238,116 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding-top: 25px;
         }
         
         .anniversary-date {
             color: #666;
             font-size: 14px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
         
-        .anniversary-countdown {
+        .anniversary-type-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: rgba(255, 107, 139, 0.1);
+            color: var(--primary);
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .anniversary-menu {
+            cursor: pointer;
+            color: #999;
+            font-size: 20px;
+            padding: 5px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .anniversary-menu:hover {
+            color: var(--primary);
+        }
+        
+        .menu-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 120px;
+            z-index: 10;
+            display: none;
+            overflow: hidden;
+        }
+        
+        .menu-dropdown.show {
+            display: block;
+        }
+        
+        .menu-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-            padding-top: 10px;
+            gap: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .menu-item.delete:hover {
+            background-color: #ffebee;
+            color: #ff5252;
+        }
+        
+        .countdown-section {
+            margin-top: 15px;
+            padding-top: 15px;
             border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
         
-        .countdown-item {
-            text-align: center;
-            background-color: rgba(255, 107, 139, 0.1);
-            border-radius: 8px;
-            padding: 8px;
-            min-width: 50px;
+        .countdown-large {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
         
-        .countdown-number {
-            font-size: 16px;
+        .countdown-number-large {
+            font-size: 28px;
             font-weight: bold;
-            color: var(--primary);
+            color: var(--urgent);
         }
         
-        .countdown-label {
-            font-size: 10px;
-            color: #999;
+        .countdown-unit-large {
+            font-size: 16px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .countdown-small {
+            font-size: 14px;
+            color: #666;
         }
         
         .anniversary-notes {
-            font-size: 14px;
+            font-size: 13px;
             color: #666;
-            margin-top: 10px;
-            padding: 8px;
+            margin-top: 12px;
+            padding: 10px;
             background-color: rgba(0, 0, 0, 0.02);
             border-radius: 8px;
-        }
-        
-        .anniversary-actions {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .action-btn {
-            background: none;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-            color: #999;
-            transition: all 0.3s;
-        }
-        
-        .action-btn:hover {
-            color: var(--primary);
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -235,136 +358,308 @@
             <div class="nav-icon">←</div>
         </div>
         
-        <div class="anniversary-header">
-            <h2>重要时刻</h2>
-            <button class="add-anniversary-btn">
-                <span>+</span> 添加纪念日
-            </button>
+        <div class="stats-card">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">全部纪念日</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">即将到来</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">已过去</div>
+                </div>
+            </div>
         </div>
         
-        <div class="anniversary-filters">
-            <button class="anniversary-filter-btn active">全部</button>
-            <button class="anniversary-filter-btn">即将到来</button>
-            <button class="anniversary-filter-btn">已过去</button>
+        <div class="add-anniversary-card" id="add-btn">
+            <div class="add-icon">+</div>
+            <div class="add-content">
+                <div class="add-title">添加纪念日</div>
+                <div class="add-description">记录你们的重要时刻</div>
+            </div>
+            <div class="add-arrow">→</div>
+        </div>
+        
+        <div class="filter-tabs">
+            <div class="filter-tab active">全部</div>
+            <div class="filter-tab">即将到来</div>
+            <div class="filter-tab">已过去</div>
+        </div>
+        
+        <!-- 即将到来区域 -->
+        <div class="section-divider">
+            <div class="section-divider-line"></div>
+            <div class="section-divider-text">📅 即将到来</div>
+            <div class="section-divider-line"></div>
         </div>
         
         <div class="anniversary-list">
-            <div class="anniversary-item urgent">
-                <div class="anniversary-status">即将到来</div>
-                <div class="anniversary-title">
-                    <span>💖</span>
-                    <span>在一起100天</span>
+            <div class="anniversary-item upcoming">
+                <div class="anniversary-header">
+                    <div class="anniversary-title-section">
+                        <div class="anniversary-title">
+                            <span>💖</span>
+                            <span>在一起100天</span>
+                        </div>
+                        <div class="anniversary-date">2023年10月16日</div>
+                        <span class="anniversary-type-badge">恋爱纪念 · 每年提醒</span>
+                    </div>
+                    <div class="anniversary-menu">
+                        ⋮
+                        <div class="menu-dropdown">
+                            <div class="menu-item edit-item">
+                                <span>✏️</span>
+                                <span>编辑</span>
+                            </div>
+                            <div class="menu-item delete delete-item">
+                                <span>🗑️</span>
+                                <span>删除</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="anniversary-date">2023年10月16日</div>
-                <div class="anniversary-countdown">
-                    <div class="countdown-item">
-                        <div class="countdown-number">1</div>
-                        <div class="countdown-label">天</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-number">12</div>
-                        <div class="countdown-label">小时</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-number">45</div>
-                        <div class="countdown-label">分钟</div>
+                
+                <div class="countdown-section">
+                    <div class="countdown-large">
+                        <span style="font-size: 14px; color: #666;">还有</span>
+                        <span class="countdown-number-large">1</span>
+                        <span class="countdown-unit-large">天</span>
+                        <span class="countdown-number-large">12</span>
+                        <span class="countdown-unit-large">小时</span>
+                        <span class="countdown-number-large">45</span>
+                        <span class="countdown-unit-large">分钟</span>
                     </div>
                 </div>
+                
                 <div class="anniversary-notes">这是我们第一个重要的纪念日，要好好庆祝！</div>
-                <div class="anniversary-actions">
-                    <button class="action-btn">✏️</button>
-                    <button class="action-btn">🗑️</button>
-                </div>
             </div>
             
             <div class="anniversary-item upcoming">
-                <div class="anniversary-status">即将到来</div>
-                <div class="anniversary-title">
-                    <span>🎂</span>
-                    <span>兔兔生日</span>
-                </div>
-                <div class="anniversary-date">2023年11月20日</div>
-                <div class="anniversary-countdown">
-                    <div class="countdown-item">
-                        <div class="countdown-number">36</div>
-                        <div class="countdown-label">天</div>
+                <div class="anniversary-header">
+                    <div class="anniversary-title-section">
+                        <div class="anniversary-title">
+                            <span>🎂</span>
+                            <span>兔兔生日</span>
+                        </div>
+                        <div class="anniversary-date">2023年11月20日</div>
+                        <span class="anniversary-type-badge">生日 · 每年提醒</span>
+                    </div>
+                    <div class="anniversary-menu">
+                        ⋮
+                        <div class="menu-dropdown">
+                            <div class="menu-item edit-item">
+                                <span>✏️</span>
+                                <span>编辑</span>
+                            </div>
+                            <div class="menu-item delete delete-item">
+                                <span>🗑️</span>
+                                <span>删除</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
+                <div class="countdown-section">
+                    <div class="countdown-small">
+                        <strong style="color: var(--warning); font-size: 18px;">36天后</strong>
+                    </div>
+                </div>
+                
                 <div class="anniversary-notes">准备给兔兔一个惊喜生日派对！</div>
-                <div class="anniversary-actions">
-                    <button class="action-btn">✏️</button>
-                    <button class="action-btn">🗑️</button>
-                </div>
             </div>
-            
+        </div>
+        
+        <!-- 已过去区域 -->
+        <div class="section-divider">
+            <div class="section-divider-line"></div>
+            <div class="section-divider-text">✅ 已过去</div>
+            <div class="section-divider-line"></div>
+        </div>
+        
+        <div class="anniversary-list">
             <div class="anniversary-item passed">
-                <div class="anniversary-status">已过去</div>
-                <div class="anniversary-title">
-                    <span>👑</span>
-                    <span>第一次约会</span>
-                </div>
-                <div class="anniversary-date">2023年6月10日</div>
-                <div class="anniversary-countdown">
-                    <div class="countdown-item">
-                        <div class="countdown-number">128</div>
-                        <div class="countdown-label">天前</div>
+                <div class="anniversary-header">
+                    <div class="anniversary-title-section">
+                        <div class="anniversary-title">
+                            <span>👑</span>
+                            <span>第一次约会</span>
+                        </div>
+                        <div class="anniversary-date">2023年6月10日</div>
+                        <span class="anniversary-type-badge">特殊日子 · 每年提醒</span>
+                    </div>
+                    <div class="anniversary-menu">
+                        ⋮
+                        <div class="menu-dropdown">
+                            <div class="menu-item edit-item">
+                                <span>✏️</span>
+                                <span>编辑</span>
+                            </div>
+                            <div class="menu-item delete delete-item">
+                                <span>🗑️</span>
+                                <span>删除</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
+                <div class="countdown-section">
+                    <div class="countdown-small">已过去 <strong>128天</strong></div>
+                </div>
+                
                 <div class="anniversary-notes">在那家温馨的咖啡馆，我们第一次正式约会</div>
-                <div class="anniversary-actions">
-                    <button class="action-btn">✏️</button>
-                    <button class="action-btn">🗑️</button>
-                </div>
             </div>
             
             <div class="anniversary-item passed">
-                <div class="anniversary-status">已过去</div>
-                <div class="anniversary-title">
-                    <span>🍽️</span>
-                    <span>第一次共同下厨</span>
-                </div>
-                <div class="anniversary-date">2023年6月15日</div>
-                <div class="anniversary-countdown">
-                    <div class="countdown-item">
-                        <div class="countdown-number">123</div>
-                        <div class="countdown-label">天前</div>
+                <div class="anniversary-header">
+                    <div class="anniversary-title-section">
+                        <div class="anniversary-title">
+                            <span>🍽️</span>
+                            <span>第一次共同下厨</span>
+                        </div>
+                        <div class="anniversary-date">2023年6月15日</div>
+                        <span class="anniversary-type-badge">特殊日子 · 每年提醒</span>
+                    </div>
+                    <div class="anniversary-menu">
+                        ⋮
+                        <div class="menu-dropdown">
+                            <div class="menu-item edit-item">
+                                <span>✏️</span>
+                                <span>编辑</span>
+                            </div>
+                            <div class="menu-item delete delete-item">
+                                <span>🗑️</span>
+                                <span>删除</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="anniversary-notes">一起做的第一顿饭是番茄鸡蛋面</div>
-                <div class="anniversary-actions">
-                    <button class="action-btn">✏️</button>
-                    <button class="action-btn">🗑️</button>
+                
+                <div class="countdown-section">
+                    <div class="countdown-small">已过去 <strong>123天</strong></div>
                 </div>
+                
+                <div class="anniversary-notes">一起做的第一顿饭是番茄鸡蛋面</div>
+            </div>
+            
+            <div class="anniversary-item passed">
+                <div class="anniversary-header">
+                    <div class="anniversary-title-section">
+                        <div class="anniversary-title">
+                            <span>🎄</span>
+                            <span>第一个圣诞节</span>
+                        </div>
+                        <div class="anniversary-date">2022年12月25日</div>
+                        <span class="anniversary-type-badge">特殊日子 · 每年提醒</span>
+                    </div>
+                    <div class="anniversary-menu">
+                        ⋮
+                        <div class="menu-dropdown">
+                            <div class="menu-item edit-item">
+                                <span>✏️</span>
+                                <span>编辑</span>
+                            </div>
+                            <div class="menu-item delete delete-item">
+                                <span>🗑️</span>
+                                <span>删除</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="countdown-section">
+                    <div class="countdown-small">已过去 <strong>295天</strong></div>
+                </div>
+                
+                <div class="anniversary-notes">第一次一起过圣诞节，收到了兔兔送的围巾</div>
             </div>
         </div>
     </div>
     
     <script>
-        // 筛选按钮功能
-        const filterBtns = document.querySelectorAll('.anniversary-filter-btn');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                filterBtns.forEach(b => b.classList.remove('active'));
+        // 筛选标签切换
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                filterTabs.forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
+                console.log('切换到筛选：', this.textContent);
             });
         });
         
-        // 删除按钮功能
-        const deleteButtons = document.querySelectorAll('.action-btn:last-child');
-        deleteButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (confirm('确定要删除这个纪念日吗？')) {
-                    alert('纪念日已删除');
-                }
+        // 纪念日菜单点击
+        const menuButtons = document.querySelectorAll('.anniversary-menu');
+        menuButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // 关闭其他打开的菜单
+                document.querySelectorAll('.menu-dropdown').forEach(dropdown => {
+                    if (dropdown !== this.querySelector('.menu-dropdown')) {
+                        dropdown.classList.remove('show');
+                    }
+                });
+                
+                // 切换当前菜单
+                const dropdown = this.querySelector('.menu-dropdown');
+                dropdown.classList.toggle('show');
             });
         });
         
-        // 编辑按钮功能
-        const editButtons = document.querySelectorAll('.action-btn:first-child');
+        // 点击其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.anniversary-menu')) {
+                document.querySelectorAll('.menu-dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+            }
+        });
+        
+        // 编辑按钮
+        const editButtons = document.querySelectorAll('.edit-item');
         editButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                alert('编辑纪念日');
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const title = this.closest('.anniversary-item').querySelector('.anniversary-title span:last-child').textContent;
+                alert(`编辑纪念日：${title}`);
+                this.closest('.menu-dropdown').classList.remove('show');
             });
+        });
+        
+        // 删除按钮
+        const deleteButtons = document.querySelectorAll('.delete-item');
+        deleteButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const title = this.closest('.anniversary-item').querySelector('.anniversary-title span:last-child').textContent;
+                if (confirm(`确定要删除纪念日"${title}"吗？`)) {
+                    alert('已删除纪念日');
+                    this.closest('.anniversary-item').remove();
+                }
+                this.closest('.menu-dropdown').classList.remove('show');
+            });
+        });
+        
+        // 纪念日卡片点击
+        const anniversaryItems = document.querySelectorAll('.anniversary-item');
+        anniversaryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const title = this.querySelector('.anniversary-title span:last-child').textContent;
+                console.log('查看纪念日详情：', title);
+            });
+        });
+        
+        // 添加纪念日卡片点击
+        document.getElementById('add-btn').addEventListener('click', function() {
+            alert('跳转到添加纪念日页面');
+        });
+        
+        // 返回按钮
+        document.querySelector('.nav-icon').addEventListener('click', function() {
+            window.history.back();
         });
     </script>
 </body>
