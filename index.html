@@ -22,12 +22,16 @@
             background: linear-gradient(135deg, #FF6B8B, #FFA07A);
             color: white;
             padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            position: relative;
+        }
+        
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            position: relative;
+            margin-bottom: 15px;
         }
         
         .logo {
@@ -55,9 +59,55 @@
             background: rgba(255, 255, 255, 0.3);
         }
         
+        .page-nav {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        
+        .page-nav::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .page-nav::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+        
+        .page-nav::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+        
+        .page-nav-item {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .page-nav-item:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .page-nav-item.active {
+            background: white;
+            color: #FF6B8B;
+            font-weight: 500;
+        }
+        
         .workspace {
             position: relative;
-            height: calc(100vh - 60px);
+            height: calc(100vh - 120px);
             overflow: auto;
             padding: 20px;
         }
@@ -68,8 +118,8 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             overflow: hidden;
-            min-width: 400px;
-            min-height: 300px;
+            min-width: 480px;
+            min-height: 500px;
             resize: both;
             transition: box-shadow 0.3s;
         }
@@ -148,134 +198,90 @@
             display: none;
         }
         
-        .sidebar {
-            position: fixed;
-            right: 20px;
-            top: 80px;
-            background: white;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
-            max-height: calc(100vh - 120px);
-            overflow-y: auto;
-            width: 220px;
-        }
-        
-        .sidebar-title {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #4A4A4A;
-        }
-        
-        .page-item {
-            padding: 10px;
-            margin-bottom: 8px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .page-item:hover {
-            background: linear-gradient(135deg, rgba(255, 107, 139, 0.1), rgba(255, 160, 122, 0.1));
-            transform: translateX(-3px);
-        }
-        
-        .page-item.active {
-            background: linear-gradient(135deg, rgba(255, 107, 139, 0.15), rgba(255, 160, 122, 0.15));
-            font-weight: 500;
-        }
-        
         @media (max-width: 768px) {
-            .sidebar {
-                display: none;
+            .card {
+                min-width: 320px;
             }
             
-            .card {
-                min-width: 300px;
+            .controls {
+                flex-wrap: wrap;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="logo">一日三餐恋 - 可拖拽页面展示</div>
-        <div class="controls">
-            <button class="control-btn" onclick="resetLayout()">重置布局</button>
-            <button class="control-btn" onclick="showAll()">显示全部</button>
-            <button class="control-btn" onclick="minimizeAll()">最小化全部</button>
+        <div class="header-top">
+            <div class="logo">一日三餐恋 - 可拖拽页面展示</div>
+            <div class="controls">
+                <button class="control-btn" onclick="resetLayout()">重置布局</button>
+                <button class="control-btn" onclick="showAll()">显示全部</button>
+                <button class="control-btn" onclick="minimizeAll()">最小化全部</button>
+            </div>
+        </div>
+        <div class="page-nav" id="pageNav">
+            <div class="page-nav-item" data-page="home">
+                <span>🏠</span>
+                <span>首页</span>
+            </div>
+            <div class="page-nav-item" data-page="add-record">
+                <span>➕</span>
+                <span>添加记录</span>
+            </div>
+            <div class="page-nav-item" data-page="records">
+                <span>📝</span>
+                <span>用餐记录</span>
+            </div>
+            <div class="page-nav-item" data-page="anniversary">
+                <span>🎉</span>
+                <span>纪念日管理</span>
+            </div>
+            <div class="page-nav-item" data-page="add-anniversary">
+                <span>📅</span>
+                <span>添加纪念日</span>
+            </div>
+            <div class="page-nav-item" data-page="recipes">
+                <span>📖</span>
+                <span>情侣菜谱</span>
+            </div>
+            <div class="page-nav-item" data-page="stats">
+                <span>📊</span>
+                <span>数据统计</span>
+            </div>
+            <div class="page-nav-item" data-page="journey">
+                <span>🗺️</span>
+                <span>美食轨迹</span>
+            </div>
+            <div class="page-nav-item" data-page="profile">
+                <span>👤</span>
+                <span>个人中心</span>
+            </div>
+            <div class="page-nav-item" data-page="settings">
+                <span>⚙️</span>
+                <span>个人设置</span>
+            </div>
         </div>
     </div>
     
     <div class="workspace" id="workspace"></div>
     
-    <div class="sidebar">
-        <div class="sidebar-title">页面列表</div>
-        <div class="page-item" onclick="toggleCard('home')">
-            <span>🏠</span>
-            <span>首页</span>
-        </div>
-        <div class="page-item" onclick="toggleCard('add-record')">
-            <span>➕</span>
-            <span>添加记录</span>
-        </div>
-        <div class="page-item" onclick="toggleCard('records')">
-            <span>📝</span>
-            <span>用餐记录</span>
-        </div>
-        <div class="page-item" onclick="toggleCard('anniversary')">
-            <span>🎉</span>
-            <span>纪念日管理</span>
-        </div>
-        <div class="page-item" onclick="toggleCard('add-anniversary')">
-            <span>📅</span>
-            <span>添加纪念日</span>
-        </div>
-        <div class="page-item" onclick="toggleCard('recipes')">
-            <span>📖</span>
-            <span>情侣菜谱</span>
-        </div>
-        <div class="page-item" onclick="toggleCard('stats')">
-            <span>📊</span>
-            <span>数据统计</span>
-        </div>
-        <div class="page-item" onclick="toggleCard('journey')">
-            <span>🗺️</span>
-            <span>美食轨迹</span>
-        </div>
-        <div class="page-item" onclick="toggleCard('profile')">
-            <span>👤</span>
-            <span>个人中心</span>
-        </div>
-        <div class="page-item" onclick="toggleCard('settings')">
-            <span>⚙️</span>
-            <span>个人设置</span>
-        </div>
-    </div>
-    
     <script>
         const pages = [
-            { id: 'home', title: '🏠 首页', src: 'home.html', width: 500, height: 600 },
-            { id: 'add-record', title: '➕ 添加记录', src: 'add-record.html', width: 500, height: 600 },
-            { id: 'records', title: '📝 用餐记录', src: 'records.html', width: 500, height: 600 },
-            { id: 'anniversary', title: '🎉 纪念日管理', src: 'anniversary.html', width: 500, height: 600 },
-            { id: 'add-anniversary', title: '📅 添加纪念日', src: 'add-anniversary.html', width: 500, height: 600 },
-            { id: 'recipes', title: '📖 情侣菜谱', src: 'recipes.html', width: 500, height: 600 },
-            { id: 'stats', title: '📊 数据统计', src: 'stats.html', width: 500, height: 600 },
-            { id: 'journey', title: '🗺️ 美食轨迹', src: 'journey.html', width: 500, height: 600 },
-            { id: 'profile', title: '👤 个人中心', src: 'profile.html', width: 500, height: 600 },
-            { id: 'settings', title: '⚙️ 个人设置', src: 'settings.html', width: 500, height: 600 }
+            { id: 'home', title: '🏠 首页', src: 'home.html', width: 600, height: 800 },
+            { id: 'add-record', title: '➕ 添加记录', src: 'add-record.html', width: 600, height: 800 },
+            { id: 'records', title: '📝 用餐记录', src: 'records.html', width: 600, height: 800 },
+            { id: 'anniversary', title: '🎉 纪念日管理', src: 'anniversary.html', width: 600, height: 800 },
+            { id: 'add-anniversary', title: '📅 添加纪念日', src: 'add-anniversary.html', width: 600, height: 800 },
+            { id: 'recipes', title: '📖 情侣菜谱', src: 'recipes.html', width: 600, height: 800 },
+            { id: 'stats', title: '📊 数据统计', src: 'stats.html', width: 600, height: 800 },
+            { id: 'journey', title: '🗺️ 美食轨迹', src: 'journey.html', width: 600, height: 800 },
+            { id: 'profile', title: '👤 个人中心', src: 'profile.html', width: 600, height: 800 },
+            { id: 'settings', title: '⚙️ 个人设置', src: 'settings.html', width: 600, height: 800 }
         ];
         
         const workspace = document.getElementById('workspace');
+        const pageNav = document.getElementById('pageNav');
         let zIndexCounter = 1;
-        let activeCard = null;
         
         // 创建卡片
         function createCard(page, x, y) {
@@ -303,6 +309,7 @@
             
             workspace.appendChild(card);
             makeDraggable(card);
+            updateNavState(page.id, true);
             
             // 点击卡片时提升层级
             card.addEventListener('mousedown', function() {
@@ -368,6 +375,19 @@
             const card = document.getElementById(`card-${id}`);
             if (card) {
                 card.remove();
+                updateNavState(id, false);
+            }
+        }
+        
+        // 更新导航状态
+        function updateNavState(pageId, isActive) {
+            const navItem = pageNav.querySelector(`[data-page="${pageId}"]`);
+            if (navItem) {
+                if (isActive) {
+                    navItem.classList.add('active');
+                } else {
+                    navItem.classList.remove('active');
+                }
             }
         }
         
@@ -375,14 +395,25 @@
         function toggleCard(id) {
             const card = document.getElementById(`card-${id}`);
             if (card) {
+                // 如果卡片已存在，取消最小化并提升到最前面
                 if (card.classList.contains('minimized')) {
                     card.classList.remove('minimized');
                 }
                 bringToFront(card);
+                
+                // 滚动到卡片位置
+                const cardRect = card.getBoundingClientRect();
+                const workspaceRect = workspace.getBoundingClientRect();
+                workspace.scrollTo({
+                    left: card.offsetLeft - 50,
+                    top: card.offsetTop - 50,
+                    behavior: 'smooth'
+                });
             } else {
+                // 如果卡片不存在，创建新卡片
                 const page = pages.find(p => p.id === id);
-                const x = Math.random() * (window.innerWidth - 600);
-                const y = Math.random() * (window.innerHeight - 700) + 100;
+                const x = Math.random() * Math.max(100, window.innerWidth - 700) + 50;
+                const y = Math.random() * Math.max(100, window.innerHeight - 900) + 50;
                 createCard(page, x, y);
             }
         }
@@ -390,15 +421,21 @@
         // 重置布局
         function resetLayout() {
             workspace.innerHTML = '';
+            pageNav.querySelectorAll('.page-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
             initLayout();
         }
         
         // 显示全部
         function showAll() {
             workspace.innerHTML = '';
+            pageNav.querySelectorAll('.page-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
             pages.forEach((page, index) => {
-                const x = (index % 3) * 520 + 20;
-                const y = Math.floor(index / 3) * 620 + 20;
+                const x = (index % 2) * 620 + 20;
+                const y = Math.floor(index / 2) * 820 + 20;
                 createCard(page, x, y);
             });
         }
@@ -412,12 +449,19 @@
         
         // 初始化布局
         function initLayout() {
-            // 创建前4个页面
+            // 创建前3个页面
             createCard(pages[0], 20, 20);
-            createCard(pages[1], 540, 20);
-            createCard(pages[2], 1060, 20);
-            createCard(pages[3], 20, 640);
+            createCard(pages[1], 640, 20);
+            createCard(pages[2], 20, 840);
         }
+        
+        // 导航项点击事件
+        pageNav.querySelectorAll('.page-nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const pageId = this.getAttribute('data-page');
+                toggleCard(pageId);
+            });
+        });
         
         // 页面加载时初始化
         initLayout();
