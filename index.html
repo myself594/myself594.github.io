@@ -117,32 +117,39 @@
             background: rgba(255, 107, 139, 0.5);
         }
         
+        .pages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 20px;
+        }
+        
         .page-card {
             background: white;
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            margin-bottom: 30px;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 900px;
+            display: flex;
+            flex-direction: column;
         }
         
         .page-card:hover {
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
         }
         
         .page-card.highlight {
-            animation: highlight 1s ease-out;
+            animation: highlight 0.8s ease-out;
         }
         
         @keyframes highlight {
-            0% {
-                box-shadow: 0 0 0 0 rgba(255, 107, 139, 0.7);
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             }
             50% {
-                box-shadow: 0 0 0 20px rgba(255, 107, 139, 0);
-            }
-            100% {
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 0 0 4px rgba(255, 107, 139, 0.5), 0 8px 30px rgba(0, 0, 0, 0.2);
+                transform: scale(1.02);
             }
         }
         
@@ -153,10 +160,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
         
         .page-card-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -167,12 +175,11 @@
             padding: 4px 12px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 12px;
-            font-size: 12px;
+            font-size: 11px;
         }
         
         .page-card-body {
-            width: 100%;
-            height: 1000px;
+            flex: 1;
             overflow: hidden;
         }
         
@@ -183,8 +190,18 @@
             display: block;
         }
         
+        @media (max-width: 1200px) {
+            .pages-grid {
+                grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            }
+        }
+        
         @media (max-width: 768px) {
-            .page-card-body {
+            .pages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-card {
                 height: 700px;
             }
         }
@@ -241,133 +258,135 @@
     </div>
     
     <div class="workspace" id="workspace">
-        <div class="page-card" id="card-home" data-page="home">
-            <div class="page-card-header">
-                <div class="page-card-title">
-                    <span>🏠</span>
-                    <span>首页</span>
+        <div class="pages-grid" id="pagesGrid">
+            <div class="page-card" data-page="home" data-order="0">
+                <div class="page-card-header">
+                    <div class="page-card-title">
+                        <span>🏠</span>
+                        <span>首页</span>
+                    </div>
+                    <div class="page-card-badge">home.html</div>
                 </div>
-                <div class="page-card-badge">home.html</div>
-            </div>
-            <div class="page-card-body">
-                <iframe class="page-frame" src="home.html"></iframe>
-            </div>
-        </div>
-        
-        <div class="page-card" id="card-add-record" data-page="add-record">
-            <div class="page-card-header">
-                <div class="page-card-title">
-                    <span>➕</span>
-                    <span>添加记录</span>
+                <div class="page-card-body">
+                    <iframe class="page-frame" src="home.html"></iframe>
                 </div>
-                <div class="page-card-badge">add-record.html</div>
             </div>
-            <div class="page-card-body">
-                <iframe class="page-frame" src="add-record.html"></iframe>
-            </div>
-        </div>
-        
-        <div class="page-card" id="card-records" data-page="records">
-            <div class="page-card-header">
-                <div class="page-card-title">
-                    <span>📝</span>
-                    <span>用餐记录</span>
+            
+            <div class="page-card" data-page="add-record" data-order="1">
+                <div class="page-card-header">
+                    <div class="page-card-title">
+                        <span>➕</span>
+                        <span>添加记录</span>
+                    </div>
+                    <div class="page-card-badge">add-record.html</div>
                 </div>
-                <div class="page-card-badge">records.html</div>
-            </div>
-            <div class="page-card-body">
-                <iframe class="page-frame" src="records.html"></iframe>
-            </div>
-        </div>
-        
-        <div class="page-card" id="card-anniversary" data-page="anniversary">
-            <div class="page-card-header">
-                <div class="page-card-title">
-                    <span>🎉</span>
-                    <span>纪念日管理</span>
+                <div class="page-card-body">
+                    <iframe class="page-frame" src="add-record.html"></iframe>
                 </div>
-                <div class="page-card-badge">anniversary.html</div>
             </div>
-            <div class="page-card-body">
-                <iframe class="page-frame" src="anniversary.html"></iframe>
-            </div>
-        </div>
-        
-        <div class="page-card" id="card-add-anniversary" data-page="add-anniversary">
-            <div class="page-card-header">
-                <div class="page-card-title">
-                    <span>📅</span>
-                    <span>添加纪念日</span>
+            
+            <div class="page-card" data-page="records" data-order="2">
+                <div class="page-card-header">
+                    <div class="page-card-title">
+                        <span>📝</span>
+                        <span>用餐记录</span>
+                    </div>
+                    <div class="page-card-badge">records.html</div>
                 </div>
-                <div class="page-card-badge">add-anniversary.html</div>
-            </div>
-            <div class="page-card-body">
-                <iframe class="page-frame" src="add-anniversary.html"></iframe>
-            </div>
-        </div>
-        
-        <div class="page-card" id="card-recipes" data-page="recipes">
-            <div class="page-card-header">
-                <div class="page-card-title">
-                    <span>📖</span>
-                    <span>情侣菜谱</span>
+                <div class="page-card-body">
+                    <iframe class="page-frame" src="records.html"></iframe>
                 </div>
-                <div class="page-card-badge">recipes.html</div>
             </div>
-            <div class="page-card-body">
-                <iframe class="page-frame" src="recipes.html"></iframe>
-            </div>
-        </div>
-        
-        <div class="page-card" id="card-stats" data-page="stats">
-            <div class="page-card-header">
-                <div class="page-card-title">
-                    <span>📊</span>
-                    <span>数据统计</span>
+            
+            <div class="page-card" data-page="anniversary" data-order="3">
+                <div class="page-card-header">
+                    <div class="page-card-title">
+                        <span>🎉</span>
+                        <span>纪念日管理</span>
+                    </div>
+                    <div class="page-card-badge">anniversary.html</div>
                 </div>
-                <div class="page-card-badge">stats.html</div>
-            </div>
-            <div class="page-card-body">
-                <iframe class="page-frame" src="stats.html"></iframe>
-            </div>
-        </div>
-        
-        <div class="page-card" id="card-journey" data-page="journey">
-            <div class="page-card-header">
-                <div class="page-card-title">
-                    <span>🗺️</span>
-                    <span>美食轨迹</span>
+                <div class="page-card-body">
+                    <iframe class="page-frame" src="anniversary.html"></iframe>
                 </div>
-                <div class="page-card-badge">journey.html</div>
             </div>
-            <div class="page-card-body">
-                <iframe class="page-frame" src="journey.html"></iframe>
-            </div>
-        </div>
-        
-        <div class="page-card" id="card-profile" data-page="profile">
-            <div class="page-card-header">
-                <div class="page-card-title">
-                    <span>👤</span>
-                    <span>个人中心</span>
+            
+            <div class="page-card" data-page="add-anniversary" data-order="4">
+                <div class="page-card-header">
+                    <div class="page-card-title">
+                        <span>📅</span>
+                        <span>添加纪念日</span>
+                    </div>
+                    <div class="page-card-badge">add-anniversary.html</div>
                 </div>
-                <div class="page-card-badge">profile.html</div>
-            </div>
-            <div class="page-card-body">
-                <iframe class="page-frame" src="profile.html"></iframe>
-            </div>
-        </div>
-        
-        <div class="page-card" id="card-settings" data-page="settings">
-            <div class="page-card-header">
-                <div class="page-card-title">
-                    <span>⚙️</span>
-                    <span>个人设置</span>
+                <div class="page-card-body">
+                    <iframe class="page-frame" src="add-anniversary.html"></iframe>
                 </div>
-                <div class="page-card-badge">settings.html</div>
             </div>
-            <div class="page-card-body">
-                <iframe class="page-frame" src="settings.html"></iframe>
+            
+            <div class="page-card" data-page="recipes" data-order="5">
+                <div class="page-card-header">
+                    <div class="page-card-title">
+                        <span>📖</span>
+                        <span>情侣菜谱</span>
+                    </div>
+                    <div class="page-card-badge">recipes.html</div>
+                </div>
+                <div class="page-card-body">
+                    <iframe class="page-frame" src="recipes.html"></iframe>
+                </div>
+            </div>
+            
+            <div class="page-card" data-page="stats" data-order="6">
+                <div class="page-card-header">
+                    <div class="page-card-title">
+                        <span>📊</span>
+                        <span>数据统计</span>
+                    </div>
+                    <div class="page-card-badge">stats.html</div>
+                </div>
+                <div class="page-card-body">
+                    <iframe class="page-frame" src="stats.html"></iframe>
+                </div>
+            </div>
+            
+            <div class="page-card" data-page="journey" data-order="7">
+                <div class="page-card-header">
+                    <div class="page-card-title">
+                        <span>🗺️</span>
+                        <span>美食轨迹</span>
+                    </div>
+                    <div class="page-card-badge">journey.html</div>
+                </div>
+                <div class="page-card-body">
+                    <iframe class="page-frame" src="journey.html"></iframe>
+                </div>
+            </div>
+            
+            <div class="page-card" data-page="profile" data-order="8">
+                <div class="page-card-header">
+                    <div class="page-card-title">
+                        <span>👤</span>
+                        <span>个人中心</span>
+                    </div>
+                    <div class="page-card-badge">profile.html</div>
+                </div>
+                <div class="page-card-body">
+                    <iframe class="page-frame" src="profile.html"></iframe>
+                </div>
+            </div>
+            
+            <div class="page-card" data-page="settings" data-order="9">
+                <div class="page-card-header">
+                    <div class="page-card-title">
+                        <span>⚙️</span>
+                        <span>个人设置</span>
+                    </div>
+                    <div class="page-card-badge">settings.html</div>
+                </div>
+                <div class="page-card-body">
+                    <iframe class="page-frame" src="settings.html"></iframe>
+                </div>
             </div>
         </div>
     </div>
@@ -375,6 +394,7 @@
     <script>
         const pageNav = document.getElementById('pageNav');
         const workspace = document.getElementById('workspace');
+        const pagesGrid = document.getElementById('pagesGrid');
         
         // 导航项点击事件
         pageNav.querySelectorAll('.page-nav-item').forEach(item => {
@@ -387,59 +407,31 @@
                 });
                 this.classList.add('active');
                 
-                // 滚动到对应的页面卡片
-                const targetCard = document.getElementById(`card-${pageId}`);
-                if (targetCard) {
-                    // 计算偏移量，使卡片显示在视图顶部（考虑header高度）
-                    const headerHeight = 120;
-                    const cardTop = targetCard.offsetTop;
-                    
-                    workspace.scrollTo({
-                        top: cardTop - 20,
-                        behavior: 'smooth'
-                    });
-                    
-                    // 添加高亮动画
-                    targetCard.classList.add('highlight');
-                    setTimeout(() => {
-                        targetCard.classList.remove('highlight');
-                    }, 1000);
-                }
+                // 将选中的卡片移到第一位
+                moveCardToFirst(pageId);
             });
         });
         
-        // 监听滚动，更新当前激活的导航项
-        let scrollTimeout;
-        workspace.addEventListener('scroll', function() {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                updateActiveNav();
-            }, 100);
-        });
-        
-        function updateActiveNav() {
-            const scrollTop = workspace.scrollTop;
-            const cards = document.querySelectorAll('.page-card');
+        function moveCardToFirst(pageId) {
+            const targetCard = document.querySelector(`.page-card[data-page="${pageId}"]`);
             
-            let activeCard = null;
-            cards.forEach(card => {
-                const cardTop = card.offsetTop - 100;
-                const cardBottom = cardTop + card.offsetHeight;
+            if (targetCard) {
+                // 将目标卡片移动到第一个位置
+                pagesGrid.insertBefore(targetCard, pagesGrid.firstChild);
                 
-                if (scrollTop >= cardTop && scrollTop < cardBottom) {
-                    activeCard = card;
-                }
-            });
-            
-            if (activeCard) {
-                const pageId = activeCard.getAttribute('data-page');
-                pageNav.querySelectorAll('.page-nav-item').forEach(nav => {
-                    nav.classList.remove('active');
+                // 添加高亮动画
+                targetCard.classList.add('highlight');
+                
+                // 滚动到顶部
+                workspace.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
-                const activeNav = pageNav.querySelector(`[data-page="${pageId}"]`);
-                if (activeNav) {
-                    activeNav.classList.add('active');
-                }
+                
+                // 移除高亮动画
+                setTimeout(() => {
+                    targetCard.classList.remove('highlight');
+                }, 800);
             }
         }
     </script>
