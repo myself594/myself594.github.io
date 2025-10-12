@@ -40,6 +40,7 @@
             background-color: white;
             min-height: 100vh;
             box-shadow: var(--shadow);
+            padding-bottom: 80px;
         }
         
         .header {
@@ -48,6 +49,7 @@
             align-items: center;
             padding: 15px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
         }
         
         .logo {
@@ -57,9 +59,14 @@
         }
         
         .nav-icon {
-            font-size: 20px;
+            font-size: 24px;
             cursor: pointer;
             color: #999;
+            transition: color 0.3s;
+        }
+        
+        .nav-icon:hover {
+            color: var(--primary);
         }
         
         .records-container {
@@ -69,9 +76,14 @@
         .record-filters {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             overflow-x: auto;
             padding-bottom: 10px;
+            scrollbar-width: none;
+        }
+        
+        .record-filters::-webkit-scrollbar {
+            display: none;
         }
         
         .filter-btn {
@@ -83,18 +95,25 @@
             cursor: pointer;
             border: none;
             transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover {
+            background-color: #e8e8e8;
         }
         
         .filter-btn.active {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
+            box-shadow: 0 2px 8px rgba(255, 107, 139, 0.3);
         }
         
         .advanced-filters {
-            background-color: #f9f9f9;
-            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.03), rgba(255, 160, 122, 0.03));
+            border-radius: 12px;
             padding: 15px;
             margin-bottom: 20px;
+            border: 1px solid rgba(255, 107, 139, 0.1);
         }
         
         .filter-group {
@@ -106,10 +125,10 @@
         }
         
         .filter-group-title {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #666;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
         }
         
         .filter-options {
@@ -119,108 +138,266 @@
         }
         
         .filter-option {
-            padding: 6px 12px;
+            padding: 6px 14px;
             background-color: white;
             border: 1px solid #e0e0e0;
             border-radius: 15px;
-            font-size: 12px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.3s;
+            font-weight: 500;
         }
         
         .filter-option:hover {
             border-color: var(--primary);
+            background-color: rgba(255, 107, 139, 0.05);
         }
         
         .filter-option.selected {
             background-color: var(--primary);
             color: white;
             border-color: var(--primary);
+            box-shadow: 0 2px 6px rgba(255, 107, 139, 0.3);
+        }
+        
+        .records-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.05), rgba(255, 160, 122, 0.05));
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
         }
         
         .record-list {
-            display: grid;
-            gap: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
         
-        .record-item {
-            background-color: white;
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: var(--shadow);
+        .meal-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .meal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .meal-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+        
+        .meal-image-container {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+            position: relative;
+        }
+        
+        .meal-carousel {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+        
+        .meal-image {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 2;
+        }
+        
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
             cursor: pointer;
             transition: all 0.3s;
         }
         
-        .record-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        .carousel-dot.active {
+            width: 20px;
+            border-radius: 4px;
+            background-color: white;
         }
         
-        .record-header {
+        .meal-image-overlay {
+            position: absolute;
+            top: 15px;
+            left: 15px;
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
+            gap: 8px;
+            z-index: 2;
         }
         
-        .record-date {
-            font-weight: bold;
+        .meal-time-badge {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         
-        .record-meal-type {
-            background-color: rgba(255, 107, 139, 0.1);
-            color: var(--primary);
-            padding: 4px 10px;
-            border-radius: 12px;
+        .meal-type-badge {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #666;
+            padding: 6px 14px;
+            border-radius: 20px;
             font-size: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         
-        .record-content {
-            display: flex;
-            gap: 15px;
+        .meal-date-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--dark);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 2;
         }
         
-        .record-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-            flex-shrink: 0;
+        .meal-card-content {
+            padding: 20px;
+        }
+        
+        .meal-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        .meal-info {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        
+        .meal-info-icon {
+            font-size: 16px;
+        }
+        
+        .meal-anniversary-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, rgba(255, 209, 102, 0.15), rgba(255, 160, 122, 0.15));
+            border-left: 3px solid #FFD166;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #e67e00;
+            font-weight: 500;
+        }
+        
+        .meal-recipe-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1));
+            border-left: 3px solid #4CAF50;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+        }
+        
+        .meal-tags-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .meal-notes {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.03), rgba(255, 160, 122, 0.03));
+            border-radius: 12px;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
             color: #999;
         }
         
-        .record-details {
-            flex: 1;
+        .empty-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
         }
         
-        .record-title {
-            font-weight: bold;
-            margin-bottom: 5px;
+        .empty-text {
+            font-size: 16px;
+            margin-bottom: 10px;
         }
         
-        .record-location {
+        .empty-hint {
             font-size: 14px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .record-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 5px;
-        }
-        
-        .record-tag {
-            background-color: rgba(255, 107, 139, 0.1);
-            color: var(--primary);
-            padding: 2px 8px;
-            border-radius: 8px;
-            font-size: 11px;
+            color: #bbb;
         }
     </style>
 </head>
@@ -228,179 +405,380 @@
     <div class="container">
         <div class="header">
             <div class="logo">用餐记录</div>
-            <div class="nav-icon">←</div>
+            <div class="nav-icon" onclick="history.back()">←</div>
         </div>
         
         <div class="records-container">
             <div class="record-filters">
-                <button class="filter-btn active">全部</button>
-                <button class="filter-btn">早餐</button>
-                <button class="filter-btn">午餐</button>
-                <button class="filter-btn">晚餐</button>
-                <button class="filter-btn">在家烹饪</button>
-                <button class="filter-btn">外出就餐</button>
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="breakfast">早餐</button>
+                <button class="filter-btn" data-filter="lunch">午餐</button>
+                <button class="filter-btn" data-filter="dinner">晚餐</button>
+                <button class="filter-btn" data-filter="home">在家烹饪</button>
+                <button class="filter-btn" data-filter="out">外出就餐</button>
             </div>
             
             <div class="advanced-filters">
                 <div class="filter-group">
-                    <div class="filter-group-title">用餐场景</div>
+                    <div class="filter-group-title">其他筛选</div>
                     <div class="filter-options">
-                        <div class="filter-option selected">全部</div>
-                        <div class="filter-option">纪念日</div>
-                        <div class="filter-option">约会</div>
-                        <div class="filter-option">探店</div>
-                        <div class="filter-option">旅行</div>
-                        <div class="filter-option">节日</div>
-                        <div class="filter-option">庆祝</div>
-                        <div class="filter-option">日常</div>
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <div class="filter-group-title">用餐地点</div>
-                    <div class="filter-options">
-                        <div class="filter-option selected">家里</div>
-                        <div class="filter-option">餐厅</div>
-                        <div class="filter-option">外卖</div>
-                        <div class="filter-option">旅行中</div>
+                        <div class="filter-option" data-other="recipe">包含菜谱</div>
+                        <div class="filter-option" data-other="anniversary-linked">关联纪念日</div>
                     </div>
                 </div>
             </div>
             
-            <div class="record-list">
-                <div class="record-item">
-                    <div class="record-header">
-                        <div class="record-date">10月15日</div>
-                        <div class="record-meal-type">午餐</div>
-                    </div>
-                    <div class="record-content">
-                        <div class="record-image">📷</div>
-                        <div class="record-details">
-                            <div class="record-title">公司附近新开的日料</div>
-                            <div class="record-location">📍 北京市朝阳区 · 日料店</div>
-                            <div class="record-tags">
-                                <div class="record-tag">探店</div>
-                                <div class="record-tag">约会</div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="records-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="total-count">42</div>
+                    <div class="stat-label">总记录</div>
                 </div>
-                
-                <div class="record-item">
-                    <div class="record-header">
-                        <div class="record-date">10月15日</div>
-                        <div class="record-meal-type">早餐</div>
-                    </div>
-                    <div class="record-content">
-                        <div class="record-image">📷</div>
-                        <div class="record-details">
-                            <div class="record-title">爱心煎蛋三明治</div>
-                            <div class="record-location">🏠 家里 · 兔兔下厨</div>
-                            <div class="record-tags">
-                                <div class="record-tag">日常</div>
-                                <div class="record-tag">在家烹饪</div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="month-count">12</div>
+                    <div class="stat-label">本月</div>
                 </div>
-                
-                <div class="record-item">
-                    <div class="record-header">
-                        <div class="record-date">10月14日</div>
-                        <div class="record-meal-type">晚餐</div>
-                    </div>
-                    <div class="record-content">
-                        <div class="record-image">📷</div>
-                        <div class="record-details">
-                            <div class="record-title">自制火锅</div>
-                            <div class="record-location">🏠 家里 · 共同下厨</div>
-                            <div class="record-tags">
-                                <div class="record-tag">日常</div>
-                                <div class="record-tag">在家烹饪</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="record-item">
-                    <div class="record-header">
-                        <div class="record-date">10月13日</div>
-                        <div class="record-meal-type">晚餐</div>
-                    </div>
-                    <div class="record-content">
-                        <div class="record-image">📷</div>
-                        <div class="record-details">
-                            <div class="record-title">海底捞火锅</div>
-                            <div class="record-location">📍 北京市朝阳区 · 海底捞</div>
-                            <div class="record-tags">
-                                <div class="record-tag">约会</div>
-                                <div class="record-tag">纪念日</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="record-item">
-                    <div class="record-header">
-                        <div class="record-date">10月12日</div>
-                        <div class="record-meal-type">午餐</div>
-                    </div>
-                    <div class="record-content">
-                        <div class="record-image">📷</div>
-                        <div class="record-details">
-                            <div class="record-title">麦当劳汉堡套餐</div>
-                            <div class="record-location">📍 北京市朝阳区 · 麦当劳</div>
-                            <div class="record-tags">
-                                <div class="record-tag">日常</div>
-                                <div class="record-tag">快餐</div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="week-count">5</div>
+                    <div class="stat-label">本周</div>
                 </div>
             </div>
+            
+            <div class="record-list" id="recordsList"></div>
         </div>
     </div>
     
     <script>
-        // 筛选按钮功能
+        const recordsData = [
+            {
+                id: 1,
+                title: '爱心煎蛋三明治',
+                date: '10月15日',
+                fullDate: '2024-10-15',
+                time: '早餐',
+                timeType: 'breakfast',
+                type: '🏠 在家烹饪',
+                typeCategory: 'home',
+                cook: '👩‍🍳👨‍🍳 一起下厨',
+                notes: '兔兔今天早起做的爱心早餐，搭配新鲜牛奶，熊大特别喜欢吃。吐司烤得刚刚好，鸡蛋煎成了爱心形状💕',
+                images: [
+                    'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=220&fit=crop',
+                    'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&h=220&fit=crop'
+                ],
+                anniversary: null,
+                recipes: ['爱心煎蛋三明治', '法式吐司']
+            },
+            {
+                id: 2,
+                title: '公司附近新开的日料',
+                date: '10月15日',
+                fullDate: '2024-10-15',
+                time: '午餐',
+                timeType: 'lunch',
+                type: '🍽️ 外出就餐',
+                typeCategory: 'out',
+                location: '📍 北京市朝阳区 · 日料店',
+                notes: '午休时间一起探索新店，三文鱼很新鲜，环境也很不错。店员服务态度特别好，下次还想来试试他们的招牌寿司。',
+                images: [
+                    'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop',
+                    'https://images.unsplash.com/photo-1563612116625-3012372fccce?w=400&h=220&fit=crop'
+                ],
+                anniversary: null,
+                recipes: null
+            },
+            {
+                id: 3,
+                title: '情人节特别晚餐',
+                date: '10月14日',
+                fullDate: '2024-10-14',
+                time: '晚餐',
+                timeType: 'dinner',
+                type: '🏠 在家烹饪',
+                typeCategory: 'home',
+                cook: '👩‍🍳👨‍🍳 一起下厨',
+                notes: '为了庆祝情人节，我们精心准备了烛光晚餐。从超市买了新鲜的牛排和红酒，一起动手做了一顿浪漫大餐。',
+                images: [
+                    'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=220&fit=crop',
+                    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=220&fit=crop',
+                    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=220&fit=crop'
+                ],
+                anniversary: '💖 在一起100天',
+                recipes: ['煎牛排', '凯撒沙拉', '提拉米苏']
+            },
+            {
+                id: 4,
+                title: '自制火锅',
+                date: '10月14日',
+                fullDate: '2024-10-14',
+                time: '晚餐',
+                timeType: 'dinner',
+                type: '🏠 在家烹饪',
+                typeCategory: 'home',
+                cook: '👩‍🍳👨‍🍳 一起下厨',
+                notes: '周末在家做火锅，买了很多喜欢的食材。边吃边聊天，非常温馨的夜晚。',
+                images: [
+                    'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=220&fit=crop'
+                ],
+                anniversary: null,
+                recipes: null
+            },
+            {
+                id: 5,
+                title: '海底捞火锅',
+                date: '10月13日',
+                fullDate: '2024-10-13',
+                time: '晚餐',
+                timeType: 'dinner',
+                type: '🍽️ 外出就餐',
+                typeCategory: 'out',
+                location: '📍 北京市朝阳区 · 海底捞',
+                notes: '庆祝在一起纪念日，选择了最喜欢的海底捞。服务一如既往的好，还有生日惊喜。',
+                images: [
+                    'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=220&fit=crop',
+                    'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=220&fit=crop'
+                ],
+                anniversary: '🎉 第一次约会',
+                recipes: null
+            },
+            {
+                id: 6,
+                title: '麦当劳汉堡套餐',
+                date: '10月12日',
+                fullDate: '2024-10-12',
+                time: '午餐',
+                timeType: 'lunch',
+                type: '🍽️ 外出就餐',
+                typeCategory: 'out',
+                location: '📍 北京市朝阳区 · 麦当劳',
+                notes: '工作日的快速午餐，虽然简单但很满足。',
+                images: [
+                    'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=400&h=220&fit=crop'
+                ],
+                anniversary: null,
+                recipes: null
+            }
+        ];
+        
+        const recordsList = document.getElementById('recordsList');
+        const carousels = {};
+        let filteredData = [...recordsData];
+        
+        function createMealCard(meal, index) {
+            const card = document.createElement('div');
+            card.className = 'meal-card';
+            card.dataset.id = meal.id;
+            
+            let imagesHTML = '';
+            if (meal.images && meal.images.length > 0) {
+                imagesHTML = meal.images.map(img => 
+                    `<img src="${img}" alt="${meal.title}" class="meal-image" loading="lazy">`
+                ).join('');
+            } else {
+                imagesHTML = '<div class="meal-image" style="display: flex; align-items: center; justify-content: center; font-size: 48px; color: #ccc;">📷</div>';
+            }
+            
+            let dotsHTML = '';
+            if (meal.images && meal.images.length > 1) {
+                dotsHTML = `
+                    <div class="carousel-dots">
+                        ${meal.images.map((_, i) => 
+                            `<div class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`
+                        ).join('')}
+                    </div>
+                `;
+            }
+            
+            let tagsHTML = '';
+            if (meal.anniversary || (meal.recipes && meal.recipes.length > 0)) {
+                tagsHTML = '<div class="meal-tags-container">';
+                
+                if (meal.anniversary) {
+                    tagsHTML += `
+                        <div class="meal-anniversary-tag">
+                            <span>🎉</span>
+                            <span>关联纪念日：${meal.anniversary}</span>
+                        </div>
+                    `;
+                }
+                
+                if (meal.recipes && meal.recipes.length > 0) {
+                    const recipesText = meal.recipes.join('、');
+                    tagsHTML += `
+                        <div class="meal-recipe-tag">
+                            <span>📖</span>
+                            <span>菜谱：${recipesText}</span>
+                        </div>
+                    `;
+                }
+                
+                tagsHTML += '</div>';
+            }
+            
+            card.innerHTML = `
+                <div class="meal-image-container">
+                    <div class="meal-carousel" data-carousel="${index}">
+                        ${imagesHTML}
+                    </div>
+                    ${dotsHTML}
+                    <div class="meal-image-overlay">
+                        <div class="meal-time-badge">${meal.time}</div>
+                        <div class="meal-type-badge">${meal.type}</div>
+                    </div>
+                    <div class="meal-date-badge">${meal.date}</div>
+                </div>
+                <div class="meal-card-content">
+                    <div class="meal-title">${meal.title}</div>
+                    <div class="meal-info">
+                        <span class="meal-info-icon">${meal.cook || meal.location}</span>
+                    </div>
+                    ${tagsHTML}
+                    <div class="meal-notes">${meal.notes}</div>
+                </div>
+            `;
+            
+            card.addEventListener('click', () => {
+                alert(`查看记录详情：${meal.title}`);
+            });
+            
+            return card;
+        }
+        
+        function renderRecords() {
+            recordsList.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                recordsList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🍽️</div>
+                        <div class="empty-text">暂无符合条件的记录</div>
+                        <div class="empty-hint">试试调整筛选条件</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredData.forEach((meal, index) => {
+                const card = createMealCard(meal, index);
+                recordsList.appendChild(card);
+            });
+            
+            initCarousels();
+        }
+        
+        function initCarousels() {
+            filteredData.forEach((meal, index) => {
+                if (meal.images && meal.images.length > 1) {
+                    carousels[index] = {
+                        currentIndex: 0,
+                        totalImages: meal.images.length,
+                        interval: null
+                    };
+                    
+                    startAutoPlay(index);
+                }
+            });
+        }
+        
+        function startAutoPlay(carouselIndex) {
+            carousels[carouselIndex].interval = setInterval(() => {
+                const carousel = carousels[carouselIndex];
+                carousel.currentIndex = (carousel.currentIndex + 1) % carousel.totalImages;
+                updateCarousel(carouselIndex);
+            }, 3000);
+        }
+        
+        function updateCarousel(carouselIndex) {
+            const carousel = carousels[carouselIndex];
+            const carouselElement = document.querySelector(`[data-carousel="${carouselIndex}"]`);
+            if (!carouselElement) return;
+            
+            const dots = carouselElement.parentElement.querySelectorAll('.carousel-dot');
+            
+            carouselElement.style.transform = `translateX(-${carousel.currentIndex * 100}%)`;
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === carousel.currentIndex);
+            });
+        }
+        
+        // 筛选功能
         const filterBtns = document.querySelectorAll('.filter-btn');
         filterBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
+                applyFilters();
             });
         });
         
-        // 高级筛选选项
         const filterOptions = document.querySelectorAll('.filter-option');
         filterOptions.forEach(option => {
             option.addEventListener('click', function() {
-                // 如果是"全部"选项，清除其他选项
-                if (this.textContent === '全部') {
-                    const group = this.closest('.filter-group');
-                    group.querySelectorAll('.filter-option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    this.classList.add('selected');
-                } else {
-                    // 取消"全部"选项
-                    const group = this.closest('.filter-group');
-                    const allOption = Array.from(group.querySelectorAll('.filter-option')).find(opt => opt.textContent === '全部');
-                    if (allOption) {
-                        allOption.classList.remove('selected');
-                    }
-                    this.classList.toggle('selected');
-                }
+                this.classList.toggle('selected');
+                applyFilters();
             });
         });
         
-        // 记录项点击事件
-        const recordItems = document.querySelectorAll('.record-item');
-        recordItems.forEach(item => {
-            item.addEventListener('click', function() {
-                alert('查看记录详情');
+        function applyFilters() {
+            // 清除所有轮播
+            Object.values(carousels).forEach(carousel => {
+                if (carousel.interval) {
+                    clearInterval(carousel.interval);
+                }
             });
+            Object.keys(carousels).forEach(key => delete carousels[key]);
+            
+            // 获取当前选中的筛选条件
+            const activeFilterBtn = document.querySelector('.filter-btn.active');
+            const mainFilter = activeFilterBtn ? activeFilterBtn.dataset.filter : 'all';
+            
+            const selectedOthers = Array.from(document.querySelectorAll('[data-other].selected'))
+                .map(el => el.dataset.other);
+            
+            // 应用筛选
+            filteredData = recordsData.filter(record => {
+                // 主筛选
+                if (mainFilter !== 'all') {
+                    if (mainFilter === 'breakfast' || mainFilter === 'lunch' || mainFilter === 'dinner') {
+                        if (record.timeType !== mainFilter) return false;
+                    } else if (mainFilter === 'home' || mainFilter === 'out') {
+                        if (record.typeCategory !== mainFilter) return false;
+                    }
+                }
+                
+                // 其他筛选
+                if (selectedOthers.includes('recipe')) {
+                    if (!record.recipes || record.recipes.length === 0) return false;
+                }
+                if (selectedOthers.includes('anniversary-linked')) {
+                    if (!record.anniversary) return false;
+                }
+                
+                return true;
+            });
+            
+            // 更新统计
+            document.getElementById('total-count').textContent = filteredData.length;
+            
+            renderRecords();
+        }
+        
+        // 轮播点击事件
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('carousel-dot')) {
+                const carouselIndex = parseInt(e.target.closest('.meal-image-container').querySelector('.meal-carousel').dataset.carousel);
+                const dotIndex = parseInt(e.target.dataset.index);
+                
+                if (carousels[carouselIndex]) {
+                    clearInterval(carousels[carouselIndex].interval);
+                    carousels[carouselIndex].currentIndex = dotIndex;
+                    updateCarousel(carouselIndex);
+                    startAutoPlay(carouselIndex);
+                }
+            }
         });
+        
+        // 初始化
+        renderRecords();
     </script>
 </body>
 </html>
