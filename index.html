@@ -3,17 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>页面导航 - 一日三餐恋</title>
+    <title>所有页面展示 - 一日三餐恋</title>
     <style>
-        :root {
-            --primary: #FF6B8B;
-            --secondary: #FFA07A;
-            --accent: #FFD166;
-            --light: #FFF9F0;
-            --dark: #4A4A4A;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-        
         * {
             margin: 0;
             padding: 0;
@@ -22,622 +13,124 @@
         }
         
         body {
-            background: linear-gradient(135deg, var(--light) 0%, #fff5e6 100%);
-            color: var(--dark);
-            line-height: 1.6;
-            padding: 40px 20px;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
+            background: #f5f5f5;
         }
         
         .header {
+            background: linear-gradient(135deg, #FF6B8B, #FFA07A);
+            color: white;
+            padding: 30px 20px;
             text-align: center;
-            margin-bottom: 50px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
         .logo {
-            font-size: 48px;
+            font-size: 32px;
             font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .subtitle {
-            font-size: 18px;
-            color: #999;
-            margin-bottom: 30px;
-        }
-        
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .stat-label {
             font-size: 14px;
-            color: #999;
-            margin-top: 5px;
+            opacity: 0.9;
         }
         
-        .filter-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-        
-        .filter-tab {
-            padding: 10px 24px;
+        .page-section {
             background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .filter-tab:hover {
-            border-color: var(--primary);
-            background-color: rgba(255, 107, 139, 0.05);
-        }
-        
-        .filter-tab.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-color: transparent;
-        }
-        
-        .pages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-        
-        .page-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
+            margin: 20px auto;
+            max-width: 1400px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
             overflow: hidden;
-            transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .page-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .page-preview {
-            width: 100%;
-            height: 300px;
-            border: none;
-            pointer-events: none;
-            transform: scale(0.8);
-            transform-origin: top left;
-            width: 125%;
-            background: #f9f9f9;
-        }
-        
-        .page-info {
-            padding: 20px;
-            border-top: 1px solid #f0f0f0;
-        }
-        
-        .page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
         }
         
         .page-title {
+            background: #f9f9f9;
+            padding: 15px 20px;
             font-size: 18px;
             font-weight: bold;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .page-icon {
-            font-size: 24px;
-        }
-        
-        .page-badge {
-            padding: 4px 12px;
-            background: linear-gradient(135deg, rgba(255, 107, 139, 0.1), rgba(255, 160, 122, 0.1));
-            color: var(--primary);
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 500;
-        }
-        
-        .page-desc {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        
-        .page-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .action-btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            text-align: center;
-            display: inline-block;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 107, 139, 0.3);
-        }
-        
-        .btn-secondary {
-            background: #f5f5f5;
-            color: #666;
-        }
-        
-        .btn-secondary:hover {
-            background: #eaeaea;
-        }
-        
-        .category-tag {
-            display: inline-block;
-            padding: 4px 10px;
-            background-color: rgba(255, 209, 102, 0.2);
-            color: #e67e00;
-            border-radius: 8px;
-            font-size: 11px;
-            margin-right: 5px;
-            font-weight: 500;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 40px 0 20px;
-            color: #999;
-            font-size: 14px;
-        }
-        
-        /* 模态框 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .modal.show {
-            display: flex;
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 1200px;
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
-        .modal-header {
-            padding: 20px 30px;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .modal-title {
-            font-size: 20px;
-            font-weight: bold;
+            color: #4A4A4A;
+            border-bottom: 2px solid #FF6B8B;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .modal-close {
-            font-size: 28px;
-            cursor: pointer;
-            color: #999;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        
-        .modal-close:hover {
-            background: #f5f5f5;
-            color: var(--dark);
-        }
-        
-        .modal-body {
-            flex: 1;
-            overflow: hidden;
-        }
-        
-        .modal-iframe {
+        .page-frame {
             width: 100%;
-            height: 100%;
+            height: 800px;
             border: none;
+            display: block;
         }
         
         @media (max-width: 768px) {
-            .pages-grid {
-                grid-template-columns: 1fr;
+            .page-section {
+                margin: 15px;
             }
             
-            .modal-content {
-                width: 95%;
-                height: 95vh;
+            .page-frame {
+                height: 600px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">一日三餐恋</div>
-            <div class="subtitle">所有页面展示 - Page Gallery</div>
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-value">10</div>
-                    <div class="stat-label">总页面数</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">4</div>
-                    <div class="stat-label">功能分类</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="filter-tabs">
-            <div class="filter-tab active" data-category="all">全部</div>
-            <div class="filter-tab" data-category="core">核心功能</div>
-            <div class="filter-tab" data-category="couple">情侣专属</div>
-            <div class="filter-tab" data-category="data">数据分析</div>
-            <div class="filter-tab" data-category="personal">个人中心</div>
-        </div>
-        
-        <div class="pages-grid">
-            <!-- 核心功能 -->
-            <div class="page-card" data-category="core" data-page="home.html">
-                <iframe class="page-preview" src="home.html" scrolling="no"></iframe>
-                <div class="page-info">
-                    <div class="page-header">
-                        <div class="page-title">
-                            <span class="page-icon">🏠</span>
-                            <span>首页</span>
-                        </div>
-                        <div class="page-badge">主页</div>
-                    </div>
-                    <div class="page-desc">
-                        <span class="category-tag">核心功能</span>
-                        查看今日用餐、纪念日提醒和最新动态
-                    </div>
-                    <div class="page-actions">
-                        <a href="home.html" target="_blank" class="action-btn btn-secondary">新窗口打开</a>
-                        <button class="action-btn btn-primary" onclick="openModal('home.html', '🏠 首页')">预览页面</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-card" data-category="core" data-page="add-record.html">
-                <iframe class="page-preview" src="add-record.html" scrolling="no"></iframe>
-                <div class="page-info">
-                    <div class="page-header">
-                        <div class="page-title">
-                            <span class="page-icon">➕</span>
-                            <span>添加记录</span>
-                        </div>
-                        <div class="page-badge">快捷操作</div>
-                    </div>
-                    <div class="page-desc">
-                        <span class="category-tag">核心功能</span>
-                        记录每一次美好的用餐时光，保存珍贵回忆
-                    </div>
-                    <div class="page-actions">
-                        <a href="add-record.html" target="_blank" class="action-btn btn-secondary">新窗口打开</a>
-                        <button class="action-btn btn-primary" onclick="openModal('add-record.html', '➕ 添加记录')">预览页面</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-card" data-category="core" data-page="records.html">
-                <iframe class="page-preview" src="records.html" scrolling="no"></iframe>
-                <div class="page-info">
-                    <div class="page-header">
-                        <div class="page-title">
-                            <span class="page-icon">📝</span>
-                            <span>用餐记录</span>
-                        </div>
-                        <div class="page-badge">42条</div>
-                    </div>
-                    <div class="page-desc">
-                        <span class="category-tag">核心功能</span>
-                        浏览所有用餐记录，支持筛选和搜索
-                    </div>
-                    <div class="page-actions">
-                        <a href="records.html" target="_blank" class="action-btn btn-secondary">新窗口打开</a>
-                        <button class="action-btn btn-primary" onclick="openModal('records.html', '📝 用餐记录')">预览页面</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 情侣专属 -->
-            <div class="page-card" data-category="couple" data-page="anniversary.html">
-                <iframe class="page-preview" src="anniversary.html" scrolling="no"></iframe>
-                <div class="page-info">
-                    <div class="page-header">
-                        <div class="page-title">
-                            <span class="page-icon">🎉</span>
-                            <span>纪念日管理</span>
-                        </div>
-                        <div class="page-badge">4个</div>
-                    </div>
-                    <div class="page-desc">
-                        <span class="category-tag">情侣专属</span>
-                        管理重要纪念日，设置提醒，记录特殊时刻
-                    </div>
-                    <div class="page-actions">
-                        <a href="anniversary.html" target="_blank" class="action-btn btn-secondary">新窗口打开</a>
-                        <button class="action-btn btn-primary" onclick="openModal('anniversary.html', '🎉 纪念日管理')">预览页面</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-card" data-category="couple" data-page="add-anniversary.html">
-                <iframe class="page-preview" src="add-anniversary.html" scrolling="no"></iframe>
-                <div class="page-info">
-                    <div class="page-header">
-                        <div class="page-title">
-                            <span class="page-icon">📅</span>
-                            <span>添加纪念日</span>
-                        </div>
-                    </div>
-                    <div class="page-desc">
-                        <span class="category-tag">情侣专属</span>
-                        创建新的纪念日，永不忘记重要日子
-                    </div>
-                    <div class="page-actions">
-                        <a href="add-anniversary.html" target="_blank" class="action-btn btn-secondary">新窗口打开</a>
-                        <button class="action-btn btn-primary" onclick="openModal('add-anniversary.html', '📅 添加纪念日')">预览页面</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-card" data-category="couple" data-page="recipes.html">
-                <iframe class="page-preview" src="recipes.html" scrolling="no"></iframe>
-                <div class="page-info">
-                    <div class="page-header">
-                        <div class="page-title">
-                            <span class="page-icon">📖</span>
-                            <span>情侣菜谱</span>
-                        </div>
-                        <div class="page-badge">15个</div>
-                    </div>
-                    <div class="page-desc">
-                        <span class="category-tag">情侣专属</span>
-                        收藏两人最爱的菜谱，记录共同的烹饪时光
-                    </div>
-                    <div class="page-actions">
-                        <a href="recipes.html" target="_blank" class="action-btn btn-secondary">新窗口打开</a>
-                        <button class="action-btn btn-primary" onclick="openModal('recipes.html', '📖 情侣菜谱')">预览页面</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 数据分析 -->
-            <div class="page-card" data-category="data" data-page="stats.html">
-                <iframe class="page-preview" src="stats.html" scrolling="no"></iframe>
-                <div class="page-info">
-                    <div class="page-header">
-                        <div class="page-title">
-                            <span class="page-icon">📊</span>
-                            <span>数据统计</span>
-                        </div>
-                    </div>
-                    <div class="page-desc">
-                        <span class="category-tag">数据分析</span>
-                        查看用餐频率、类型分布等详细统计图表
-                    </div>
-                    <div class="page-actions">
-                        <a href="stats.html" target="_blank" class="action-btn btn-secondary">新窗口打开</a>
-                        <button class="action-btn btn-primary" onclick="openModal('stats.html', '📊 数据统计')">预览页面</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-card" data-category="data" data-page="journey.html">
-                <iframe class="page-preview" src="journey.html" scrolling="no"></iframe>
-                <div class="page-info">
-                    <div class="page-header">
-                        <div class="page-title">
-                            <span class="page-icon">🗺️</span>
-                            <span>美食轨迹</span>
-                        </div>
-                        <div class="page-badge">8个城市</div>
-                    </div>
-                    <div class="page-desc">
-                        <span class="category-tag">数据分析</span>
-                        在地图上查看美食足迹，探索更多城市
-                    </div>
-                    <div class="page-actions">
-                        <a href="journey.html" target="_blank" class="action-btn btn-secondary">新窗口打开</a>
-                        <button class="action-btn btn-primary" onclick="openModal('journey.html', '🗺️ 美食轨迹')">预览页面</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 个人中心 -->
-            <div class="page-card" data-category="personal" data-page="profile.html">
-                <iframe class="page-preview" src="profile.html" scrolling="no"></iframe>
-                <div class="page-info">
-                    <div class="page-header">
-                        <div class="page-title">
-                            <span class="page-icon">👤</span>
-                            <span>个人中心</span>
-                        </div>
-                    </div>
-                    <div class="page-desc">
-                        <span class="category-tag">个人中心</span>
-                        查看个人资料、成就徽章和统计数据
-                    </div>
-                    <div class="page-actions">
-                        <a href="profile.html" target="_blank" class="action-btn btn-secondary">新窗口打开</a>
-                        <button class="action-btn btn-primary" onclick="openModal('profile.html', '👤 个人中心')">预览页面</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-card" data-category="personal" data-page="settings.html">
-                <iframe class="page-preview" src="settings.html" scrolling="no"></iframe>
-                <div class="page-info">
-                    <div class="page-header">
-                        <div class="page-title">
-                            <span class="page-icon">⚙️</span>
-                            <span>个人设置</span>
-                        </div>
-                    </div>
-                    <div class="page-desc">
-                        <span class="category-tag">个人中心</span>
-                        管理账号信息、偏好设置和隐私选项
-                    </div>
-                    <div class="page-actions">
-                        <a href="settings.html" target="_blank" class="action-btn btn-secondary">新窗口打开</a>
-                        <button class="action-btn btn-primary" onclick="openModal('settings.html', '⚙️ 个人设置')">预览页面</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <p>一日三餐恋 v1.0.0</p>
-            <p>总共 10 个页面 | 点击卡片预览完整页面</p>
-        </div>
+    <div class="header">
+        <div class="logo">一日三餐恋 - 所有页面展示</div>
+        <div class="subtitle">10个页面 | 完整展示</div>
     </div>
     
-    <!-- 模态框 -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title" id="modalTitle">页面预览</div>
-                <div class="modal-close" onclick="closeModal()">×</div>
-            </div>
-            <div class="modal-body">
-                <iframe class="modal-iframe" id="modalIframe" src=""></iframe>
-            </div>
-        </div>
+    <div class="page-section">
+        <div class="page-title">🏠 首页 - home.html</div>
+        <iframe class="page-frame" src="home.html"></iframe>
     </div>
     
-    <script>
-        // 筛选功能
-        const filterTabs = document.querySelectorAll('.filter-tab');
-        const pageCards = document.querySelectorAll('.page-card');
-        
-        filterTabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                const category = this.getAttribute('data-category');
-                
-                // 更新激活状态
-                filterTabs.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                
-                // 筛选页面卡片
-                pageCards.forEach(card => {
-                    if (category === 'all' || card.getAttribute('data-category') === category) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-        
-        // 模态框
-        function openModal(page, title) {
-            const modal = document.getElementById('modal');
-            const modalIframe = document.getElementById('modalIframe');
-            const modalTitle = document.getElementById('modalTitle');
-            
-            modalTitle.textContent = title;
-            modalIframe.src = page;
-            modal.classList.add('show');
-        }
-        
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            const modalIframe = document.getElementById('modalIframe');
-            
-            modal.classList.remove('show');
-            modalIframe.src = '';
-        }
-        
-        // ESC 键关闭模态框
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-        
-        // 点击模态框背景关闭
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-    </script>
+    <div class="page-section">
+        <div class="page-title">➕ 添加记录 - add-record.html</div>
+        <iframe class="page-frame" src="add-record.html"></iframe>
+    </div>
+    
+    <div class="page-section">
+        <div class="page-title">📝 用餐记录 - records.html</div>
+        <iframe class="page-frame" src="records.html"></iframe>
+    </div>
+    
+    <div class="page-section">
+        <div class="page-title">🎉 纪念日管理 - anniversary.html</div>
+        <iframe class="page-frame" src="anniversary.html"></iframe>
+    </div>
+    
+    <div class="page-section">
+        <div class="page-title">📅 添加纪念日 - add-anniversary.html</div>
+        <iframe class="page-frame" src="add-anniversary.html"></iframe>
+    </div>
+    
+    <div class="page-section">
+        <div class="page-title">📖 情侣菜谱 - recipes.html</div>
+        <iframe class="page-frame" src="recipes.html"></iframe>
+    </div>
+    
+    <div class="page-section">
+        <div class="page-title">📊 数据统计 - stats.html</div>
+        <iframe class="page-frame" src="stats.html"></iframe>
+    </div>
+    
+    <div class="page-section">
+        <div class="page-title">🗺️ 美食轨迹 - journey.html</div>
+        <iframe class="page-frame" src="journey.html"></iframe>
+    </div>
+    
+    <div class="page-section">
+        <div class="page-title">👤 个人中心 - profile.html</div>
+        <iframe class="page-frame" src="profile.html"></iframe>
+    </div>
+    
+    <div class="page-section">
+        <div class="page-title">⚙️ 个人设置 - settings.html</div>
+        <iframe class="page-frame" src="settings.html"></iframe>
+    </div>
 </body>
 </html>
