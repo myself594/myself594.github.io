@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>所有页面展示 - 一日三餐恋</title>
+    <title>页面展示 - 一日三餐恋</title>
     <style>
         * {
             margin: 0;
@@ -13,124 +13,414 @@
         }
         
         body {
-            background: #f5f5f5;
+            background: linear-gradient(135deg, #FFF9F0 0%, #fff5e6 100%);
+            overflow: hidden;
+            height: 100vh;
         }
         
         .header {
             background: linear-gradient(135deg, #FF6B8B, #FFA07A);
             color: white;
-            padding: 30px 20px;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            position: relative;
         }
         
         .logo {
-            font-size: 32px;
+            font-size: 20px;
             font-weight: bold;
-            margin-bottom: 8px;
         }
         
-        .subtitle {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        .page-section {
-            background: white;
-            margin: 20px auto;
-            max-width: 1400px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .page-title {
-            background: #f9f9f9;
-            padding: 15px 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #4A4A4A;
-            border-bottom: 2px solid #FF6B8B;
+        .controls {
             display: flex;
-            align-items: center;
             gap: 10px;
         }
         
-        .page-frame {
-            width: 100%;
-            height: 800px;
+        .control-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .workspace {
+            position: relative;
+            height: calc(100vh - 60px);
+            overflow: auto;
+            padding: 20px;
+        }
+        
+        .card {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            min-width: 400px;
+            min-height: 300px;
+            resize: both;
+            transition: box-shadow 0.3s;
+        }
+        
+        .card.dragging {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            cursor: move;
+        }
+        
+        .card:hover {
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #FF6B8B, #FFA07A);
+            color: white;
+            padding: 12px 15px;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        
+        .card-title {
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .card-action-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
             border: none;
-            display: block;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .card-action-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .card-body {
+            width: 100%;
+            height: calc(100% - 48px);
+            overflow: hidden;
+        }
+        
+        .card-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .card.minimized {
+            height: 48px !important;
+            min-height: 48px;
+            resize: none;
+        }
+        
+        .card.minimized .card-body {
+            display: none;
+        }
+        
+        .sidebar {
+            position: fixed;
+            right: 20px;
+            top: 80px;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            width: 220px;
+        }
+        
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #4A4A4A;
+        }
+        
+        .page-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .page-item:hover {
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.1), rgba(255, 160, 122, 0.1));
+            transform: translateX(-3px);
+        }
+        
+        .page-item.active {
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.15), rgba(255, 160, 122, 0.15));
+            font-weight: 500;
         }
         
         @media (max-width: 768px) {
-            .page-section {
-                margin: 15px;
+            .sidebar {
+                display: none;
             }
             
-            .page-frame {
-                height: 600px;
+            .card {
+                min-width: 300px;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="logo">一日三餐恋 - 所有页面展示</div>
-        <div class="subtitle">10个页面 | 完整展示</div>
+        <div class="logo">一日三餐恋 - 可拖拽页面展示</div>
+        <div class="controls">
+            <button class="control-btn" onclick="resetLayout()">重置布局</button>
+            <button class="control-btn" onclick="showAll()">显示全部</button>
+            <button class="control-btn" onclick="minimizeAll()">最小化全部</button>
+        </div>
     </div>
     
-    <div class="page-section">
-        <div class="page-title">🏠 首页 - home.html</div>
-        <iframe class="page-frame" src="home.html"></iframe>
+    <div class="workspace" id="workspace"></div>
+    
+    <div class="sidebar">
+        <div class="sidebar-title">页面列表</div>
+        <div class="page-item" onclick="toggleCard('home')">
+            <span>🏠</span>
+            <span>首页</span>
+        </div>
+        <div class="page-item" onclick="toggleCard('add-record')">
+            <span>➕</span>
+            <span>添加记录</span>
+        </div>
+        <div class="page-item" onclick="toggleCard('records')">
+            <span>📝</span>
+            <span>用餐记录</span>
+        </div>
+        <div class="page-item" onclick="toggleCard('anniversary')">
+            <span>🎉</span>
+            <span>纪念日管理</span>
+        </div>
+        <div class="page-item" onclick="toggleCard('add-anniversary')">
+            <span>📅</span>
+            <span>添加纪念日</span>
+        </div>
+        <div class="page-item" onclick="toggleCard('recipes')">
+            <span>📖</span>
+            <span>情侣菜谱</span>
+        </div>
+        <div class="page-item" onclick="toggleCard('stats')">
+            <span>📊</span>
+            <span>数据统计</span>
+        </div>
+        <div class="page-item" onclick="toggleCard('journey')">
+            <span>🗺️</span>
+            <span>美食轨迹</span>
+        </div>
+        <div class="page-item" onclick="toggleCard('profile')">
+            <span>👤</span>
+            <span>个人中心</span>
+        </div>
+        <div class="page-item" onclick="toggleCard('settings')">
+            <span>⚙️</span>
+            <span>个人设置</span>
+        </div>
     </div>
     
-    <div class="page-section">
-        <div class="page-title">➕ 添加记录 - add-record.html</div>
-        <iframe class="page-frame" src="add-record.html"></iframe>
-    </div>
-    
-    <div class="page-section">
-        <div class="page-title">📝 用餐记录 - records.html</div>
-        <iframe class="page-frame" src="records.html"></iframe>
-    </div>
-    
-    <div class="page-section">
-        <div class="page-title">🎉 纪念日管理 - anniversary.html</div>
-        <iframe class="page-frame" src="anniversary.html"></iframe>
-    </div>
-    
-    <div class="page-section">
-        <div class="page-title">📅 添加纪念日 - add-anniversary.html</div>
-        <iframe class="page-frame" src="add-anniversary.html"></iframe>
-    </div>
-    
-    <div class="page-section">
-        <div class="page-title">📖 情侣菜谱 - recipes.html</div>
-        <iframe class="page-frame" src="recipes.html"></iframe>
-    </div>
-    
-    <div class="page-section">
-        <div class="page-title">📊 数据统计 - stats.html</div>
-        <iframe class="page-frame" src="stats.html"></iframe>
-    </div>
-    
-    <div class="page-section">
-        <div class="page-title">🗺️ 美食轨迹 - journey.html</div>
-        <iframe class="page-frame" src="journey.html"></iframe>
-    </div>
-    
-    <div class="page-section">
-        <div class="page-title">👤 个人中心 - profile.html</div>
-        <iframe class="page-frame" src="profile.html"></iframe>
-    </div>
-    
-    <div class="page-section">
-        <div class="page-title">⚙️ 个人设置 - settings.html</div>
-        <iframe class="page-frame" src="settings.html"></iframe>
-    </div>
+    <script>
+        const pages = [
+            { id: 'home', title: '🏠 首页', src: 'home.html', width: 500, height: 600 },
+            { id: 'add-record', title: '➕ 添加记录', src: 'add-record.html', width: 500, height: 600 },
+            { id: 'records', title: '📝 用餐记录', src: 'records.html', width: 500, height: 600 },
+            { id: 'anniversary', title: '🎉 纪念日管理', src: 'anniversary.html', width: 500, height: 600 },
+            { id: 'add-anniversary', title: '📅 添加纪念日', src: 'add-anniversary.html', width: 500, height: 600 },
+            { id: 'recipes', title: '📖 情侣菜谱', src: 'recipes.html', width: 500, height: 600 },
+            { id: 'stats', title: '📊 数据统计', src: 'stats.html', width: 500, height: 600 },
+            { id: 'journey', title: '🗺️ 美食轨迹', src: 'journey.html', width: 500, height: 600 },
+            { id: 'profile', title: '👤 个人中心', src: 'profile.html', width: 500, height: 600 },
+            { id: 'settings', title: '⚙️ 个人设置', src: 'settings.html', width: 500, height: 600 }
+        ];
+        
+        const workspace = document.getElementById('workspace');
+        let zIndexCounter = 1;
+        let activeCard = null;
+        
+        // 创建卡片
+        function createCard(page, x, y) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.id = `card-${page.id}`;
+            card.style.left = x + 'px';
+            card.style.top = y + 'px';
+            card.style.width = page.width + 'px';
+            card.style.height = page.height + 'px';
+            card.style.zIndex = zIndexCounter++;
+            
+            card.innerHTML = `
+                <div class="card-header">
+                    <div class="card-title">${page.title}</div>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="minimizeCard('${page.id}')" title="最小化">−</button>
+                        <button class="card-action-btn" onclick="closeCard('${page.id}')" title="关闭">×</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <iframe class="card-frame" src="${page.src}"></iframe>
+                </div>
+            `;
+            
+            workspace.appendChild(card);
+            makeDraggable(card);
+            
+            // 点击卡片时提升层级
+            card.addEventListener('mousedown', function() {
+                bringToFront(card);
+            });
+            
+            return card;
+        }
+        
+        // 使卡片可拖拽
+        function makeDraggable(card) {
+            const header = card.querySelector('.card-header');
+            let isDragging = false;
+            let currentX, currentY, initialX, initialY;
+            
+            header.addEventListener('mousedown', function(e) {
+                if (e.target.classList.contains('card-action-btn')) return;
+                
+                isDragging = true;
+                card.classList.add('dragging');
+                
+                initialX = e.clientX - card.offsetLeft;
+                initialY = e.clientY - card.offsetTop;
+                
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', stopDrag);
+            });
+            
+            function drag(e) {
+                if (!isDragging) return;
+                
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                
+                card.style.left = currentX + 'px';
+                card.style.top = currentY + 'px';
+            }
+            
+            function stopDrag() {
+                isDragging = false;
+                card.classList.remove('dragging');
+                document.removeEventListener('mousemove', drag);
+                document.removeEventListener('mouseup', stopDrag);
+            }
+        }
+        
+        // 提升卡片层级
+        function bringToFront(card) {
+            card.style.zIndex = zIndexCounter++;
+        }
+        
+        // 最小化卡片
+        function minimizeCard(id) {
+            const card = document.getElementById(`card-${id}`);
+            if (card) {
+                card.classList.toggle('minimized');
+            }
+        }
+        
+        // 关闭卡片
+        function closeCard(id) {
+            const card = document.getElementById(`card-${id}`);
+            if (card) {
+                card.remove();
+            }
+        }
+        
+        // 切换卡片显示
+        function toggleCard(id) {
+            const card = document.getElementById(`card-${id}`);
+            if (card) {
+                if (card.classList.contains('minimized')) {
+                    card.classList.remove('minimized');
+                }
+                bringToFront(card);
+            } else {
+                const page = pages.find(p => p.id === id);
+                const x = Math.random() * (window.innerWidth - 600);
+                const y = Math.random() * (window.innerHeight - 700) + 100;
+                createCard(page, x, y);
+            }
+        }
+        
+        // 重置布局
+        function resetLayout() {
+            workspace.innerHTML = '';
+            initLayout();
+        }
+        
+        // 显示全部
+        function showAll() {
+            workspace.innerHTML = '';
+            pages.forEach((page, index) => {
+                const x = (index % 3) * 520 + 20;
+                const y = Math.floor(index / 3) * 620 + 20;
+                createCard(page, x, y);
+            });
+        }
+        
+        // 最小化全部
+        function minimizeAll() {
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.add('minimized');
+            });
+        }
+        
+        // 初始化布局
+        function initLayout() {
+            // 创建前4个页面
+            createCard(pages[0], 20, 20);
+            createCard(pages[1], 540, 20);
+            createCard(pages[2], 1060, 20);
+            createCard(pages[3], 20, 640);
+        }
+        
+        // 页面加载时初始化
+        initLayout();
+    </script>
 </body>
 </html>
