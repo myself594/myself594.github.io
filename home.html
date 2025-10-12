@@ -173,7 +173,7 @@
         .section-title {
             font-size: 18px;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -185,116 +185,120 @@
             text-decoration: none;
         }
         
-        .meal-card {
-            background-color: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--primary);
-        }
-        
-        .meal-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .meal-time {
-            background-color: rgba(255, 107, 139, 0.1);
-            color: var(--primary);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-        
-        .meal-type {
-            background-color: rgba(255, 107, 139, 0.1);
-            color: var(--primary);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-        
-        .meal-content {
+        .meals-list {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
+        }
+        
+        /* 优化的用餐卡片 */
+        .meal-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .meal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .meal-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
         }
         
         .meal-image-container {
             width: 100%;
-            height: 200px;
-            border-radius: 12px;
+            height: 220px;
             overflow: hidden;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+            position: relative;
         }
         
         .meal-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.5s ease;
         }
         
-        .meal-image:hover {
+        .meal-card:hover .meal-image {
             transform: scale(1.05);
         }
         
+        .meal-image-overlay {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .meal-time-badge {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .meal-type-badge {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #666;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .meal-card-content {
+            padding: 20px;
+        }
+        
         .meal-title {
-            font-weight: bold;
-            font-size: 18px;
+            font-size: 19px;
+            font-weight: 700;
             color: var(--dark);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            line-height: 1.4;
         }
         
         .meal-info {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 12px;
-        }
-        
-        .meal-cook {
+            gap: 10px;
             font-size: 14px;
-            color: #666;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            color: #888;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         }
         
-        .meal-location {
-            font-size: 14px;
-            color: #666;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .meal-scenarios {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 12px;
-        }
-        
-        .scenario-tag {
-            background-color: rgba(255, 107, 139, 0.1);
-            color: var(--primary);
-            padding: 4px 10px;
-            border-radius: 10px;
-            font-size: 12px;
+        .meal-info-icon {
+            font-size: 16px;
         }
         
         .meal-notes {
             font-size: 14px;
             color: #666;
-            line-height: 1.5;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.02);
-            border-radius: 8px;
+            line-height: 1.8;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.03), rgba(255, 160, 122, 0.03));
+            border-radius: 12px;
+            border-left: 3px solid var(--primary);
         }
         
         .bottom-nav {
@@ -418,71 +422,67 @@
                 <a href="#" class="see-all">查看全部</a>
             </div>
             
-            <div class="meal-card">
-                <div class="meal-card-header">
-                    <div class="meal-time">早餐</div>
-                    <div class="meal-type">在家烹饪</div>
-                </div>
-                <div class="meal-content">
+            <div class="meals-list">
+                <!-- 早餐记录 -->
+                <div class="meal-card">
                     <div class="meal-image-container">
-                        <img src="https://via.placeholder.com/400x200" alt="爱心煎蛋三明治" class="meal-image">
+                        <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&h=220&fit=crop" alt="爱心煎蛋三明治" class="meal-image">
+                        <div class="meal-image-overlay">
+                            <div class="meal-time-badge">早餐</div>
+                            <div class="meal-type-badge">🏠 在家烹饪</div>
+                        </div>
                     </div>
-                    <div>
+                    <div class="meal-card-content">
                         <div class="meal-title">爱心煎蛋三明治</div>
                         <div class="meal-info">
-                            <div class="meal-cook">👩‍🍳👨‍🍳 一起下厨</div>
+                            <span class="meal-info-icon">👩‍🍳👨‍🍳</span>
+                            <span>一起下厨</span>
                         </div>
-                        <div class="meal-scenarios">
-                            <span class="scenario-tag">日常</span>
-                            <span class="scenario-tag">早餐</span>
+                        <div class="meal-notes">
+                            兔兔今天早起做的爱心早餐，搭配新鲜牛奶，熊大特别喜欢吃。吐司烤得刚刚好，鸡蛋煎成了爱心形状💕
                         </div>
-                        <div class="meal-notes">兔兔今天早起做的爱心早餐，搭配新鲜牛奶，熊大特别喜欢吃</div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="meal-card">
-                <div class="meal-card-header">
-                    <div class="meal-time">午餐</div>
-                    <div class="meal-type">外出就餐</div>
-                </div>
-                <div class="meal-content">
+                
+                <!-- 午餐记录 -->
+                <div class="meal-card">
                     <div class="meal-image-container">
-                        <img src="https://via.placeholder.com/400x200" alt="公司附近新开的日料" class="meal-image">
+                        <img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop" alt="日料" class="meal-image">
+                        <div class="meal-image-overlay">
+                            <div class="meal-time-badge">午餐</div>
+                            <div class="meal-type-badge">🍽️ 外出就餐</div>
+                        </div>
                     </div>
-                    <div>
+                    <div class="meal-card-content">
                         <div class="meal-title">公司附近新开的日料</div>
                         <div class="meal-info">
-                            <div class="meal-location">📍 北京市朝阳区 · 日料店</div>
+                            <span class="meal-info-icon">📍</span>
+                            <span>北京市朝阳区 · 日料店</span>
                         </div>
-                        <div class="meal-scenarios">
-                            <span class="scenario-tag">探店</span>
-                            <span class="scenario-tag">约会</span>
+                        <div class="meal-notes">
+                            午休时间一起探索新店，三文鱼很新鲜，环境也很不错。店员服务态度特别好，下次还想来试试他们的招牌寿司。
                         </div>
-                        <div class="meal-notes">午休时间一起探索新店，三文鱼很新鲜，环境也很不错</div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="meal-card">
-                <div class="meal-card-header">
-                    <div class="meal-time">晚餐</div>
-                    <div class="meal-type">在家烹饪</div>
-                </div>
-                <div class="meal-content">
+                
+                <!-- 晚餐记录 -->
+                <div class="meal-card">
                     <div class="meal-image-container">
-                        <img src="https://via.placeholder.com/400x200" alt="自制火锅" class="meal-image">
+                        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&h=220&fit=crop" alt="自制火锅" class="meal-image">
+                        <div class="meal-image-overlay">
+                            <div class="meal-time-badge">晚餐</div>
+                            <div class="meal-type-badge">🏠 在家烹饪</div>
+                        </div>
                     </div>
-                    <div>
+                    <div class="meal-card-content">
                         <div class="meal-title">自制火锅</div>
                         <div class="meal-info">
-                            <div class="meal-cook">👩‍🍳👨‍🍳 一起下厨</div>
+                            <span class="meal-info-icon">👩‍🍳👨‍🍳</span>
+                            <span>一起下厨</span>
                         </div>
-                        <div class="meal-scenarios">
-                            <span class="scenario-tag">日常</span>
-                            <span class="scenario-tag">晚餐</span>
+                        <div class="meal-notes">
+                            周末晚上一起准备的火锅，食材丰富，汤底鲜美。准备了牛肉、羊肉、各种蔬菜和豆腐，吃得特别满足。
                         </div>
-                        <div class="meal-notes">周末晚上一起准备的火锅，食材丰富，汤底鲜美</div>
                     </div>
                 </div>
             </div>
