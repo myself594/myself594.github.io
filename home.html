@@ -191,7 +191,6 @@
             gap: 20px;
         }
         
-        /* 优化的用餐卡片 */
         .meal-card {
             background: white;
             border-radius: 20px;
@@ -224,15 +223,41 @@
             position: relative;
         }
         
-        .meal-image {
-            width: 100%;
+        .meal-carousel {
+            display: flex;
             height: 100%;
-            object-fit: cover;
             transition: transform 0.5s ease;
         }
         
-        .meal-card:hover .meal-image {
-            transform: scale(1.05);
+        .meal-image {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 2;
+        }
+        
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .carousel-dot.active {
+            width: 20px;
+            border-radius: 4px;
+            background-color: white;
         }
         
         .meal-image-overlay {
@@ -241,6 +266,7 @@
             left: 15px;
             display: flex;
             gap: 8px;
+            z-index: 2;
         }
         
         .meal-time-badge {
@@ -289,6 +315,41 @@
         
         .meal-info-icon {
             font-size: 16px;
+        }
+        
+        .meal-anniversary-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, rgba(255, 209, 102, 0.15), rgba(255, 160, 122, 0.15));
+            border-left: 3px solid #FFD166;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #e67e00;
+            font-weight: 500;
+        }
+        
+        .meal-recipe-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1));
+            border-left: 3px solid #4CAF50;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+        }
+        
+        .meal-tags-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
         }
         
         .meal-notes {
@@ -422,70 +483,7 @@
                 <a href="#" class="see-all">查看全部</a>
             </div>
             
-            <div class="meals-list">
-                <!-- 早餐记录 -->
-                <div class="meal-card">
-                    <div class="meal-image-container">
-                        <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&h=220&fit=crop" alt="爱心煎蛋三明治" class="meal-image">
-                        <div class="meal-image-overlay">
-                            <div class="meal-time-badge">早餐</div>
-                            <div class="meal-type-badge">🏠 在家烹饪</div>
-                        </div>
-                    </div>
-                    <div class="meal-card-content">
-                        <div class="meal-title">爱心煎蛋三明治</div>
-                        <div class="meal-info">
-                            <span class="meal-info-icon">👩‍🍳👨‍🍳</span>
-                            <span>一起下厨</span>
-                        </div>
-                        <div class="meal-notes">
-                            兔兔今天早起做的爱心早餐，搭配新鲜牛奶，熊大特别喜欢吃。吐司烤得刚刚好，鸡蛋煎成了爱心形状💕
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 午餐记录 -->
-                <div class="meal-card">
-                    <div class="meal-image-container">
-                        <img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop" alt="日料" class="meal-image">
-                        <div class="meal-image-overlay">
-                            <div class="meal-time-badge">午餐</div>
-                            <div class="meal-type-badge">🍽️ 外出就餐</div>
-                        </div>
-                    </div>
-                    <div class="meal-card-content">
-                        <div class="meal-title">公司附近新开的日料</div>
-                        <div class="meal-info">
-                            <span class="meal-info-icon">📍</span>
-                            <span>北京市朝阳区 · 日料店</span>
-                        </div>
-                        <div class="meal-notes">
-                            午休时间一起探索新店，三文鱼很新鲜，环境也很不错。店员服务态度特别好，下次还想来试试他们的招牌寿司。
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 晚餐记录 -->
-                <div class="meal-card">
-                    <div class="meal-image-container">
-                        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&h=220&fit=crop" alt="自制火锅" class="meal-image">
-                        <div class="meal-image-overlay">
-                            <div class="meal-time-badge">晚餐</div>
-                            <div class="meal-type-badge">🏠 在家烹饪</div>
-                        </div>
-                    </div>
-                    <div class="meal-card-content">
-                        <div class="meal-title">自制火锅</div>
-                        <div class="meal-info">
-                            <span class="meal-info-icon">👩‍🍳👨‍🍳</span>
-                            <span>一起下厨</span>
-                        </div>
-                        <div class="meal-notes">
-                            周末晚上一起准备的火锅，食材丰富，汤底鲜美。准备了牛肉、羊肉、各种蔬菜和豆腐，吃得特别满足。
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="meals-list" id="mealsList"></div>
         </div>
     </div>
     
@@ -503,5 +501,182 @@
             <div>我的</div>
         </div>
     </div>
+    
+    <script>
+        const mealsData = [
+            {
+                title: '爱心煎蛋三明治',
+                time: '早餐',
+                type: '🏠 在家烹饪',
+                cook: '👩‍🍳👨‍🍳 一起下厨',
+                notes: '兔兔今天早起做的爱心早餐，搭配新鲜牛奶，熊大特别喜欢吃。吐司烤得刚刚好，鸡蛋煎成了爱心形状💕',
+                images: [
+                    'https://cn.bing.com/th?id=OHR.LionDay_ZH-CN3864552438_1920x1080.jpg',
+                    'https://cn.bing.com/th?id=OHR.OldTownTallinn_ZH-CN3721270247_1920x1080.jpg',
+                    'https://cn.bing.com/th?id=OHR.ManhattanView_ZH-CN3614444449_1920x1080.jpg'
+                ],
+                anniversary: null,
+                recipes: ['爱心煎蛋三明治', '法式吐司']
+            },
+            {
+                title: '公司附近新开的日料',
+                time: '午餐',
+                type: '🍽️ 外出就餐',
+                location: '📍 北京市朝阳区 · 日料店',
+                notes: '午休时间一起探索新店，三文鱼很新鲜，环境也很不错。店员服务态度特别好，下次还想来试试他们的招牌寿司。',
+                images: [
+                    'https://cn.bing.com/th?id=OHR.KingfisherBed_ZH-CN3519084485_1920x1080.jpg',
+                    'https://cn.bing.com/th?id=OHR.PlymouthHarbor_ZH-CN3369091693_1920x1080.jpg'
+                ],
+                anniversary: null,
+                recipes: null
+            },
+            {
+                title: '情人节特别晚餐',
+                time: '晚餐',
+                type: '🏠 在家烹饪',
+                cook: '👩‍🍳👨‍🍳 一起下厨',
+                notes: '为了庆祝情人节，我们精心准备了烛光晚餐。从超市买了新鲜的牛排和红酒，一起动手做了一顿浪漫大餐。',
+                images: [
+                    'https://cn.bing.com/th?id=OHR.AdelieBreeding_ZH-CN3246348922_1920x1080.jpg',
+                    'https://cn.bing.com/th?id=OHR.PinnaclesNambung_ZH-CN3095493517_1920x1080.jpg',
+                    'https://cn.bing.com/th?id=OHR.Knuthojdsmossen_ZH-CN2984846982_1920x1080.jpg',
+                    'https://cn.bing.com/th?id=OHR.BasilicaSuperga_ZH-CN2857476612_1920x1080.jpg'
+                ],
+                anniversary: '💖 在一起100天',
+                recipes: ['煎牛排', '凯撒沙拉', '提拉米苏']
+            }
+        ];
+        
+        const mealsList = document.getElementById('mealsList');
+        const carousels = {};
+        
+        function createMealCard(meal, index) {
+            const card = document.createElement('div');
+            card.className = 'meal-card';
+            
+            let imagesHTML = '';
+            if (meal.images && meal.images.length > 0) {
+                imagesHTML = meal.images.map(img => 
+                    `<img src="${img}" alt="${meal.title}" class="meal-image">`
+                ).join('');
+            }
+            
+            let dotsHTML = '';
+            if (meal.images && meal.images.length > 1) {
+                dotsHTML = `
+                    <div class="carousel-dots">
+                        ${meal.images.map((_, i) => 
+                            `<div class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`
+                        ).join('')}
+                    </div>
+                `;
+            }
+            
+            let tagsHTML = '';
+            if (meal.anniversary || meal.recipes) {
+                tagsHTML = '<div class="meal-tags-container">';
+                
+                if (meal.anniversary) {
+                    tagsHTML += `
+                        <div class="meal-anniversary-tag">
+                            <span>🎉</span>
+                            <span>关联纪念日：${meal.anniversary}</span>
+                        </div>
+                    `;
+                }
+                
+                if (meal.recipes && meal.recipes.length > 0) {
+                    const recipesText = meal.recipes.join('、');
+                    tagsHTML += `
+                        <div class="meal-recipe-tag">
+                            <span>📖</span>
+                            <span>菜谱：${recipesText}</span>
+                        </div>
+                    `;
+                }
+                
+                tagsHTML += '</div>';
+            }
+            
+            card.innerHTML = `
+                <div class="meal-image-container">
+                    <div class="meal-carousel" data-carousel="${index}">
+                        ${imagesHTML}
+                    </div>
+                    ${dotsHTML}
+                    <div class="meal-image-overlay">
+                        <div class="meal-time-badge">${meal.time}</div>
+                        <div class="meal-type-badge">${meal.type}</div>
+                    </div>
+                </div>
+                <div class="meal-card-content">
+                    <div class="meal-title">${meal.title}</div>
+                    <div class="meal-info">
+                        <span class="meal-info-icon">${meal.cook || meal.location}</span>
+                    </div>
+                    ${tagsHTML}
+                    <div class="meal-notes">${meal.notes}</div>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        function initCarousels() {
+            mealsData.forEach((meal, index) => {
+                if (meal.images && meal.images.length > 1) {
+                    carousels[index] = {
+                        currentIndex: 0,
+                        totalImages: meal.images.length,
+                        interval: null
+                    };
+                    
+                    startAutoPlay(index);
+                }
+            });
+        }
+        
+        function startAutoPlay(carouselIndex) {
+            carousels[carouselIndex].interval = setInterval(() => {
+                const carousel = carousels[carouselIndex];
+                carousel.currentIndex = (carousel.currentIndex + 1) % carousel.totalImages;
+                updateCarousel(carouselIndex);
+            }, 3000);
+        }
+        
+        function updateCarousel(carouselIndex) {
+            const carousel = carousels[carouselIndex];
+            const carouselElement = document.querySelector(`[data-carousel="${carouselIndex}"]`);
+            const dots = carouselElement.parentElement.querySelectorAll('.carousel-dot');
+            
+            carouselElement.style.transform = `translateX(-${carousel.currentIndex * 100}%)`;
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === carousel.currentIndex);
+            });
+        }
+        
+        mealsData.forEach((meal, index) => {
+            const card = createMealCard(meal, index);
+            mealsList.appendChild(card);
+        });
+        
+        initCarousels();
+        
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('carousel-dot')) {
+                const carouselIndex = parseInt(e.target.closest('.meal-image-container').querySelector('.meal-carousel').dataset.carousel);
+                const dotIndex = parseInt(e.target.dataset.index);
+                
+                if (carousels[carouselIndex]) {
+                    clearInterval(carousels[carouselIndex].interval);
+                    carousels[carouselIndex].currentIndex = dotIndex;
+                    updateCarousel(carouselIndex);
+                    startAutoPlay(carouselIndex);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
