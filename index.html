@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页 - 一日三餐恋</title>
+    <style>
+        :root {
+            --primary: #FF6B8B;
+            --secondary: #FFA07A;
+            --accent: #FFD166;
+            --light: #FFF9F0;
+            --dark: #4A4A4A;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: var(--shadow);
+            padding-bottom: 80px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .couple-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            color: white;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .couple-card::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .couple-avatars {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        
+        .avatar:last-child {
+            margin-left: -15px;
+        }
+        
+        .heart-icon {
+            margin: 0 15px;
+            color: white;
+            font-size: 28px;
+        }
+        
+        .couple-names {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .couple-days {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .couple-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .anniversary-reminder {
+            background: linear-gradient(135deg, #FFD166, #FFA07A);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            color: white;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .anniversary-reminder:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .anniversary-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .anniversary-desc {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .meal-section {
+            margin: 25px 0;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .see-all {
+            font-size: 14px;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .meal-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .meal-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .meal-time {
+            background-color: rgba(255, 107, 139, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .meal-type {
+            background-color: rgba(255, 107, 139, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .meal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .meal-image-container {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #f5f5f5;
+        }
+        
+        .meal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .meal-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .meal-title {
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .meal-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+        
+        .meal-cook {
+            font-size: 14px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .meal-location {
+            font-size: 14px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .meal-scenarios {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+        
+        .scenario-tag {
+            background-color: rgba(255, 107, 139, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        
+        .meal-notes {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            max-width: 480px;
+            margin: 0 auto;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #999;
+            font-size: 12px;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.3s;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .add-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .add-nav-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 6px 20px rgba(255, 107, 139, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            margin-top: -30px;
+            transition: transform 0.3s;
+        }
+        
+        .add-nav-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .add-nav-label {
+            margin-top: 5px;
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">一日三餐恋</div>
+        </div>
+        
+        <div class="couple-card">
+            <div class="couple-avatars">
+                <div class="avatar">🐰</div>
+                <div class="heart-icon">❤️</div>
+                <div class="avatar">🐻</div>
+            </div>
+            <div class="couple-info">
+                <h3 class="couple-names">兔兔 & 熊大</h3>
+                <p class="couple-days">在一起的第 128 天</p>
+            </div>
+            
+            <div class="couple-stats">
+                <div class="stat">
+                    <div class="stat-value">42</div>
+                    <div class="stat-label">共同用餐</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">28</div>
+                    <div class="stat-label">共同下厨</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">16</div>
+                    <div class="stat-label">美食探索</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="anniversary-reminder">
+            <div class="anniversary-content">
+                <div class="anniversary-title">
+                    <span>🎉</span>
+                    <span>纪念日提醒</span>
+                </div>
+                <div class="anniversary-desc">明天是你们在一起100天纪念日</div>
+            </div>
+        </div>
+        
+        <div class="meal-section">
+            <div class="section-title">
+                <h2>今日用餐</h2>
+                <a href="#" class="see-all">查看全部</a>
+            </div>
+            
+            <div class="meal-card">
+                <div class="meal-card-header">
+                    <div class="meal-time">早餐</div>
+                    <div class="meal-type">在家烹饪</div>
+                </div>
+                <div class="meal-content">
+                    <div class="meal-image-container">
+                        <img src="https://via.placeholder.com/400x200" alt="爱心煎蛋三明治" class="meal-image">
+                    </div>
+                    <div>
+                        <div class="meal-title">爱心煎蛋三明治</div>
+                        <div class="meal-info">
+                            <div class="meal-cook">👩‍🍳👨‍🍳 一起下厨</div>
+                        </div>
+                        <div class="meal-scenarios">
+                            <span class="scenario-tag">日常</span>
+                            <span class="scenario-tag">早餐</span>
+                        </div>
+                        <div class="meal-notes">兔兔今天早起做的爱心早餐，搭配新鲜牛奶，熊大特别喜欢吃</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="meal-card">
+                <div class="meal-card-header">
+                    <div class="meal-time">午餐</div>
+                    <div class="meal-type">外出就餐</div>
+                </div>
+                <div class="meal-content">
+                    <div class="meal-image-container">
+                        <img src="https://via.placeholder.com/400x200" alt="公司附近新开的日料" class="meal-image">
+                    </div>
+                    <div>
+                        <div class="meal-title">公司附近新开的日料</div>
+                        <div class="meal-info">
+                            <div class="meal-location">📍 北京市朝阳区 · 日料店</div>
+                        </div>
+                        <div class="meal-scenarios">
+                            <span class="scenario-tag">探店</span>
+                            <span class="scenario-tag">约会</span>
+                        </div>
+                        <div class="meal-notes">午休时间一起探索新店，三文鱼很新鲜，环境也很不错</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="meal-card">
+                <div class="meal-card-header">
+                    <div class="meal-time">晚餐</div>
+                    <div class="meal-type">在家烹饪</div>
+                </div>
+                <div class="meal-content">
+                    <div class="meal-image-container">
+                        <img src="https://via.placeholder.com/400x200" alt="自制火锅" class="meal-image">
+                    </div>
+                    <div>
+                        <div class="meal-title">自制火锅</div>
+                        <div class="meal-info">
+                            <div class="meal-cook">👩‍🍳👨‍🍳 一起下厨</div>
+                        </div>
+                        <div class="meal-scenarios">
+                            <span class="scenario-tag">日常</span>
+                            <span class="scenario-tag">晚餐</span>
+                        </div>
+                        <div class="meal-notes">周末晚上一起准备的火锅，食材丰富，汤底鲜美</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bottom-nav">
+        <div class="nav-item active">
+            <div class="nav-icon">🏠</div>
+            <div>首页</div>
+        </div>
+        <div class="add-nav-item">
+            <div class="add-nav-button">+</div>
+            <div class="add-nav-label">添加</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">👤</div>
+            <div>我的</div>
+        </div>
+    </div>
+</body>
+</html>
