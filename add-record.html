@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加记录 - 一日三餐恋</title>
+    <style>
+        :root {
+            --primary: #FF6B8B;
+            --secondary: #FFA07A;
+            --accent: #FFD166;
+            --light: #FFF9F0;
+            --dark: #4A4A4A;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: var(--shadow);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .required-label:after {
+            content: " *";
+            color: #ff5252;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: white;
+            box-shadow: 0 0 0 2px rgba(255, 107, 139, 0.2);
+        }
+        
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .image-upload-area {
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .image-upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(255, 107, 139, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 40px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+        
+        .upload-text {
+            color: #999;
+            margin-bottom: 5px;
+        }
+        
+        .upload-hint {
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        .meal-time-selector {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .meal-time-option {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .meal-time-option:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .meal-time-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(255, 107, 139, 0.1);
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        .meal-type-selector {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .meal-type-option {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .meal-type-option:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .meal-type-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(255, 107, 139, 0.1);
+        }
+        
+        .meal-type-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .meal-type-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .cook-selector {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .cook-option {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .cook-option:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .cook-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(255, 107, 139, 0.1);
+        }
+        
+        .cook-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .cook-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .scenario-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .scenario-option {
+            padding: 8px 12px;
+            background-color: #f5f5f5;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .scenario-option:hover {
+            background-color: #eaeaea;
+        }
+        
+        .scenario-option.selected {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 107, 139, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">添加用餐记录</div>
+            <div class="nav-icon">✕</div>
+        </div>
+        
+        <form id="add-record-form">
+            <div class="form-group">
+                <label class="form-label required-label" for="meal-name">记录名称</label>
+                <input type="text" id="meal-name" class="form-input" placeholder="例如：周末家庭晚餐、情人节特别晚餐" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">记录照片</label>
+                <div class="image-upload-area" id="image-upload">
+                    <div class="upload-icon">📷</div>
+                    <div class="upload-text">点击上传照片</div>
+                    <div class="upload-hint">最多上传3张照片</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required-label" for="meal-date">用餐日期</label>
+                <input type="date" id="meal-date" class="form-input" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required-label">用餐时间</label>
+                <div class="meal-time-selector">
+                    <div class="meal-time-option selected">早餐</div>
+                    <div class="meal-time-option">午餐</div>
+                    <div class="meal-time-option">晚餐</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required-label">用餐方式</label>
+                <div class="meal-type-selector">
+                    <div class="meal-type-option">
+                        <div class="meal-type-icon">🍽️</div>
+                        <div class="meal-type-label">外出就餐</div>
+                    </div>
+                    <div class="meal-type-option selected">
+                        <div class="meal-type-icon">🏠</div>
+                        <div class="meal-type-label">在家烹饪</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">谁下厨</label>
+                <div class="cook-selector">
+                    <div class="cook-option">
+                        <div class="cook-icon">👩‍🍳</div>
+                        <div class="cook-label">我下厨</div>
+                    </div>
+                    <div class="cook-option">
+                        <div class="cook-icon">👨‍🍳</div>
+                        <div class="cook-label">TA下厨</div>
+                    </div>
+                    <div class="cook-option selected">
+                        <div class="cook-icon">👩‍🍳👨‍🍳</div>
+                        <div class="cook-label">一起下厨</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="meal-location">用餐地点</label>
+                <input type="text" id="meal-location" class="form-input" placeholder="例如：XX餐厅">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">用餐场景</label>
+                <div class="scenario-selector">
+                    <div class="scenario-option">纪念日</div>
+                    <div class="scenario-option selected">约会</div>
+                    <div class="scenario-option">探店</div>
+                    <div class="scenario-option">旅行</div>
+                    <div class="scenario-option">节日</div>
+                    <div class="scenario-option">庆祝</div>
+                    <div class="scenario-option">日常</div>
+                    <div class="scenario-option">生日</div>
+                    <div class="scenario-option">野餐</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="meal-notes">记录备注</label>
+                <textarea id="meal-notes" class="form-textarea" placeholder="记录用餐的特别时刻、感受或菜品的特别之处..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">发布记录</button>
+        </form>
+    </div>
+    
+    <script>
+        // 设置默认日期为今天
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('meal-date').value = today;
+        
+        // 用餐时间选择
+        const mealTimeOptions = document.querySelectorAll('.meal-time-option');
+        mealTimeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                mealTimeOptions.forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        // 用餐方式选择
+        const mealTypeOptions = document.querySelectorAll('.meal-type-option');
+        mealTypeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                mealTypeOptions.forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        // 厨师选择
+        const cookOptions = document.querySelectorAll('.cook-option');
+        cookOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                cookOptions.forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        // 场景选择（支持多选）
+        const scenarioOptions = document.querySelectorAll('.scenario-option');
+        scenarioOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+        });
+        
+        // 图片上传
+        document.getElementById('image-upload').addEventListener('click', function() {
+            alert('点击上传图片功能');
+        });
+        
+        // 表单提交
+        document.getElementById('add-record-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('记录添加成功！');
+        });
+    </script>
+</body>
+</html>
