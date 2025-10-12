@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- 禁止缓存的 Meta 标签 -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    
     <title>用餐记录 - 一日三餐恋</title>
     <style>
         :root {
@@ -40,7 +37,6 @@
             background-color: white;
             min-height: 100vh;
             box-shadow: var(--shadow);
-            padding-bottom: 80px;
         }
         
         .header {
@@ -49,7 +45,7 @@
             align-items: center;
             padding: 15px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .logo {
@@ -58,135 +54,134 @@
             color: var(--primary);
         }
         
-        .nav-icon {
+        .back-btn {
             font-size: 24px;
             cursor: pointer;
             color: #999;
             transition: color 0.3s;
         }
         
-        .nav-icon:hover {
+        .back-btn:hover {
             color: var(--primary);
         }
         
-        .records-container {
-            margin-top: 20px;
+        /* 筛选区域 */
+        .filters-wrapper {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
         
-        .record-filters {
+        .filter-row {
             display: flex;
+            align-items: center;
             gap: 10px;
-            margin-bottom: 15px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scrollbar-width: none;
+            margin-bottom: 12px;
         }
         
-        .record-filters::-webkit-scrollbar {
-            display: none;
+        .filter-row:last-child {
+            margin-bottom: 0;
         }
         
-        .filter-btn {
+        .filter-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark);
+            min-width: 60px;
+        }
+        
+        .filter-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+        
+        .filter-chip {
             padding: 8px 16px;
-            background-color: #f5f5f5;
+            background: #f5f5f5;
+            border: 1px solid #e8e8e8;
             border-radius: 20px;
             font-size: 14px;
-            white-space: nowrap;
+            color: #666;
             cursor: pointer;
-            border: none;
             transition: all 0.3s;
+            white-space: nowrap;
             font-weight: 500;
         }
         
-        .filter-btn:hover {
-            background-color: #e8e8e8;
+        .filter-chip:hover {
+            background: #ebebeb;
+            border-color: var(--primary);
+            color: var(--dark);
         }
         
-        .filter-btn.active {
+        .filter-chip.active {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: transparent;
             color: white;
             box-shadow: 0 2px 8px rgba(255, 107, 139, 0.3);
         }
         
-        .advanced-filters {
-            background: linear-gradient(135deg, rgba(255, 107, 139, 0.03), rgba(255, 160, 122, 0.03));
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 107, 139, 0.1);
-        }
-        
-        .filter-group {
-            margin-bottom: 15px;
-        }
-        
-        .filter-group:last-child {
-            margin-bottom: 0;
-        }
-        
-        .filter-group-title {
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-        
-        .filter-options {
+        .filter-selects {
             display: flex;
-            flex-wrap: wrap;
             gap: 8px;
-        }
-        
-        .filter-option {
-            padding: 6px 14px;
-            background-color: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 15px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-        
-        .filter-option:hover {
-            border-color: var(--primary);
-            background-color: rgba(255, 107, 139, 0.05);
-        }
-        
-        .filter-option.selected {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            box-shadow: 0 2px 6px rgba(255, 107, 139, 0.3);
-        }
-        
-        .records-stats {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px;
-            background: linear-gradient(135deg, rgba(255, 107, 139, 0.05), rgba(255, 160, 122, 0.05));
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-        
-        .stat-item {
-            text-align: center;
             flex: 1;
         }
         
-        .stat-value {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .stat-label {
-            font-size: 12px;
+        .filter-select {
+            flex: 1;
+            padding: 8px 30px 8px 12px;
+            border: 1px solid #e8e8e8;
+            border-radius: 20px;
+            font-size: 13px;
+            background-color: #f5f5f5;
             color: #666;
-            margin-top: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+            font-weight: 500;
         }
         
-        .record-list {
+        .filter-select:hover {
+            border-color: var(--primary);
+            background-color: white;
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.1);
+        }
+        
+        .reset-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 20px;
+            color: #666;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .reset-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        /* 记录列表 */
+        .meals-list {
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -405,55 +400,66 @@
     <div class="container">
         <div class="header">
             <div class="logo">用餐记录</div>
-            <div class="nav-icon" onclick="history.back()">←</div>
+            <div class="back-btn" onclick="history.back()">←</div>
         </div>
         
-        <div class="records-container">
-            <div class="record-filters">
-                <button class="filter-btn active" data-filter="all">全部</button>
-                <button class="filter-btn" data-filter="breakfast">早餐</button>
-                <button class="filter-btn" data-filter="lunch">午餐</button>
-                <button class="filter-btn" data-filter="dinner">晚餐</button>
-                <button class="filter-btn" data-filter="home">在家烹饪</button>
-                <button class="filter-btn" data-filter="out">外出就餐</button>
-            </div>
-            
-            <div class="advanced-filters">
-                <div class="filter-group">
-                    <div class="filter-group-title">其他筛选</div>
-                    <div class="filter-options">
-                        <div class="filter-option" data-other="recipe">包含菜谱</div>
-                        <div class="filter-option" data-other="anniversary-linked">关联纪念日</div>
-                    </div>
+        <!-- 筛选区域 -->
+        <div class="filters-wrapper">
+            <div class="filter-row">
+                <div class="filter-label">时间</div>
+                <div class="filter-chips">
+                    <button class="filter-chip active" data-filter="time" data-value="all">全部</button>
+                    <button class="filter-chip" data-filter="time" data-value="today">今天</button>
+                    <button class="filter-chip" data-filter="time" data-value="week">本周</button>
+                    <button class="filter-chip" data-filter="time" data-value="month">本月</button>
                 </div>
             </div>
             
-            <div class="records-stats">
-                <div class="stat-item">
-                    <div class="stat-value" id="total-count">42</div>
-                    <div class="stat-label">总记录</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="month-count">12</div>
-                    <div class="stat-label">本月</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="week-count">5</div>
-                    <div class="stat-label">本周</div>
+            <div class="filter-row">
+                <div class="filter-label">时段</div>
+                <div class="filter-chips">
+                    <button class="filter-chip active" data-filter="mealtime" data-value="all">全部</button>
+                    <button class="filter-chip" data-filter="mealtime" data-value="breakfast">早餐</button>
+                    <button class="filter-chip" data-filter="mealtime" data-value="lunch">午餐</button>
+                    <button class="filter-chip" data-filter="mealtime" data-value="dinner">晚餐</button>
                 </div>
             </div>
             
-            <div class="record-list" id="recordsList"></div>
+            <div class="filter-row">
+                <div class="filter-label">方式</div>
+                <div class="filter-chips">
+                    <button class="filter-chip active" data-filter="type" data-value="all">全部</button>
+                    <button class="filter-chip" data-filter="type" data-value="home">在家</button>
+                    <button class="filter-chip" data-filter="type" data-value="out">外出</button>
+                </div>
+            </div>
+            
+            <div class="filter-row">
+                <div class="filter-label">更多</div>
+                <div class="filter-selects">
+                    <select class="filter-select" id="recipeFilter">
+                        <option value="all">菜谱筛选</option>
+                    </select>
+                    <select class="filter-select" id="anniversaryFilter">
+                        <option value="all">纪念日筛选</option>
+                    </select>
+                    <button class="reset-btn" id="resetBtn">重置</button>
+                </div>
+            </div>
         </div>
+        
+        <!-- 记录列表 -->
+        <div class="meals-list" id="mealsList"></div>
     </div>
     
     <script>
+        // 数据
         const recordsData = [
             {
                 id: 1,
                 title: '爱心煎蛋三明治',
-                date: '10月15日',
-                fullDate: '2024-10-15',
+                date: '10月12日',
+                fullDate: '2024-10-12',
                 time: '早餐',
                 timeType: 'breakfast',
                 type: '🏠 在家烹饪',
@@ -470,8 +476,8 @@
             {
                 id: 2,
                 title: '公司附近新开的日料',
-                date: '10月15日',
-                fullDate: '2024-10-15',
+                date: '10月12日',
+                fullDate: '2024-10-12',
                 time: '午餐',
                 timeType: 'lunch',
                 type: '🍽️ 外出就餐',
@@ -488,8 +494,8 @@
             {
                 id: 3,
                 title: '情人节特别晚餐',
-                date: '10月14日',
-                fullDate: '2024-10-14',
+                date: '10月10日',
+                fullDate: '2024-10-10',
                 time: '晚餐',
                 timeType: 'dinner',
                 type: '🏠 在家烹饪',
@@ -506,66 +512,229 @@
             },
             {
                 id: 4,
-                title: '自制火锅',
-                date: '10月14日',
-                fullDate: '2024-10-14',
+                title: '周年纪念牛排大餐',
+                date: '9月20日',
+                fullDate: '2024-09-20',
+                time: '晚餐',
+                timeType: 'dinner',
+                type: '🏠 在家烹饪',
+                typeCategory: 'home',
+                cook: '👨‍🍳 TA下厨',
+                notes: '熊大特意学习了煎牛排的技巧，为我们的周年纪念准备的惊喜晚餐。牛排五分熟恰到好处！',
+                images: [
+                    'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=220&fit=crop'
+                ],
+                anniversary: '💖 在一起100天',
+                recipes: ['煎牛排', '奶油蘑菇汤']
+            },
+            {
+                id: 5,
+                title: '生日蛋糕甜品',
+                date: '10月7日',
+                fullDate: '2024-10-07',
                 time: '晚餐',
                 timeType: 'dinner',
                 type: '🏠 在家烹饪',
                 typeCategory: 'home',
                 cook: '👩‍🍳👨‍🍳 一起下厨',
-                notes: '周末在家做火锅，买了很多喜欢的食材。边吃边聊天，非常温馨的夜晚。',
+                notes: '兔兔的生日，我们一起做了提拉米苏，虽然有点歪但充满了爱意❤️',
                 images: [
-                    'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=220&fit=crop'
+                    'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=220&fit=crop'
                 ],
-                anniversary: null,
-                recipes: null
-            },
-            {
-                id: 5,
-                title: '海底捞火锅',
-                date: '10月13日',
-                fullDate: '2024-10-13',
-                time: '晚餐',
-                timeType: 'dinner',
-                type: '🍽️ 外出就餐',
-                typeCategory: 'out',
-                location: '📍 北京市朝阳区 · 海底捞',
-                notes: '庆祝在一起纪念日，选择了最喜欢的海底捞。服务一如既往的好，还有生日惊喜。',
-                images: [
-                    'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=220&fit=crop',
-                    'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=220&fit=crop'
-                ],
-                anniversary: '🎉 第一次约会',
-                recipes: null
-            },
-            {
-                id: 6,
-                title: '麦当劳汉堡套餐',
-                date: '10月12日',
-                fullDate: '2024-10-12',
-                time: '午餐',
-                timeType: 'lunch',
-                type: '🍽️ 外出就餐',
-                typeCategory: 'out',
-                location: '📍 北京市朝阳区 · 麦当劳',
-                notes: '工作日的快速午餐，虽然简单但很满足。',
-                images: [
-                    'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=400&h=220&fit=crop'
-                ],
-                anniversary: null,
-                recipes: null
+                anniversary: '🎂 兔兔生日',
+                recipes: ['提拉米苏']
             }
         ];
         
-        const recordsList = document.getElementById('recordsList');
-        const carousels = {};
+        // 全局变量
         let filteredData = [...recordsData];
+        const carousels = {};
+        const filters = {
+            time: 'all',
+            mealtime: 'all',
+            type: 'all',
+            recipe: 'all',
+            anniversary: 'all'
+        };
         
+        // 初始化
+        function init() {
+            initFilters();
+            renderRecords();
+        }
+        
+        // 初始化筛选选项
+        function initFilters() {
+            // 提取菜谱
+            const recipes = new Set();
+            recordsData.forEach(record => {
+                if (record.recipes) {
+                    record.recipes.forEach(r => recipes.add(r));
+                }
+            });
+            
+            const recipeSelect = document.getElementById('recipeFilter');
+            recipes.forEach(recipe => {
+                const option = document.createElement('option');
+                option.value = recipe;
+                option.textContent = recipe;
+                recipeSelect.appendChild(option);
+            });
+            
+            // 提取纪念日
+            const anniversaries = new Set();
+            recordsData.forEach(record => {
+                if (record.anniversary) {
+                    anniversaries.add(record.anniversary);
+                }
+            });
+            
+            const anniversarySelect = document.getElementById('anniversaryFilter');
+            anniversaries.forEach(anniversary => {
+                const option = document.createElement('option');
+                option.value = anniversary;
+                option.textContent = anniversary;
+                anniversarySelect.appendChild(option);
+            });
+            
+            // 绑定事件
+            bindFilterEvents();
+        }
+        
+        // 绑定筛选事件
+        function bindFilterEvents() {
+            // 按钮筛选
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.addEventListener('click', function() {
+                    const filterType = this.dataset.filter;
+                    const value = this.dataset.value;
+                    
+                    // 更新按钮状态
+                    document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(c => {
+                        c.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // 更新筛选条件
+                    filters[filterType] = value;
+                    applyFilters();
+                });
+            });
+            
+            // 下拉框筛选
+            document.getElementById('recipeFilter').addEventListener('change', function() {
+                filters.recipe = this.value;
+                applyFilters();
+            });
+            
+            document.getElementById('anniversaryFilter').addEventListener('change', function() {
+                filters.anniversary = this.value;
+                applyFilters();
+            });
+            
+            // 重置按钮
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                // 重置所有筛选
+                filters.time = 'all';
+                filters.mealtime = 'all';
+                filters.type = 'all';
+                filters.recipe = 'all';
+                filters.anniversary = 'all';
+                
+                // 重置UI
+                document.querySelectorAll('.filter-chip').forEach(chip => {
+                    chip.classList.toggle('active', chip.dataset.value === 'all');
+                });
+                document.getElementById('recipeFilter').value = 'all';
+                document.getElementById('anniversaryFilter').value = 'all';
+                
+                applyFilters();
+            });
+        }
+        
+        // 应用筛选
+        function applyFilters() {
+            // 清除轮播
+            Object.values(carousels).forEach(c => {
+                if (c.interval) clearInterval(c.interval);
+            });
+            Object.keys(carousels).forEach(k => delete carousels[k]);
+            
+            // 筛选数据
+            filteredData = recordsData.filter(record => {
+                // 时间筛选
+                if (filters.time !== 'all') {
+                    const now = new Date();
+                    const recordDate = new Date(record.fullDate);
+                    
+                    if (filters.time === 'today') {
+                        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                        if (recordDate < today) return false;
+                    } else if (filters.time === 'week') {
+                        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                        if (recordDate < weekAgo) return false;
+                    } else if (filters.time === 'month') {
+                        const monthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+                        if (recordDate < monthAgo) return false;
+                    }
+                }
+                
+                // 时段筛选
+                if (filters.mealtime !== 'all' && record.timeType !== filters.mealtime) {
+                    return false;
+                }
+                
+                // 方式筛选
+                if (filters.type !== 'all' && record.typeCategory !== filters.type) {
+                    return false;
+                }
+                
+                // 菜谱筛选
+                if (filters.recipe !== 'all') {
+                    if (!record.recipes || !record.recipes.includes(filters.recipe)) {
+                        return false;
+                    }
+                }
+                
+                // 纪念日筛选
+                if (filters.anniversary !== 'all' && record.anniversary !== filters.anniversary) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            renderRecords();
+        }
+        
+        // 渲染记录
+        function renderRecords() {
+            const container = document.getElementById('mealsList');
+            container.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🍽️</div>
+                        <div class="empty-text">暂无符合条件的记录</div>
+                        <div class="empty-hint">试试调整筛选条件</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredData.forEach((meal, index) => {
+                const card = createMealCard(meal, index);
+                container.appendChild(card);
+            });
+            
+            initCarousels();
+        }
+        
+        // 创建卡片
         function createMealCard(meal, index) {
             const card = document.createElement('div');
             card.className = 'meal-card';
-            card.dataset.id = meal.id;
             
             let imagesHTML = '';
             if (meal.images && meal.images.length > 0) {
@@ -573,7 +742,7 @@
                     `<img src="${img}" alt="${meal.title}" class="meal-image" loading="lazy">`
                 ).join('');
             } else {
-                imagesHTML = '<div class="meal-image" style="display: flex; align-items: center; justify-content: center; font-size: 48px; color: #ccc;">📷</div>';
+                imagesHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;color:#ccc;">📷</div>';
             }
             
             let dotsHTML = '';
@@ -642,143 +811,58 @@
             return card;
         }
         
-        function renderRecords() {
-            recordsList.innerHTML = '';
-            
-            if (filteredData.length === 0) {
-                recordsList.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">🍽️</div>
-                        <div class="empty-text">暂无符合条件的记录</div>
-                        <div class="empty-hint">试试调整筛选条件</div>
-                    </div>
-                `;
-                return;
-            }
-            
-            filteredData.forEach((meal, index) => {
-                const card = createMealCard(meal, index);
-                recordsList.appendChild(card);
-            });
-            
-            initCarousels();
-        }
-        
+        // 初始化轮播
         function initCarousels() {
             filteredData.forEach((meal, index) => {
                 if (meal.images && meal.images.length > 1) {
                     carousels[index] = {
                         currentIndex: 0,
                         totalImages: meal.images.length,
-                        interval: null
+                        interval: setInterval(() => {
+                            carousels[index].currentIndex = (carousels[index].currentIndex + 1) % carousels[index].totalImages;
+                            updateCarousel(index);
+                        }, 3000)
                     };
-                    
-                    startAutoPlay(index);
                 }
             });
         }
         
-        function startAutoPlay(carouselIndex) {
-            carousels[carouselIndex].interval = setInterval(() => {
-                const carousel = carousels[carouselIndex];
-                carousel.currentIndex = (carousel.currentIndex + 1) % carousel.totalImages;
-                updateCarousel(carouselIndex);
-            }, 3000);
-        }
-        
-        function updateCarousel(carouselIndex) {
-            const carousel = carousels[carouselIndex];
-            const carouselElement = document.querySelector(`[data-carousel="${carouselIndex}"]`);
-            if (!carouselElement) return;
+        // 更新轮播
+        function updateCarousel(index) {
+            const carousel = carousels[index];
+            const element = document.querySelector(`[data-carousel="${index}"]`);
+            if (!element) return;
             
-            const dots = carouselElement.parentElement.querySelectorAll('.carousel-dot');
+            element.style.transform = `translateX(-${carousel.currentIndex * 100}%)`;
             
-            carouselElement.style.transform = `translateX(-${carousel.currentIndex * 100}%)`;
-            
+            const dots = element.parentElement.querySelectorAll('.carousel-dot');
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === carousel.currentIndex);
             });
         }
         
-        // 筛选功能
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                applyFilters();
-            });
-        });
-        
-        const filterOptions = document.querySelectorAll('.filter-option');
-        filterOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                this.classList.toggle('selected');
-                applyFilters();
-            });
-        });
-        
-        function applyFilters() {
-            // 清除所有轮播
-            Object.values(carousels).forEach(carousel => {
-                if (carousel.interval) {
-                    clearInterval(carousel.interval);
-                }
-            });
-            Object.keys(carousels).forEach(key => delete carousels[key]);
-            
-            // 获取当前选中的筛选条件
-            const activeFilterBtn = document.querySelector('.filter-btn.active');
-            const mainFilter = activeFilterBtn ? activeFilterBtn.dataset.filter : 'all';
-            
-            const selectedOthers = Array.from(document.querySelectorAll('[data-other].selected'))
-                .map(el => el.dataset.other);
-            
-            // 应用筛选
-            filteredData = recordsData.filter(record => {
-                // 主筛选
-                if (mainFilter !== 'all') {
-                    if (mainFilter === 'breakfast' || mainFilter === 'lunch' || mainFilter === 'dinner') {
-                        if (record.timeType !== mainFilter) return false;
-                    } else if (mainFilter === 'home' || mainFilter === 'out') {
-                        if (record.typeCategory !== mainFilter) return false;
-                    }
-                }
-                
-                // 其他筛选
-                if (selectedOthers.includes('recipe')) {
-                    if (!record.recipes || record.recipes.length === 0) return false;
-                }
-                if (selectedOthers.includes('anniversary-linked')) {
-                    if (!record.anniversary) return false;
-                }
-                
-                return true;
-            });
-            
-            // 更新统计
-            document.getElementById('total-count').textContent = filteredData.length;
-            
-            renderRecords();
-        }
-        
         // 轮播点击事件
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('carousel-dot')) {
-                const carouselIndex = parseInt(e.target.closest('.meal-image-container').querySelector('.meal-carousel').dataset.carousel);
+                const container = e.target.closest('.meal-image-container');
+                const carouselEl = container.querySelector('.meal-carousel');
+                const index = parseInt(carouselEl.dataset.carousel);
                 const dotIndex = parseInt(e.target.dataset.index);
                 
-                if (carousels[carouselIndex]) {
-                    clearInterval(carousels[carouselIndex].interval);
-                    carousels[carouselIndex].currentIndex = dotIndex;
-                    updateCarousel(carouselIndex);
-                    startAutoPlay(carouselIndex);
+                if (carousels[index]) {
+                    clearInterval(carousels[index].interval);
+                    carousels[index].currentIndex = dotIndex;
+                    updateCarousel(index);
+                    carousels[index].interval = setInterval(() => {
+                        carousels[index].currentIndex = (carousels[index].currentIndex + 1) % carousels[index].totalImages;
+                        updateCarousel(index);
+                    }, 3000);
                 }
             }
         });
         
-        // 初始化
-        renderRecords();
+        // 启动
+        init();
     </script>
 </body>
 </html>
