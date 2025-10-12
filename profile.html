@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 一日三餐恋</title>
+    <style>
+        :root {
+            --primary: #FF6B8B;
+            --secondary: #FFA07A;
+            --accent: #FFD166;
+            --light: #FFF9F0;
+            --dark: #4A4A4A;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: var(--shadow);
+            padding-bottom: 80px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .profile-header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            border: 3px solid var(--primary);
+            position: relative;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+        
+        .profile-avatar-edit {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: white;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+        
+        .profile-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .profile-name-edit {
+            font-size: 16px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        
+        .profile-relationship {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.05), rgba(255, 160, 122, 0.05));
+            border-radius: 15px;
+        }
+        
+        .profile-stat {
+            text-align: center;
+        }
+        
+        .profile-stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .profile-stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .profile-section {
+            margin: 25px 0;
+        }
+        
+        .profile-section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .see-all {
+            font-size: 14px;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .badge-item {
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+        
+        .badge-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .badge-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+        
+        .badge-name {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .badge-desc {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .badge-item.unlocked {
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.1), rgba(255, 160, 122, 0.1));
+        }
+        
+        .badge-item.locked {
+            opacity: 0.5;
+            filter: grayscale(1);
+        }
+        
+        .profile-menu {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: rgba(255, 107, 139, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+            font-size: 18px;
+        }
+        
+        .menu-text {
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .menu-arrow {
+            color: #ccc;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            max-width: 480px;
+            margin: 0 auto;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #999;
+            font-size: 12px;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.3s;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        .nav-item .nav-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+            width: auto;
+            height: auto;
+        }
+        
+        .add-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .add-nav-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 6px 20px rgba(255, 107, 139, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            margin-top: -30px;
+            transition: transform 0.3s;
+        }
+        
+        .add-nav-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .add-nav-label {
+            margin-top: 5px;
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">个人中心</div>
+            <div class="nav-icons">
+                <div class="nav-icon">⚙️</div>
+            </div>
+        </div>
+        
+        <div class="profile-header">
+            <div class="profile-avatar">
+                🐰
+                <div class="profile-avatar-edit">✏️</div>
+            </div>
+            <div class="profile-name">
+                <span>兔兔</span>
+                <span class="profile-name-edit">✏️</span>
+            </div>
+            <div class="profile-relationship">与熊大在一起 128 天</div>
+            
+            <div class="profile-stats">
+                <div class="profile-stat">
+                    <div class="profile-stat-value">42</div>
+                    <div class="profile-stat-label">用餐记录</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value">28</div>
+                    <div class="profile-stat-label">下厨记录</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value">128</div>
+                    <div class="profile-stat-label">连续记录</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <div class="profile-section-title">
+                <h2>美食成就</h2>
+                <a href="#" class="see-all">查看全部</a>
+            </div>
+            <div class="badges-grid">
+                <div class="badge-item unlocked">
+                    <div class="badge-icon">🏆</div>
+                    <div class="badge-name">美食家</div>
+                    <div class="badge-desc">记录100次用餐</div>
+                </div>
+                <div class="badge-item unlocked">
+                    <div class="badge-icon">👨‍🍳</div>
+                    <div class="badge-name">厨艺大师</div>
+                    <div class="badge-desc">完成50次下厨</div>
+                </div>
+                <div class="badge-item unlocked">
+                    <div class="badge-icon">🌍</div>
+                    <div class="badge-name">美食探索家</div>
+                    <div class="badge-desc">探索10个城市</div>
+                </div>
+                <div class="badge-item locked">
+                    <div class="badge-icon">👑</div>
+                    <div class="badge-name">甜蜜情侣</div>
+                    <div class="badge-desc">共同用餐100次</div>
+                </div>
+                <div class="badge-item locked">
+                    <div class="badge-icon">📅</div>
+                    <div class="badge-name">持之以恒</div>
+                    <div class="badge-desc">连续记录365天</div>
+                </div>
+                <div class="badge-item locked">
+                    <div class="badge-icon">📸</div>
+                    <div class="badge-name">美食摄影师</div>
+                    <div class="badge-desc">上传200张照片</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <div class="profile-menu">
+                <div class="menu-item">
+                    <div class="menu-icon">📝</div>
+                    <div class="menu-text">用餐记录</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">📖</div>
+                    <div class="menu-text">情侣菜谱</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">📊</div>
+                    <div class="menu-text">数据统计</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">🗺️</div>
+                    <div class="menu-text">美食轨迹</div>
+                    <div class="menu-arrow">></div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">📅</div>
+                    <div class="menu-text">纪念日管理</div>
+                    <div class="menu-arrow">></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bottom-nav">
+        <div class="nav-item">
+            <div class="nav-icon">🏠</div>
+            <div>首页</div>
+        </div>
+        <div class="add-nav-item">
+            <div class="add-nav-button">+</div>
+            <div class="add-nav-label">添加</div>
+        </div>
+        <div class="nav-item active">
+            <div class="nav-icon">👤</div>
+            <div>我的</div>
+        </div>
+    </div>
+</body>
+</html>
