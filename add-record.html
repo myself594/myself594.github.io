@@ -90,6 +90,16 @@
             box-shadow: 0 0 0 2px rgba(255, 107, 139, 0.2);
         }
         
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+        
         .form-textarea {
             min-height: 100px;
             resize: vertical;
@@ -223,31 +233,6 @@
             font-weight: 500;
         }
         
-        .scenario-selector {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
-        
-        .scenario-option {
-            padding: 8px 12px;
-            background-color: #f5f5f5;
-            border-radius: 15px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .scenario-option:hover {
-            background-color: #eaeaea;
-        }
-        
-        .scenario-option.selected {
-            background-color: var(--primary);
-            color: white;
-        }
-        
         .btn {
             width: 100%;
             padding: 15px;
@@ -268,6 +253,209 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
+        }
+        
+        .recipe-checkbox-wrapper {
+            background-color: rgba(255, 209, 102, 0.1);
+            border-left: 3px solid #FFD166;
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .recipe-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+        
+        .checkbox-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        #recipe-list {
+            margin-top: 15px;
+        }
+        
+        .recipe-card {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .recipe-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .recipe-card-title {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 16px;
+        }
+        
+        .remove-recipe-btn {
+            background-color: #ff5252;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .remove-recipe-btn:hover {
+            background-color: #ff1744;
+            transform: scale(1.1);
+        }
+        
+        .recipe-form-group {
+            margin-bottom: 15px;
+        }
+        
+        .recipe-form-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        .add-recipe-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: white;
+            border: 2px dashed var(--primary);
+            border-radius: 8px;
+            color: var(--primary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        
+        .add-recipe-btn:hover {
+            background-color: rgba(255, 107, 139, 0.05);
+        }
+        
+        .image-selector-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .image-option-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .image-option-btn:hover {
+            border-color: var(--primary);
+            background-color: rgba(255, 107, 139, 0.05);
+        }
+        
+        .image-option-btn.selected {
+            border-color: var(--primary);
+            background-color: rgba(255, 107, 139, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .info-hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .location-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+        
+        .location-input-wrapper .form-input {
+            flex: 1;
+        }
+        
+        .get-location-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .get-location-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 107, 139, 0.3);
+        }
+        
+        .get-location-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .anniversary-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            background-color: rgba(255, 209, 102, 0.2);
+            color: #e67e00;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+        
+        .selected-anniversary-display {
+            margin-top: 10px;
+            padding: 12px 15px;
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.05), rgba(255, 160, 122, 0.05));
+            border-left: 3px solid var(--primary);
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .selected-anniversary-display.show {
+            display: block;
+        }
+        
+        .selected-anniversary-text {
+            font-size: 14px;
+            color: var(--dark);
+        }
+        
+        .selected-anniversary-icon {
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -321,7 +509,15 @@
                 </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group" id="location-group" style="display: none;">
+                <label class="form-label" for="meal-location">用餐地点</label>
+                <div class="location-input-wrapper">
+                    <input type="text" id="meal-location" class="form-input" placeholder="例如：XX餐厅">
+                    <button type="button" class="get-location-btn" id="get-location-btn">📍 获取位置</button>
+                </div>
+            </div>
+            
+            <div class="form-group" id="cook-group">
                 <label class="form-label">谁下厨</label>
                 <div class="cook-selector">
                     <div class="cook-option">
@@ -339,23 +535,38 @@
                 </div>
             </div>
             
-            <div class="form-group">
-                <label class="form-label" for="meal-location">用餐地点</label>
-                <input type="text" id="meal-location" class="form-input" placeholder="例如：XX餐厅">
+            <div class="form-group" id="recipe-section" style="display: block;">
+                <div class="recipe-checkbox-wrapper">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="add-to-recipe" class="recipe-checkbox">
+                        <span class="checkbox-text">添加到情侣菜谱</span>
+                    </label>
+                </div>
+                
+                <div id="recipe-list" style="display: none;"></div>
+                
+                <button type="button" class="add-recipe-btn" id="add-recipe-btn" style="display: none;">
+                    + 添加菜谱
+                </button>
             </div>
             
             <div class="form-group">
-                <label class="form-label">用餐场景</label>
-                <div class="scenario-selector">
-                    <div class="scenario-option">纪念日</div>
-                    <div class="scenario-option selected">约会</div>
-                    <div class="scenario-option">探店</div>
-                    <div class="scenario-option">旅行</div>
-                    <div class="scenario-option">节日</div>
-                    <div class="scenario-option">庆祝</div>
-                    <div class="scenario-option">日常</div>
-                    <div class="scenario-option">生日</div>
-                    <div class="scenario-option">野餐</div>
+                <label class="form-label">
+                    关联纪念日
+                    <span class="anniversary-badge">🎉 特殊日子</span>
+                </label>
+                <select id="anniversary-select" class="form-select">
+                    <option value="">无 - 不关联纪念日</option>
+                    <option value="1">💖 在一起100天</option>
+                    <option value="2">🎂 兔兔生日</option>
+                    <option value="3">👑 第一次约会</option>
+                    <option value="4">🍽️ 第一次共同下厨</option>
+                </select>
+                <div id="selected-anniversary-display" class="selected-anniversary-display">
+                    <div class="selected-anniversary-text">
+                        <span class="selected-anniversary-icon">🎉</span>
+                        这条记录将关联到：<strong id="selected-anniversary-name"></strong>
+                    </div>
                 </div>
             </div>
             
@@ -369,9 +580,33 @@
     </div>
     
     <script>
+        let recipeCount = 0;
+        
+        // 纪念日数据（实际应用中从后端获取）
+        const anniversaries = {
+            '1': { name: '💖 在一起100天', date: '2023-10-16' },
+            '2': { name: '🎂 兔兔生日', date: '2023-11-20' },
+            '3': { name: '👑 第一次约会', date: '2023-06-10' },
+            '4': { name: '🍽️ 第一次共同下厨', date: '2023-06-15' }
+        };
+        
         // 设置默认日期为今天
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('meal-date').value = today;
+        
+        // 纪念日选择
+        document.getElementById('anniversary-select').addEventListener('change', function() {
+            const selectedValue = this.value;
+            const display = document.getElementById('selected-anniversary-display');
+            const nameEl = document.getElementById('selected-anniversary-name');
+            
+            if (selectedValue && anniversaries[selectedValue]) {
+                nameEl.textContent = anniversaries[selectedValue].name;
+                display.classList.add('show');
+            } else {
+                display.classList.remove('show');
+            }
+        });
         
         // 用餐时间选择
         const mealTimeOptions = document.querySelectorAll('.meal-time-option');
@@ -388,8 +623,166 @@
             option.addEventListener('click', function() {
                 mealTypeOptions.forEach(o => o.classList.remove('selected'));
                 this.classList.add('selected');
+                
+                const isHomeCooking = this.querySelector('.meal-type-label').textContent === '在家烹饪';
+                const recipeSection = document.getElementById('recipe-section');
+                const cookGroup = document.getElementById('cook-group');
+                const locationGroup = document.getElementById('location-group');
+                
+                if (isHomeCooking) {
+                    cookGroup.style.display = 'block';
+                    recipeSection.style.display = 'block';
+                    locationGroup.style.display = 'none';
+                } else {
+                    cookGroup.style.display = 'none';
+                    locationGroup.style.display = 'block';
+                    recipeSection.style.display = 'none';
+                    document.getElementById('add-to-recipe').checked = false;
+                    document.getElementById('recipe-list').style.display = 'none';
+                    document.getElementById('add-recipe-btn').style.display = 'none';
+                }
             });
         });
+        
+        // 获取当前位置
+        document.getElementById('get-location-btn').addEventListener('click', function() {
+            const btn = this;
+            const locationInput = document.getElementById('meal-location');
+            
+            if (!navigator.geolocation) {
+                alert('您的浏览器不支持地理定位功能');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = '📍 定位中...';
+            
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    locationInput.value = `位置：纬度 ${lat.toFixed(6)}, 经度 ${lng.toFixed(6)}`;
+                    
+                    btn.disabled = false;
+                    btn.textContent = '📍 获取位置';
+                    
+                    alert('定位成功！\n实际应用中会调用地图API转换为具体地址');
+                },
+                function(error) {
+                    btn.disabled = false;
+                    btn.textContent = '📍 获取位置';
+                    
+                    let errorMsg = '定位失败';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMsg = '用户拒绝了定位请求';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMsg = '位置信息不可用';
+                            break;
+                        case error.TIMEOUT:
+                            errorMsg = '定位请求超时';
+                            break;
+                    }
+                    alert(errorMsg);
+                }
+            );
+        });
+        
+        // 添加到菜谱复选框
+        document.getElementById('add-to-recipe').addEventListener('change', function() {
+            const recipeList = document.getElementById('recipe-list');
+            const addRecipeBtn = document.getElementById('add-recipe-btn');
+            
+            if (this.checked) {
+                recipeList.style.display = 'block';
+                addRecipeBtn.style.display = 'block';
+                if (recipeCount === 0) {
+                    addRecipe();
+                }
+            } else {
+                recipeList.style.display = 'none';
+                addRecipeBtn.style.display = 'none';
+            }
+        });
+        
+        // 添加菜谱
+        function addRecipe() {
+            recipeCount++;
+            const recipeList = document.getElementById('recipe-list');
+            const recipeCard = document.createElement('div');
+            recipeCard.className = 'recipe-card';
+            recipeCard.dataset.recipeId = recipeCount;
+            
+            recipeCard.innerHTML = `
+                <div class="recipe-card-header">
+                    <div class="recipe-card-title">菜谱 ${recipeCount}</div>
+                    <button type="button" class="remove-recipe-btn" onclick="removeRecipe(${recipeCount})">✕</button>
+                </div>
+                
+                <div class="recipe-form-group">
+                    <label class="form-label required-label">菜谱名称</label>
+                    <input type="text" class="form-input recipe-name-input" placeholder="例如：爱心煎蛋三明治">
+                </div>
+                
+                <div class="recipe-form-group">
+                    <label class="form-label">菜谱图片</label>
+                    <div class="image-selector-options">
+                        <button type="button" class="image-option-btn upload-new-btn" data-recipe="${recipeCount}">
+                            📤 上传图片
+                        </button>
+                        <button type="button" class="image-option-btn select-from-record-btn" data-recipe="${recipeCount}">
+                            🖼️ 从记录照片选择
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="recipe-form-group">
+                    <label class="form-label">食材清单</label>
+                    <textarea class="form-textarea recipe-ingredients-textarea" placeholder="每行输入一个食材，例如：&#10;鸡蛋 2个&#10;吐司面包 2片&#10;生菜 2片" rows="4"></textarea>
+                    <div class="info-hint">💡 每行一个食材，换行表示分隔</div>
+                </div>
+                
+                <div class="recipe-form-group">
+                    <label class="form-label">制作步骤</label>
+                    <textarea class="form-textarea recipe-steps-textarea" placeholder="每行输入一个步骤，例如：&#10;1. 将吐司面包片放入烤面包机中烤至金黄色&#10;2. 在平底锅中融化黄油，打入鸡蛋&#10;3. 将火腿片稍微煎一下" rows="5"></textarea>
+                    <div class="info-hint">💡 每行一个步骤，换行表示分隔</div>
+                </div>
+            `;
+            
+            recipeList.appendChild(recipeCard);
+            
+            // 绑定图片选择按钮事件
+            recipeCard.querySelector('.upload-new-btn').addEventListener('click', function() {
+                const btn = this;
+                btn.classList.add('selected');
+                recipeCard.querySelector('.select-from-record-btn').classList.remove('selected');
+                alert('点击上传新图片功能');
+            });
+            
+            recipeCard.querySelector('.select-from-record-btn').addEventListener('click', function() {
+                const btn = this;
+                btn.classList.add('selected');
+                recipeCard.querySelector('.upload-new-btn').classList.remove('selected');
+                alert('从记录照片中选择（这里会显示上面上传的照片列表）');
+            });
+        }
+        
+        // 删除菜谱
+        function removeRecipe(recipeId) {
+            const recipeCard = document.querySelector(`[data-recipe-id="${recipeId}"]`);
+            if (recipeCard) {
+                recipeCard.remove();
+                const remainingRecipes = document.querySelectorAll('.recipe-card');
+                if (remainingRecipes.length === 0) {
+                    recipeCount = 0;
+                }
+            }
+        }
+        
+        // 添加菜谱按钮
+        document.getElementById('add-recipe-btn').addEventListener('click', addRecipe);
         
         // 厨师选择
         const cookOptions = document.querySelectorAll('.cook-option');
@@ -397,14 +790,6 @@
             option.addEventListener('click', function() {
                 cookOptions.forEach(o => o.classList.remove('selected'));
                 this.classList.add('selected');
-            });
-        });
-        
-        // 场景选择（支持多选）
-        const scenarioOptions = document.querySelectorAll('.scenario-option');
-        scenarioOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                this.classList.toggle('selected');
             });
         });
         
@@ -416,7 +801,58 @@
         // 表单提交
         document.getElementById('add-record-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('记录添加成功！');
+            
+            const formData = {
+                name: document.getElementById('meal-name').value,
+                date: document.getElementById('meal-date').value,
+                mealTime: document.querySelector('.meal-time-option.selected').textContent,
+                mealType: document.querySelector('.meal-type-option.selected .meal-type-label').textContent,
+                notes: document.getElementById('meal-notes').value
+            };
+            
+            // 关联纪念日
+            const anniversaryId = document.getElementById('anniversary-select').value;
+            if (anniversaryId && anniversaries[anniversaryId]) {
+                formData.anniversary = {
+                    id: anniversaryId,
+                    name: anniversaries[anniversaryId].name,
+                    date: anniversaries[anniversaryId].date
+                };
+            }
+            
+            // 根据用餐方式添加不同字段
+            if (formData.mealType === '在家烹饪') {
+                formData.cook = document.querySelector('.cook-option.selected .cook-label')?.textContent || '';
+                
+                const addToRecipe = document.getElementById('add-to-recipe').checked;
+                if (addToRecipe) {
+                    const recipes = [];
+                    document.querySelectorAll('.recipe-card').forEach(card => {
+                        const ingredientsText = card.querySelector('.recipe-ingredients-textarea').value;
+                        const stepsText = card.querySelector('.recipe-steps-textarea').value;
+                        
+                        recipes.push({
+                            name: card.querySelector('.recipe-name-input').value,
+                            ingredients: ingredientsText.split('\n').filter(line => line.trim() !== ''),
+                            steps: stepsText.split('\n').filter(line => line.trim() !== '')
+                        });
+                    });
+                    formData.recipes = recipes;
+                }
+            } else {
+                formData.location = document.getElementById('meal-location').value;
+            }
+            
+            console.log('记录数据:', formData);
+            
+            let successMsg = '记录添加成功！';
+            if (formData.anniversary) {
+                successMsg += `\n已关联到纪念日：${formData.anniversary.name}`;
+            }
+            if (formData.recipes && formData.recipes.length > 0) {
+                successMsg += `\n已保存 ${formData.recipes.length} 个菜谱到情侣菜谱`;
+            }
+            alert(successMsg);
         });
     </script>
 </body>
