@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情侣菜谱 - 一日三餐恋</title>
+    <style>
+        :root {
+            --primary: #FF6B8B;
+            --secondary: #FFA07A;
+            --accent: #FFD166;
+            --light: #FFF9F0;
+            --dark: #4A4A4A;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: var(--shadow);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .recipes-container {
+            margin-top: 20px;
+        }
+        
+        .recipes-tabs {
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 30px;
+            padding: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .recipes-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .recipes-tab.active {
+            background-color: white;
+            box-shadow: var(--shadow);
+        }
+        
+        .recipe-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+        }
+        
+        .recipe-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .recipe-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .recipe-favorite {
+            color: #ccc;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .recipe-favorite.active {
+            color: #FFD166;
+        }
+        
+        .recipe-image {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+        
+        .recipe-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .recipe-ingredients {
+            margin-bottom: 15px;
+        }
+        
+        .recipe-ingredients-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .recipe-ingredients-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .recipe-ingredient {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .recipe-ingredient:before {
+            content: "•";
+            color: var(--primary);
+            margin-right: 5px;
+        }
+        
+        .recipe-steps {
+            margin-bottom: 15px;
+        }
+        
+        .recipe-steps-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .recipe-step {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .recipe-step-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .recipe-step-text {
+            font-size: 14px;
+            line-height: 1.5;
+            flex: 1;
+        }
+        
+        .recipe-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 15px;
+        }
+        
+        .recipe-tag {
+            background-color: rgba(255, 107, 139, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">情侣菜谱</div>
+            <div class="nav-icon">←</div>
+        </div>
+        
+        <div class="recipes-container">
+            <div class="recipes-tabs">
+                <div class="recipes-tab active">全部菜谱</div>
+                <div class="recipes-tab">最爱菜谱</div>
+                <div class="recipes-tab">兔兔专属</div>
+                <div class="recipes-tab">熊大专属</div>
+            </div>
+            
+            <div class="recipe-card">
+                <div class="recipe-header">
+                    <div class="recipe-title">爱心煎蛋三明治</div>
+                    <div class="recipe-favorite active">★</div>
+                </div>
+                <div class="recipe-image">📷 菜品图片</div>
+                <div class="recipe-meta">
+                    <div>👩‍🍳 兔兔</div>
+                    <div>⏱️ 15分钟</div>
+                    <div>❤️ 熊大最爱</div>
+                </div>
+                
+                <div class="recipe-ingredients">
+                    <div class="recipe-ingredients-title">食材</div>
+                    <div class="recipe-ingredients-list">
+                        <div class="recipe-ingredient">吐司面包 2片</div>
+                        <div class="recipe-ingredient">鸡蛋 2个</div>
+                        <div class="recipe-ingredient">火腿 2片</div>
+                        <div class="recipe-ingredient">生菜 2片</div>
+                        <div class="recipe-ingredient">番茄 1片</div>
+                        <div class="recipe-ingredient">芝士 1片</div>
+                        <div class="recipe-ingredient">黄油 适量</div>
+                        <div class="recipe-ingredient">盐 少许</div>
+                    </div>
+                </div>
+                
+                <div class="recipe-steps">
+                    <div class="recipe-steps-title">步骤</div>
+                    <div class="recipe-step">
+                        <div class="recipe-step-number">1</div>
+                        <div class="recipe-step-text">将吐司面包片放入烤面包机中烤至金黄色</div>
+                    </div>
+                    <div class="recipe-step">
+                        <div class="recipe-step-number">2</div>
+                        <div class="recipe-step-text">在平底锅中融化黄油，打入鸡蛋，煎至蛋白凝固但蛋黄仍保持流动状态</div>
+                    </div>
+                    <div class="recipe-step">
+                        <div class="recipe-step-number">3</div>
+                        <div class="recipe-step-text">将火腿片稍微煎一下，增加香味</div>
+                    </div>
+                    <div class="recipe-step">
+                        <div class="recipe-step-number">4</div>
+                        <div class="recipe-step-text">在一片吐司上依次放上生菜、番茄片、火腿、芝士和煎蛋</div>
+                    </div>
+                    <div class="recipe-step">
+                        <div class="recipe-step-number">5</div>
+                        <div class="recipe-step-text">盖上另一片吐司，对角切开，摆盘即可</div>
+                    </div>
+                </div>
+                
+                <div class="recipe-tags">
+                    <div class="recipe-tag">早餐</div>
+                    <div class="recipe-tag">简单</div>
+                    <div class="recipe-tag">西式</div>
+                </div>
+            </div>
+            
+            <div class="recipe-card">
+                <div class="recipe-header">
+                    <div class="recipe-title">自制火锅</div>
+                    <div class="recipe-favorite">★</div>
+                </div>
+                <div class="recipe-image">📷 菜品图片</div>
+                <div class="recipe-meta">
+                    <div>👩‍🍳👨‍🍳 共同制作</div>
+                    <div>⏱️ 30分钟</div>
+                    <div>❤️ 双方最爱</div>
+                </div>
+                
+                <div class="recipe-ingredients">
+                    <div class="recipe-ingredients-title">食材</div>
+                    <div class="recipe-ingredients-list">
+                        <div class="recipe-ingredient">火锅底料 1包</div>
+                        <div class="recipe-ingredient">牛肉片 200g</div>
+                        <div class="recipe-ingredient">羊肉片 200g</div>
+                        <div class="recipe-ingredient">虾 150g</div>
+                        <div class="recipe-ingredient">豆腐 1块</div>
+                        <div class="recipe-ingredient">金针菇 150g</div>
+                        <div class="recipe-ingredient">白菜 适量</div>
+                        <div class="recipe-ingredient">粉丝 1把</div>
+                    </div>
+                </div>
+                
+                <div class="recipe-tags">
+                    <div class="recipe-tag">晚餐</div>
+                    <div class="recipe-tag">中式</div>
+                    <div class="recipe-tag">共同制作</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 标签切换
+        const tabs = document.querySelectorAll('.recipes-tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // 收藏功能
+        const favorites = document.querySelectorAll('.recipe-favorite');
+        favorites.forEach(fav => {
+            fav.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
