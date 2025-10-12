@@ -67,36 +67,184 @@
         
         /* 筛选区域 */
         .filters-wrapper {
-            background: white;
-            border-radius: 15px;
-            padding: 15px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
         
-        .filter-row {
+        .filter-trigger {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            transition: all 0.3s;
         }
         
-        .filter-row:last-child {
+        .filter-trigger:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .filter-trigger-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-icon {
+            font-size: 18px;
+        }
+        
+        .filter-trigger-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .filter-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .filter-arrow {
+            font-size: 12px;
+            color: #999;
+            transition: transform 0.3s;
+        }
+        
+        .active-filters-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .active-filter-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(255, 107, 139, 0.25);
+        }
+        
+        .tag-remove {
+            cursor: pointer;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .tag-remove:hover {
+            opacity: 1;
+        }
+        
+        /* 筛选抽屉 */
+        .filter-drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .filter-drawer-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .filter-drawer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            max-height: 70vh;
+            overflow-y: auto;
+            z-index: 1001;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        
+        .filter-drawer.show {
+            transform: translateY(0);
+        }
+        
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+        }
+        
+        .drawer-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .drawer-close {
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .drawer-close:hover {
+            color: var(--primary);
+        }
+        
+        .drawer-content {
+            padding: 20px;
+        }
+        
+        .filter-section {
+            margin-bottom: 24px;
+        }
+        
+        .filter-section:last-child {
             margin-bottom: 0;
         }
         
-        .filter-label {
-            font-size: 13px;
+        .filter-section-title {
+            font-size: 14px;
             font-weight: 600;
             color: var(--dark);
-            min-width: 60px;
+            margin-bottom: 12px;
         }
         
         .filter-chips {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            flex: 1;
         }
         
         .filter-chip {
@@ -125,18 +273,12 @@
             box-shadow: 0 2px 8px rgba(255, 107, 139, 0.3);
         }
         
-        .filter-selects {
-            display: flex;
-            gap: 8px;
-            flex: 1;
-        }
-        
         .filter-select {
-            flex: 1;
-            padding: 8px 30px 8px 12px;
+            width: 100%;
+            padding: 10px 35px 10px 12px;
             border: 1px solid #e8e8e8;
-            border-radius: 20px;
-            font-size: 13px;
+            border-radius: 12px;
+            font-size: 14px;
             background-color: #f5f5f5;
             color: #666;
             cursor: pointer;
@@ -144,8 +286,8 @@
             appearance: none;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 12px;
+            background-position: right 12px center;
+            background-size: 14px;
             font-weight: 500;
         }
         
@@ -161,23 +303,46 @@
             box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.1);
         }
         
-        .reset-btn {
-            padding: 8px 16px;
+        .drawer-footer {
+            display: flex;
+            gap: 12px;
+            padding: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            position: sticky;
+            bottom: 0;
             background: white;
-            border: 1px solid #e8e8e8;
-            border-radius: 20px;
-            color: #666;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            white-space: nowrap;
+            z-index: 10;
         }
         
-        .reset-btn:hover {
-            background: var(--primary);
-            border-color: var(--primary);
+        .drawer-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .drawer-btn-reset {
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        .drawer-btn-reset:hover {
+            background: #e8e8e8;
+        }
+        
+        .drawer-btn-apply {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
+            box-shadow: 0 4px 12px rgba(255, 107, 139, 0.3);
+        }
+        
+        .drawer-btn-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 139, 0.4);
         }
         
         /* 记录列表 */
@@ -403,48 +568,79 @@
             <div class="back-btn" onclick="history.back()">←</div>
         </div>
         
-        <!-- 筛选区域 -->
+        <!-- 筛选触发按钮 -->
         <div class="filters-wrapper">
-            <div class="filter-row">
-                <div class="filter-label">时间</div>
-                <div class="filter-chips">
-                    <button class="filter-chip active" data-filter="time" data-value="all">全部</button>
-                    <button class="filter-chip" data-filter="time" data-value="today">今天</button>
-                    <button class="filter-chip" data-filter="time" data-value="week">本周</button>
-                    <button class="filter-chip" data-filter="time" data-value="month">本月</button>
+            <div class="filter-trigger" id="filterTrigger">
+                <div class="filter-trigger-left">
+                    <span class="filter-icon">🔍</span>
+                    <span class="filter-trigger-text">筛选条件</span>
+                    <span class="filter-count" id="filterCount" style="display: none;">0</span>
                 </div>
+                <span class="filter-arrow">▼</span>
             </div>
             
-            <div class="filter-row">
-                <div class="filter-label">时段</div>
-                <div class="filter-chips">
-                    <button class="filter-chip active" data-filter="mealtime" data-value="all">全部</button>
-                    <button class="filter-chip" data-filter="mealtime" data-value="breakfast">早餐</button>
-                    <button class="filter-chip" data-filter="mealtime" data-value="lunch">午餐</button>
-                    <button class="filter-chip" data-filter="mealtime" data-value="dinner">晚餐</button>
-                </div>
+            <!-- 激活的筛选标签 -->
+            <div class="active-filters-tags" id="activeFiltersTags"></div>
+        </div>
+        
+        <!-- 筛选抽屉遮罩 -->
+        <div class="filter-drawer-overlay" id="drawerOverlay"></div>
+        
+        <!-- 筛选抽屉 -->
+        <div class="filter-drawer" id="filterDrawer">
+            <div class="drawer-header">
+                <div class="drawer-title">筛选条件</div>
+                <div class="drawer-close" id="drawerClose">✕</div>
             </div>
             
-            <div class="filter-row">
-                <div class="filter-label">方式</div>
-                <div class="filter-chips">
-                    <button class="filter-chip active" data-filter="type" data-value="all">全部</button>
-                    <button class="filter-chip" data-filter="type" data-value="home">在家</button>
-                    <button class="filter-chip" data-filter="type" data-value="out">外出</button>
+            <div class="drawer-content">
+                <div class="filter-section">
+                    <div class="filter-section-title">时间范围</div>
+                    <div class="filter-chips">
+                        <button class="filter-chip active" data-filter="time" data-value="all">全部</button>
+                        <button class="filter-chip" data-filter="time" data-value="today">今天</button>
+                        <button class="filter-chip" data-filter="time" data-value="week">本周</button>
+                        <button class="filter-chip" data-filter="time" data-value="month">本月</button>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="filter-row">
-                <div class="filter-label">更多</div>
-                <div class="filter-selects">
+                
+                <div class="filter-section">
+                    <div class="filter-section-title">用餐时段</div>
+                    <div class="filter-chips">
+                        <button class="filter-chip active" data-filter="mealtime" data-value="all">全部</button>
+                        <button class="filter-chip" data-filter="mealtime" data-value="breakfast">早餐</button>
+                        <button class="filter-chip" data-filter="mealtime" data-value="lunch">午餐</button>
+                        <button class="filter-chip" data-filter="mealtime" data-value="dinner">晚餐</button>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <div class="filter-section-title">用餐方式</div>
+                    <div class="filter-chips">
+                        <button class="filter-chip active" data-filter="type" data-value="all">全部</button>
+                        <button class="filter-chip" data-filter="type" data-value="home">在家烹饪</button>
+                        <button class="filter-chip" data-filter="type" data-value="out">外出就餐</button>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <div class="filter-section-title">菜谱筛选</div>
                     <select class="filter-select" id="recipeFilter">
-                        <option value="all">菜谱筛选</option>
+                        <option value="all">全部菜谱</option>
                     </select>
-                    <select class="filter-select" id="anniversaryFilter">
-                        <option value="all">纪念日筛选</option>
-                    </select>
-                    <button class="reset-btn" id="resetBtn">重置</button>
                 </div>
+                
+                <div class="filter-section">
+                    <div class="filter-section-title">纪念日筛选</div>
+                    <select class="filter-select" id="anniversaryFilter">
+                        <option value="all">全部纪念日</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="drawer-footer">
+                <button class="drawer-btn drawer-btn-reset" id="resetBtn">重置</button>
+                <button class="drawer-btn drawer-btn-apply" id="applyBtn">应用</button>
             </div>
         </div>
         
@@ -560,6 +756,7 @@
         // 初始化
         function init() {
             initFilters();
+            updateFilterCount();
             renderRecords();
         }
         
@@ -603,6 +800,17 @@
         
         // 绑定筛选事件
         function bindFilterEvents() {
+            // 打开抽屉
+            document.getElementById('filterTrigger').addEventListener('click', openDrawer);
+            document.getElementById('drawerOverlay').addEventListener('click', closeDrawer);
+            document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+            
+            // 应用筛选
+            document.getElementById('applyBtn').addEventListener('click', () => {
+                applyFilters();
+                closeDrawer();
+            });
+            
             // 按钮筛选
             document.querySelectorAll('.filter-chip').forEach(chip => {
                 chip.addEventListener('click', function() {
@@ -617,39 +825,134 @@
                     
                     // 更新筛选条件
                     filters[filterType] = value;
-                    applyFilters();
+                    updateFilterCount();
                 });
             });
             
             // 下拉框筛选
             document.getElementById('recipeFilter').addEventListener('change', function() {
                 filters.recipe = this.value;
-                applyFilters();
+                updateFilterCount();
             });
             
             document.getElementById('anniversaryFilter').addEventListener('change', function() {
                 filters.anniversary = this.value;
-                applyFilters();
+                updateFilterCount();
             });
             
             // 重置按钮
-            document.getElementById('resetBtn').addEventListener('click', function() {
-                // 重置所有筛选
-                filters.time = 'all';
-                filters.mealtime = 'all';
-                filters.type = 'all';
-                filters.recipe = 'all';
-                filters.anniversary = 'all';
+            document.getElementById('resetBtn').addEventListener('click', resetFilters);
+        }
+        
+        // 打开抽屉
+        function openDrawer() {
+            document.getElementById('drawerOverlay').classList.add('show');
+            document.getElementById('filterDrawer').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 关闭抽屉
+        function closeDrawer() {
+            document.getElementById('drawerOverlay').classList.remove('show');
+            document.getElementById('filterDrawer').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+        
+        // 重置筛选
+        function resetFilters() {
+            filters.time = 'all';
+            filters.mealtime = 'all';
+            filters.type = 'all';
+            filters.recipe = 'all';
+            filters.anniversary = 'all';
+            
+            // 重置UI
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.classList.toggle('active', chip.dataset.value === 'all');
+            });
+            document.getElementById('recipeFilter').value = 'all';
+            document.getElementById('anniversaryFilter').value = 'all';
+            
+            updateFilterCount();
+            applyFilters();
+            closeDrawer();
+        }
+        
+        // 更新筛选数量和标签
+        function updateFilterCount() {
+            const activeFilters = [];
+            
+            // 收集激活的筛选
+            if (filters.time !== 'all') {
+                const chip = document.querySelector(`[data-filter="time"][data-value="${filters.time}"]`);
+                activeFilters.push({ type: 'time', label: chip.textContent, value: filters.time });
+            }
+            if (filters.mealtime !== 'all') {
+                const chip = document.querySelector(`[data-filter="mealtime"][data-value="${filters.mealtime}"]`);
+                activeFilters.push({ type: 'mealtime', label: chip.textContent, value: filters.mealtime });
+            }
+            if (filters.type !== 'all') {
+                const chip = document.querySelector(`[data-filter="type"][data-value="${filters.type}"]`);
+                activeFilters.push({ type: 'type', label: chip.textContent, value: filters.type });
+            }
+            if (filters.recipe !== 'all') {
+                const select = document.getElementById('recipeFilter');
+                activeFilters.push({ type: 'recipe', label: select.options[select.selectedIndex].text, value: filters.recipe });
+            }
+            if (filters.anniversary !== 'all') {
+                const select = document.getElementById('anniversaryFilter');
+                activeFilters.push({ type: 'anniversary', label: select.options[select.selectedIndex].text, value: filters.anniversary });
+            }
+            
+            // 更新数量显示
+            const countEl = document.getElementById('filterCount');
+            if (activeFilters.length > 0) {
+                countEl.textContent = activeFilters.length;
+                countEl.style.display = 'inline-flex';
+            } else {
+                countEl.style.display = 'none';
+            }
+            
+            // 更新标签显示
+            const tagsContainer = document.getElementById('activeFiltersTags');
+            if (activeFilters.length > 0) {
+                tagsContainer.innerHTML = activeFilters.map(filter => `
+                    <div class="active-filter-tag">
+                        <span>${filter.label}</span>
+                        <span class="tag-remove" data-type="${filter.type}">✕</span>
+                    </div>
+                `).join('');
                 
-                // 重置UI
-                document.querySelectorAll('.filter-chip').forEach(chip => {
+                // 绑定删除事件
+                tagsContainer.querySelectorAll('.tag-remove').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const type = this.dataset.type;
+                        removeFilter(type);
+                    });
+                });
+            } else {
+                tagsContainer.innerHTML = '';
+            }
+        }
+        
+        // 删除单个筛选
+        function removeFilter(type) {
+            filters[type] = 'all';
+            
+            // 更新UI
+            if (type === 'time' || type === 'mealtime' || type === 'type') {
+                document.querySelectorAll(`[data-filter="${type}"]`).forEach(chip => {
                     chip.classList.toggle('active', chip.dataset.value === 'all');
                 });
+            } else if (type === 'recipe') {
                 document.getElementById('recipeFilter').value = 'all';
+            } else if (type === 'anniversary') {
                 document.getElementById('anniversaryFilter').value = 'all';
-                
-                applyFilters();
-            });
+            }
+            
+            updateFilterCount();
+            applyFilters();
         }
         
         // 应用筛选
@@ -704,6 +1007,7 @@
                 return true;
             });
             
+            updateFilterCount();
             renderRecords();
         }
         
