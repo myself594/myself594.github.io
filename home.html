@@ -147,9 +147,6 @@
             margin: 15px 0;
             color: white;
             box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -165,11 +162,12 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            font-size: 15px;
         }
         
         .anniversary-desc {
             font-size: 14px;
-            opacity: 0.9;
+            opacity: 0.95;
         }
         
         .meal-section {
@@ -474,13 +472,11 @@
         </div>
         
         <div class="anniversary-reminder">
-            <div class="anniversary-content">
-                <div class="anniversary-title">
-                    <span>🎉</span>
-                    <span>纪念日提醒</span>
-                </div>
-                <div class="anniversary-desc">明天是你们在一起100天纪念日</div>
+            <div class="anniversary-title">
+                <span>🎉</span>
+                <span>纪念日提醒</span>
             </div>
+            <div class="anniversary-desc">在一起100天 · 还有1天12小时</div>
         </div>
         
         <div class="meal-section">
@@ -517,9 +513,9 @@
                 cook: '👩‍🍳👨‍🍳 一起下厨',
                 notes: '兔兔今天早起做的爱心早餐，搭配新鲜牛奶，熊大特别喜欢吃。吐司烤得刚刚好，鸡蛋煎成了爱心形状💕',
                 images: [
-                    'https://cn.bing.com/th?id=OHR.LionDay_ZH-CN3864552438_1920x1080.jpg',
-                    'https://cn.bing.com/th?id=OHR.OldTownTallinn_ZH-CN3721270247_1920x1080.jpg',
-                    'https://cn.bing.com/th?id=OHR.ManhattanView_ZH-CN3614444449_1920x1080.jpg'
+                    'https://www.bing.com/th?id=OHR.LofotenSurfing_ZH-CN5756734508_1920x1080.jpg',
+                    'https://www.bing.com/th?id=OHR.YosemiteReflection_ZH-CN5626789401_1920x1080.jpg',
+                    'https://www.bing.com/th?id=OHR.Tegallalang_ZH-CN5496213437_1920x1080.jpg'
                 ],
                 anniversary: null,
                 recipes: ['爱心煎蛋三明治', '法式吐司']
@@ -531,8 +527,8 @@
                 location: '📍 北京市朝阳区 · 日料店',
                 notes: '午休时间一起探索新店，三文鱼很新鲜，环境也很不错。店员服务态度特别好，下次还想来试试他们的招牌寿司。',
                 images: [
-                    'https://cn.bing.com/th?id=OHR.KingfisherBed_ZH-CN3519084485_1920x1080.jpg',
-                    'https://cn.bing.com/th?id=OHR.PlymouthHarbor_ZH-CN3369091693_1920x1080.jpg'
+                    'https://www.bing.com/th?id=OHR.PurnululuNP_ZH-CN5323785820_1920x1080.jpg',
+                    'https://www.bing.com/th?id=OHR.WinterOlympia_ZH-CN5181469813_1920x1080.jpg'
                 ],
                 anniversary: null,
                 recipes: null
@@ -544,10 +540,10 @@
                 cook: '👩‍🍳👨‍🍳 一起下厨',
                 notes: '为了庆祝情人节，我们精心准备了烛光晚餐。从超市买了新鲜的牛排和红酒，一起动手做了一顿浪漫大餐。',
                 images: [
-                    'https://cn.bing.com/th?id=OHR.AdelieBreeding_ZH-CN3246348922_1920x1080.jpg',
-                    'https://cn.bing.com/th?id=OHR.PinnaclesNambung_ZH-CN3095493517_1920x1080.jpg',
-                    'https://cn.bing.com/th?id=OHR.Knuthojdsmossen_ZH-CN2984846982_1920x1080.jpg',
-                    'https://cn.bing.com/th?id=OHR.BasilicaSuperga_ZH-CN2857476612_1920x1080.jpg'
+                    'https://www.bing.com/th?id=OHR.Comma_ZH-CN5021473503_1920x1080.jpg',
+                    'https://www.bing.com/th?id=OHR.LopburiMonkeys_ZH-CN4889893623_1920x1080.jpg',
+                    'https://www.bing.com/th?id=OHR.SheepCirrus_ZH-CN4758965818_1920x1080.jpg',
+                    'https://www.bing.com/th?id=OHR.CottonGrass_ZH-CN4626609663_1920x1080.jpg'
                 ],
                 anniversary: '💖 在一起100天',
                 recipes: ['煎牛排', '凯撒沙拉', '提拉米苏']
@@ -682,6 +678,11 @@
                     startAutoPlay(carouselIndex);
                 }
             }
+        });
+        
+        // 纪念日卡片点击
+        document.querySelector('.anniversary-reminder').addEventListener('click', function() {
+            alert('跳转到纪念日详情页面');
         });
     </script>
 </body>
