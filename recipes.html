@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>情侣菜谱 - 一日三餐恋</title>
+    <title>情侣菜谱 - 一日三餐</title>
     <style>
         :root {
             --primary: #FF6B8B;
@@ -46,7 +46,7 @@
             align-items: center;
             padding: 15px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .logo {
@@ -74,7 +74,7 @@
         
         /* 搜索框 */
         .search-container {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: none;
         }
         
@@ -118,40 +118,6 @@
             display: block;
         }
         
-        /* 统计卡片 */
-        .stats-banner {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 15px;
-            padding: 20px;
-            color: white;
-            margin-bottom: 15px;
-            box-shadow: var(--shadow);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            text-align: center;
-        }
-        
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .stat-value {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-        
-        .stat-label {
-            font-size: 11px;
-            opacity: 0.85;
-        }
-        
         /* 筛选标签 */
         .recipes-tabs {
             display: flex;
@@ -188,7 +154,7 @@
         /* 菜谱列表 */
         .recipes-container {
             display: grid;
-            gap: 15px;
+            gap: 20px;
         }
         
         .recipe-card {
@@ -211,6 +177,7 @@
             height: 160px;
             overflow: hidden;
             background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            border-radius: 20px 20px 0 0;
         }
         
         .recipe-image {
@@ -243,6 +210,23 @@
             z-index: 2;
         }
         
+        .recipe-pinned-badge {
+            position: absolute;
+            top: 52px;
+            left: 12px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 209, 102, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            z-index: 3;
+            box-shadow: 0 2px 8px rgba(255, 209, 102, 0.4);
+        }
+        
         .recipe-menu-btn {
             position: absolute;
             top: 12px;
@@ -273,11 +257,11 @@
             right: 12px;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            min-width: 140px;
-            z-index: 10;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+            min-width: 160px;
+            max-width: 200px;
+            z-index: 1000;
             display: none;
-            overflow: hidden;
         }
         
         .recipe-menu-dropdown.show {
@@ -297,15 +281,22 @@
         }
         
         .recipe-menu-item {
-            padding: 12px 16px;
+            padding: 14px 18px;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 14px;
+            font-size: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             color: var(--dark);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            white-space: nowrap;
+        }
+        
+        .recipe-menu-item span:first-child {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
         }
         
         .recipe-menu-item:last-child {
@@ -315,10 +306,6 @@
         .recipe-menu-item:hover {
             background-color: rgba(255, 107, 139, 0.05);
             color: var(--primary);
-        }
-        
-        .recipe-menu-item.favorite.active {
-            color: #FFD166;
         }
         
         .recipe-menu-item.delete:hover {
@@ -719,35 +706,12 @@
             </div>
         </div>
         
-        <!-- 统计横幅 -->
-        <div class="stats-banner">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value" id="totalRecipes">12</div>
-                    <div class="stat-label">全部菜谱</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="favoriteRecipes">5</div>
-                    <div class="stat-label">收藏菜谱</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="rabbitRecipes">4</div>
-                    <div class="stat-label">兔兔菜谱</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="bearRecipes">2</div>
-                    <div class="stat-label">熊大菜谱</div>
-                </div>
-            </div>
-        </div>
-        
         <!-- 分类标签 -->
         <div class="recipes-tabs">
             <div class="recipes-tab active" data-filter="all">全部</div>
-            <div class="recipes-tab" data-filter="favorite">最爱</div>
-            <div class="recipes-tab" data-filter="rabbit">兔兔专属</div>
-            <div class="recipes-tab" data-filter="bear">熊大专属</div>
-            <div class="recipes-tab" data-filter="together">共同制作</div>
+            <div class="recipes-tab" data-filter="早餐">早餐</div>
+            <div class="recipes-tab" data-filter="午餐">午餐</div>
+            <div class="recipes-tab" data-filter="晚餐">晚餐</div>
         </div>
         
         <!-- 菜谱列表 -->
@@ -855,7 +819,7 @@
                 cook: 'together',
                 cookLabel: '👩‍🍳👨‍🍳 一起',
                 time: 15,
-                favorite: true,
+                pinned: false,
                 ingredients: ['吐司面包 2片', '鸡蛋 2个', '火腿 2片', '生菜 2片', '番茄 1片', '芝士 1片', '黄油 适量', '盐 少许'],
                 steps: [
                     '将吐司面包片放入烤面包机中烤至金黄色',
@@ -874,7 +838,7 @@
                 cook: 'together',
                 cookLabel: '👩‍🍳👨‍🍳 一起',
                 time: 30,
-                favorite: false,
+                pinned: true,
                 ingredients: ['火锅底料 1包', '牛肉片 200g', '羊肉片 200g', '虾 150g', '豆腐 1块', '金针菇 150g', '白菜 适量', '粉丝 1把'],
                 steps: [
                     '准备好所有食材，肉类提前解冻',
@@ -892,7 +856,7 @@
                 cook: 'rabbit',
                 cookLabel: '👩‍🍳 兔兔',
                 time: 10,
-                favorite: true,
+                pinned: false,
                 ingredients: ['番茄 2个', '鸡蛋 3个', '葱 少许', '盐 适量', '糖 少许', '油 适量'],
                 steps: [
                     '番茄洗净切块，鸡蛋打散',
@@ -936,20 +900,21 @@
                             ${recipe.tags[0]}
                         </div>
                         ` : ''}
+                        ${recipe.pinned ? `<div class="recipe-pinned-badge" style="${recipe.tags.length > 0 ? 'top: 52px;' : 'top: 12px;'}">📌</div>` : ''}
                         <div class="recipe-menu-btn" data-id="${recipe.id}">
                             ⋮
                             <div class="recipe-menu-dropdown">
-                                <div class="recipe-menu-item favorite ${recipe.favorite ? 'active' : ''}" data-action="favorite" data-id="${recipe.id}">
-                                    <span>★</span>
-                                    <span>${recipe.favorite ? '取消收藏' : '收藏菜谱'}</span>
-                                </div>
-                                <div class="recipe-menu-item" data-action="share" data-id="${recipe.id}">
-                                    <span>📤</span>
-                                    <span>分享菜谱</span>
+                                <div class="recipe-menu-item" data-action="pin" data-id="${recipe.id}">
+                                    <span>📌</span>
+                                    <span>${recipe.pinned ? '取消置顶' : '置顶菜谱'}</span>
                                 </div>
                                 <div class="recipe-menu-item" data-action="edit" data-id="${recipe.id}">
                                     <span>✏️</span>
                                     <span>编辑菜谱</span>
+                                </div>
+                                <div class="recipe-menu-item" data-action="share" data-id="${recipe.id}">
+                                    <span>📤</span>
+                                    <span>分享菜谱</span>
                                 </div>
                                 <div class="recipe-menu-item delete" data-action="delete" data-id="${recipe.id}">
                                     <span>🗑️</span>
@@ -1030,14 +995,14 @@
             if (!recipe) return;
             
             switch(action) {
-                case 'favorite':
-                    toggleFavorite(id);
-                    break;
-                case 'share':
-                    shareRecipe(id);
+                case 'pin':
+                    togglePin(id);
                     break;
                 case 'edit':
                     editRecipe(id);
+                    break;
+                case 'share':
+                    shareRecipe(id);
                     break;
                 case 'delete':
                     deleteRecipe(id);
@@ -1045,11 +1010,21 @@
             }
         }
         
+        // 置顶/取消置顶
+        function togglePin(id) {
+            const recipe = recipesData.find(r => r.id === id);
+            if (recipe) {
+                recipe.pinned = !recipe.pinned;
+                filterRecipes(currentFilter);
+                alert(recipe.pinned ? `"${recipe.name}"已置顶` : `已取消置顶"${recipe.name}"`);
+            }
+        }
+        
         // 分享菜谱
         function shareRecipe(id) {
             const recipe = recipesData.find(r => r.id === id);
             if (recipe) {
-                alert(`分享菜谱：${recipe.name}\n\n将菜谱分享给好友功能`);
+                alert(`分享菜谱：${recipe.name}\n\n可以分享给好友或生成分享链接`);
             }
         }
         
@@ -1070,20 +1045,9 @@
                     if (index > -1) {
                         recipesData.splice(index, 1);
                         filterRecipes(currentFilter);
-                        updateStats();
                         alert('菜谱已删除');
                     }
                 }
-            }
-        }
-        
-        // 切换收藏状态
-        function toggleFavorite(id) {
-            const recipe = recipesData.find(r => r.id === id);
-            if (recipe) {
-                recipe.favorite = !recipe.favorite;
-                filterRecipes(currentFilter);
-                updateStats();
             }
         }
         
@@ -1109,15 +1073,17 @@
             
             let filtered = recipesData;
             
-            if (filter === 'favorite') {
-                filtered = recipesData.filter(r => r.favorite);
-            } else if (filter === 'rabbit') {
-                filtered = recipesData.filter(r => r.cook === 'rabbit');
-            } else if (filter === 'bear') {
-                filtered = recipesData.filter(r => r.cook === 'bear');
-            } else if (filter === 'together') {
-                filtered = recipesData.filter(r => r.cook === 'together');
+            // 按用餐时间筛选
+            if (filter !== 'all') {
+                filtered = filtered.filter(r => r.tags.includes(filter));
             }
+            
+            // 置顶的菜谱排在前面
+            filtered.sort((a, b) => {
+                if (a.pinned && !b.pinned) return -1;
+                if (!a.pinned && b.pinned) return 1;
+                return 0;
+            });
             
             currentRecipes = filtered;
             renderRecipes(filtered);
@@ -1126,25 +1092,31 @@
         // 搜索菜谱
         function searchRecipes(keyword) {
             if (!keyword.trim()) {
-                renderRecipes(currentRecipes);
+                filterRecipes(currentFilter);
                 return;
             }
             
-            const searched = currentRecipes.filter(recipe => {
+            // 先按当前筛选条件筛选
+            let filtered = recipesData;
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(r => r.tags.includes(currentFilter));
+            }
+            
+            // 再按关键词搜索
+            const searched = filtered.filter(recipe => {
                 return recipe.name.toLowerCase().includes(keyword.toLowerCase()) ||
                        recipe.ingredients.some(ing => ing.toLowerCase().includes(keyword.toLowerCase())) ||
                        recipe.tags.some(tag => tag.toLowerCase().includes(keyword.toLowerCase()));
             });
             
+            // 置顶的菜谱排在前面
+            searched.sort((a, b) => {
+                if (a.pinned && !b.pinned) return -1;
+                if (!a.pinned && b.pinned) return 1;
+                return 0;
+            });
+            
             renderRecipes(searched);
-        }
-        
-        // 更新统计数据
-        function updateStats() {
-            document.getElementById('totalRecipes').textContent = recipesData.length;
-            document.getElementById('favoriteRecipes').textContent = recipesData.filter(r => r.favorite).length;
-            document.getElementById('rabbitRecipes').textContent = recipesData.filter(r => r.cook === 'rabbit').length;
-            document.getElementById('bearRecipes').textContent = recipesData.filter(r => r.cook === 'bear').length;
         }
         
         // 标签切换
@@ -1302,7 +1274,7 @@
                 cook,
                 cookLabel: cookLabels[cook],
                 time,
-                favorite: false,
+                pinned: false,
                 ingredients,
                 steps,
                 tags,
@@ -1313,7 +1285,6 @@
             
             // 更新显示
             filterRecipes(currentFilter);
-            updateStats();
             
             // 关闭模态框并重置表单
             closeModal();
@@ -1336,7 +1307,6 @@
         
         // 初始化
         renderRecipes(recipesData);
-        updateStats();
         
         // 点击其他地方关闭菜单
         document.addEventListener('click', function(e) {
