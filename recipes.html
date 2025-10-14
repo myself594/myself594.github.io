@@ -35,24 +35,10 @@
             max-width: 480px;
             margin: 0 auto;
             padding: 20px;
+            padding-top: 30px;
             background-color: white;
             min-height: 100vh;
             box-shadow: var(--shadow);
-        }
-        
-        .header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-        
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary);
         }
         
         /* 筛选标签 */
@@ -146,6 +132,20 @@
             font-weight: 600;
             color: var(--dark);
             z-index: 2;
+        }
+        
+        .recipe-pinned-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 6px 12px;
+            background: rgba(255, 209, 102, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--dark);
+            z-index: 3;
         }
         
         .recipe-menu-btn {
@@ -592,10 +592,6 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">情侣菜谱</div>
-        </div>
-        
         <!-- 分类标签 -->
         <div class="recipes-tabs">
             <div class="recipes-tab active" data-filter="all">全部</div>
@@ -785,8 +781,13 @@
                             `<img src="${recipe.image}" alt="${recipe.name}" class="recipe-image">` :
                             `<div class="recipe-image-placeholder">📷</div>`
                         }
+                        ${recipe.pinned ? `
+                        <div class="recipe-pinned-badge">
+                            ⭐ 置顶
+                        </div>
+                        ` : ''}
                         ${recipe.tags.length > 0 ? `
-                        <div class="recipe-difficulty-badge">
+                        <div class="recipe-difficulty-badge" style="${recipe.pinned ? 'left: 95px;' : ''}">
                             ${recipe.tags[0]}
                         </div>
                         ` : ''}
