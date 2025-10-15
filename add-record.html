@@ -40,27 +40,7 @@
             background-color: white;
             min-height: 100vh;
             box-shadow: var(--shadow);
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-        
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .nav-icon {
-            font-size: 20px;
-            cursor: pointer;
-            color: #999;
+            padding-bottom: 100px;
         }
         
         .form-group {
@@ -237,6 +217,19 @@
         .cook-label {
             font-size: 14px;
             font-weight: 500;
+        }
+        
+        .btn-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            padding: 15px 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            max-width: 480px;
+            margin: 0 auto;
         }
         
         .btn {
@@ -467,11 +460,6 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">添加用餐记录</div>
-            <div class="nav-icon">✕</div>
-        </div>
-        
         <form id="add-record-form">
             <div class="form-group">
                 <label class="form-label required-label" for="meal-name">记录名称</label>
@@ -580,9 +568,11 @@
                 <label class="form-label" for="meal-notes">记录备注</label>
                 <textarea id="meal-notes" class="form-textarea" placeholder="记录用餐的特别时刻、感受或菜品的特别之处..."></textarea>
             </div>
-            
-            <button type="submit" class="btn btn-primary">发布记录</button>
         </form>
+    </div>
+    
+    <div class="btn-container">
+        <button type="submit" form="add-record-form" class="btn btn-primary">发布记录</button>
     </div>
     
     <script>
@@ -735,11 +725,11 @@
                 <div class="recipe-form-group">
                     <label class="form-label">菜谱图片</label>
                     <div class="image-selector-options">
-                        <button type="button" class="image-option-btn upload-new-btn" data-recipe="${recipeCount}">
-                            📤 上传图片
-                        </button>
                         <button type="button" class="image-option-btn select-from-record-btn" data-recipe="${recipeCount}">
                             🖼️ 从记录照片选择
+                        </button>
+                        <button type="button" class="image-option-btn upload-new-btn" data-recipe="${recipeCount}">
+                            📤 上传图片
                         </button>
                     </div>
                 </div>
@@ -760,18 +750,18 @@
             recipeList.appendChild(recipeCard);
             
             // 绑定图片选择按钮事件
-            recipeCard.querySelector('.upload-new-btn').addEventListener('click', function() {
-                const btn = this;
-                btn.classList.add('selected');
-                recipeCard.querySelector('.select-from-record-btn').classList.remove('selected');
-                alert('点击上传新图片功能');
-            });
-            
             recipeCard.querySelector('.select-from-record-btn').addEventListener('click', function() {
                 const btn = this;
                 btn.classList.add('selected');
                 recipeCard.querySelector('.upload-new-btn').classList.remove('selected');
                 alert('从记录照片中选择（这里会显示上面上传的照片列表）');
+            });
+            
+            recipeCard.querySelector('.upload-new-btn').addEventListener('click', function() {
+                const btn = this;
+                btn.classList.add('selected');
+                recipeCard.querySelector('.select-from-record-btn').classList.remove('selected');
+                alert('点击上传新图片功能');
             });
         }
         
