@@ -41,17 +41,11 @@
         
         .header {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             padding: 15px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
-        }
-        
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary);
         }
         
         .back-btn {
@@ -564,7 +558,6 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">用餐记录</div>
             <div class="back-btn" onclick="history.back()">←</div>
         </div>
         
@@ -661,7 +654,7 @@
                 type: '🏠 在家烹饪',
                 typeCategory: 'home',
                 cook: '👩‍🍳👨‍🍳 一起下厨',
-                notes: '兔兔今天早起做的爱心早餐，搭配新鲜牛奶，熊大特别喜欢吃。吐司烤得刚刚好，鸡蛋煎成了爱心形状💕',
+                notes: '兔兔今天早起做的爱心早餐，搭配新鲜牛奶，熊大特别喜欢吃。吐司烤得刚刚好,鸡蛋煎成了爱心形状💕',
                 images: [
                     'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=220&fit=crop',
                     'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&h=220&fit=crop'
