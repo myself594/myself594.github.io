@@ -31,36 +31,17 @@
             background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
+            padding-bottom: 100px;
         }
         
         .container {
             max-width: 480px;
             margin: 0 auto;
             padding: 20px;
+            padding-top: 30px;
             background-color: white;
             min-height: 100vh;
             box-shadow: var(--shadow);
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-        
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .nav-icon {
-            font-size: 20px;
-            cursor: pointer;
-            color: #999;
         }
         
         .form-group {
@@ -186,32 +167,6 @@
             color: white;
         }
         
-        .form-actions {
-            margin-top: 30px;
-        }
-        
-        .btn {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            box-shadow: 0 4px 12px rgba(255, 107, 139, 0.3);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
-        }
-        
         .info-box {
             background-color: rgba(255, 209, 102, 0.1);
             border-left: 3px solid #FFD166;
@@ -253,15 +208,46 @@
         .reminder-example-icon {
             font-size: 16px;
         }
+        
+        /* 底部按钮 */
+        .footer-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 480px;
+            width: 100%;
+            padding: 15px 20px;
+            background: white;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+            z-index: 100;
+        }
+        
+        .footer-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .footer-btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 107, 139, 0.3);
+        }
+        
+        .footer-btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 139, 0.4);
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">添加纪念日</div>
-            <div class="nav-icon">←</div>
-        </div>
-        
         <form id="add-anniversary-form">
             <div class="form-group">
                 <label class="form-label required-label" for="anniversary-name">纪念日名称</label>
@@ -329,11 +315,11 @@
                 <label class="form-label" for="anniversary-notes">备注</label>
                 <textarea id="anniversary-notes" class="form-textarea" placeholder="记录这个纪念日的特别之处..."></textarea>
             </div>
-            
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">保存纪念日</button>
-            </div>
         </form>
+        
+        <div class="footer-buttons">
+            <button type="submit" form="add-anniversary-form" class="footer-btn footer-btn-submit">保存纪念日</button>
+        </div>
     </div>
     
     <script>
@@ -378,13 +364,6 @@
             
             console.log('纪念日数据:', formData);
             alert('纪念日添加成功！\n\n提醒将在首页顶部的纪念日卡片中显示');
-        });
-        
-        // 返回按钮
-        document.querySelector('.nav-icon').addEventListener('click', function() {
-            if (confirm('确定要返回吗？未保存的内容将丢失')) {
-                window.history.back();
-            }
         });
     </script>
 </body>
