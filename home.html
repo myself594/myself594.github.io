@@ -43,20 +43,6 @@
             padding-bottom: 80px;
         }
         
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
         .couple-card {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 20px;
@@ -175,7 +161,7 @@
         }
         
         .section-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             margin-bottom: 20px;
             display: flex;
@@ -187,6 +173,7 @@
             font-size: 14px;
             color: var(--primary);
             text-decoration: none;
+            cursor: pointer;
         }
         
         .meals-list {
@@ -433,10 +420,6 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">一日三餐恋</div>
-        </div>
-        
         <div class="couple-card">
             <div class="couple-avatars">
                 <div class="avatar">🐰</div>
@@ -475,7 +458,7 @@
         <div class="meal-section">
             <div class="section-title">
                 <h2>今日用餐</h2>
-                <a href="#" class="see-all">查看全部</a>
+                <a href="#" class="see-all" id="seeAllLink">查看全部</a>
             </div>
             
             <div class="meals-list" id="mealsList"></div>
@@ -487,7 +470,7 @@
             <div class="nav-icon">🏠</div>
             <div>首页</div>
         </div>
-        <div class="nav-item">
+        <div class="nav-item" id="recordNav">
             <div class="nav-icon">📝</div>
             <div>记录</div>
         </div>
@@ -683,6 +666,19 @@
         // 纪念日卡片点击
         document.querySelector('.anniversary-reminder').addEventListener('click', function() {
             alert('跳转到纪念日详情页面');
+        });
+        
+        // 查看全部按钮点击 - 跳转到记录页面
+        document.getElementById('seeAllLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('跳转到记录页面');
+            // 实际项目中使用: window.location.href = 'records.html';
+        });
+        
+        // 底部导航栏 - 记录按钮点击
+        document.getElementById('recordNav').addEventListener('click', function() {
+            alert('跳转到记录页面');
+            // 实际项目中使用: window.location.href = 'records.html';
         });
     </script>
 </body>
