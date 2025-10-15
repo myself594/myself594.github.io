@@ -41,6 +41,62 @@
             box-shadow: var(--shadow);
         }
         
+        /* 添加菜谱卡片 */
+        .add-recipe-card {
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.05), rgba(255, 160, 122, 0.05));
+            border-radius: 12px;
+            padding: 18px 20px;
+            position: relative;
+            border: 1.5px solid rgba(255, 107, 139, 0.2);
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+        }
+        
+        .add-recipe-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 139, 0.15);
+            border-color: rgba(255, 107, 139, 0.4);
+        }
+        
+        .add-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: 300;
+        }
+        
+        .add-content {
+            flex: 1;
+        }
+        
+        .add-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 2px;
+        }
+        
+        .add-description {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .add-arrow {
+            font-size: 16px;
+            color: var(--primary);
+        }
+        
         /* 筛选标签 */
         .recipes-tabs {
             display: flex;
@@ -269,33 +325,6 @@
         .recipe-steps-preview strong {
             color: var(--dark);
             font-weight: 600;
-        }
-        
-        /* 浮动添加按钮 */
-        .floating-add-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 50%;
-            transform: translateX(calc(240px - 30px));
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            box-shadow: 0 6px 20px rgba(255, 107, 139, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 100;
-            border: none;
-        }
-        
-        .floating-add-btn:hover {
-            transform: translateX(calc(240px - 30px)) scale(1.1);
-            box-shadow: 0 8px 25px rgba(255, 107, 139, 0.5);
         }
         
         /* 模态框 */
@@ -600,12 +629,19 @@
             <div class="recipes-tab" data-filter="晚餐">晚餐</div>
         </div>
         
+        <!-- 添加菜谱卡片 -->
+        <div class="add-recipe-card" id="addRecipeBtn">
+            <div class="add-icon">+</div>
+            <div class="add-content">
+                <div class="add-title">添加菜谱</div>
+                <div class="add-description">记录你们的美食时光</div>
+            </div>
+            <div class="add-arrow">→</div>
+        </div>
+        
         <!-- 菜谱列表 -->
         <div class="recipes-container" id="recipesContainer"></div>
     </div>
-    
-    <!-- 浮动添加按钮 -->
-    <button class="floating-add-btn" id="addRecipeBtn">+</button>
     
     <!-- 添加菜谱模态框 -->
     <div class="modal-overlay" id="addRecipeModal">
