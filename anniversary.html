@@ -45,57 +45,6 @@
             box-shadow: var(--shadow);
         }
         
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-        
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .nav-icon {
-            font-size: 20px;
-            cursor: pointer;
-            color: #999;
-        }
-        
-        .stats-card {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            color: white;
-            box-shadow: var(--shadow);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            opacity: 0.85;
-        }
-        
         .filter-tabs {
             display: flex;
             background-color: rgba(0, 0, 0, 0.05);
@@ -122,31 +71,6 @@
             color: var(--primary);
         }
         
-        .section-divider {
-            margin: 25px 0 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .section-divider-line {
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
-        }
-        
-        .section-divider-text {
-            font-size: 14px;
-            color: #999;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-        
-        .anniversary-list {
-            display: grid;
-            gap: 15px;
-        }
-        
         .add-anniversary-card {
             background: linear-gradient(135deg, rgba(255, 107, 139, 0.05), rgba(255, 160, 122, 0.05));
             border-radius: 12px;
@@ -154,10 +78,16 @@
             position: relative;
             border: 1.5px solid rgba(255, 107, 139, 0.2);
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 15px;
+            transition: all 0.3s;
+        }
+        
+        .add-anniversary-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 139, 0.15);
         }
         
         .add-icon {
@@ -195,10 +125,35 @@
             color: var(--primary);
         }
         
+        .section-divider {
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+        }
+        
+        .section-divider-text {
+            font-size: 14px;
+            color: #999;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .anniversary-list {
+            display: grid;
+            gap: 15px;
+        }
+        
         .anniversary-item {
             background-color: white;
             border-radius: 15px;
-            padding: 20px;
+            padding: 24px 20px;
             box-shadow: var(--shadow);
             position: relative;
             transition: all 0.3s;
@@ -216,8 +171,8 @@
         }
         
         .anniversary-item.upcoming {
-            background: linear-gradient(135deg, rgba(255, 209, 102, 0.08), rgba(255, 160, 122, 0.08));
-            border-left-color: var(--warning);
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.08), rgba(255, 160, 122, 0.08));
+            border-left-color: var(--primary);
         }
         
         .anniversary-item.passed {
@@ -332,7 +287,7 @@
         .countdown-number-large {
             font-size: 28px;
             font-weight: bold;
-            color: var(--urgent);
+            color: var(--primary);
         }
         
         .countdown-unit-large {
@@ -359,26 +314,10 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">纪念日管理</div>
-            <div class="nav-icon">←</div>
-        </div>
-        
-        <div class="stats-card">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value">6</div>
-                    <div class="stat-label">全部纪念日</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">2</div>
-                    <div class="stat-label">即将到来</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">4</div>
-                    <div class="stat-label">已过去</div>
-                </div>
-            </div>
+        <div class="filter-tabs">
+            <div class="filter-tab active">全部</div>
+            <div class="filter-tab">即将到来</div>
+            <div class="filter-tab">已过去</div>
         </div>
         
         <div class="add-anniversary-card" id="add-btn">
@@ -388,12 +327,6 @@
                 <div class="add-description">记录你们的重要时刻</div>
             </div>
             <div class="add-arrow">→</div>
-        </div>
-        
-        <div class="filter-tabs">
-            <div class="filter-tab active">全部</div>
-            <div class="filter-tab">即将到来</div>
-            <div class="filter-tab">已过去</div>
         </div>
         
         <!-- 即将到来区域 -->
@@ -417,6 +350,14 @@
                     <div class="anniversary-menu">
                         ⋮
                         <div class="menu-dropdown">
+                            <div class="menu-item pin-item">
+                                <span>📌</span>
+                                <span>置顶</span>
+                            </div>
+                            <div class="menu-item share-item">
+                                <span>📤</span>
+                                <span>分享</span>
+                            </div>
                             <div class="menu-item edit-item">
                                 <span>✏️</span>
                                 <span>编辑</span>
@@ -457,6 +398,14 @@
                     <div class="anniversary-menu">
                         ⋮
                         <div class="menu-dropdown">
+                            <div class="menu-item pin-item">
+                                <span>📌</span>
+                                <span>置顶</span>
+                            </div>
+                            <div class="menu-item share-item">
+                                <span>📤</span>
+                                <span>分享</span>
+                            </div>
                             <div class="menu-item edit-item">
                                 <span>✏️</span>
                                 <span>编辑</span>
@@ -471,7 +420,7 @@
                 
                 <div class="countdown-section">
                     <div class="countdown-small">
-                        <strong style="color: var(--warning); font-size: 18px;">36天后</strong>
+                        <strong style="color: var(--primary); font-size: 18px;">36天后</strong>
                     </div>
                 </div>
                 
@@ -500,6 +449,14 @@
                     <div class="anniversary-menu">
                         ⋮
                         <div class="menu-dropdown">
+                            <div class="menu-item pin-item">
+                                <span>📌</span>
+                                <span>置顶</span>
+                            </div>
+                            <div class="menu-item share-item">
+                                <span>📤</span>
+                                <span>分享</span>
+                            </div>
                             <div class="menu-item edit-item">
                                 <span>✏️</span>
                                 <span>编辑</span>
@@ -532,6 +489,14 @@
                     <div class="anniversary-menu">
                         ⋮
                         <div class="menu-dropdown">
+                            <div class="menu-item pin-item">
+                                <span>📌</span>
+                                <span>置顶</span>
+                            </div>
+                            <div class="menu-item share-item">
+                                <span>📤</span>
+                                <span>分享</span>
+                            </div>
                             <div class="menu-item edit-item">
                                 <span>✏️</span>
                                 <span>编辑</span>
@@ -564,6 +529,14 @@
                     <div class="anniversary-menu">
                         ⋮
                         <div class="menu-dropdown">
+                            <div class="menu-item pin-item">
+                                <span>📌</span>
+                                <span>置顶</span>
+                            </div>
+                            <div class="menu-item share-item">
+                                <span>📤</span>
+                                <span>分享</span>
+                            </div>
                             <div class="menu-item edit-item">
                                 <span>✏️</span>
                                 <span>编辑</span>
@@ -624,6 +597,28 @@
             }
         });
         
+        // 置顶按钮
+        const pinButtons = document.querySelectorAll('.pin-item');
+        pinButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const title = this.closest('.anniversary-item').querySelector('.anniversary-title span:last-child').textContent;
+                alert(`已置顶纪念日：${title}`);
+                this.closest('.menu-dropdown').classList.remove('show');
+            });
+        });
+        
+        // 分享按钮
+        const shareButtons = document.querySelectorAll('.share-item');
+        shareButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const title = this.closest('.anniversary-item').querySelector('.anniversary-title span:last-child').textContent;
+                alert(`分享纪念日：${title}`);
+                this.closest('.menu-dropdown').classList.remove('show');
+            });
+        });
+        
         // 编辑按钮
         const editButtons = document.querySelectorAll('.edit-item');
         editButtons.forEach(btn => {
@@ -661,11 +656,6 @@
         // 添加纪念日卡片点击
         document.getElementById('add-btn').addEventListener('click', function() {
             alert('跳转到添加纪念日页面');
-        });
-        
-        // 返回按钮
-        document.querySelector('.nav-icon').addEventListener('click', function() {
-            window.history.back();
         });
     </script>
 </body>
