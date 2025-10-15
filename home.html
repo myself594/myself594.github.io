@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- 禁止缓存的 Meta 标签 -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    
     <title>首页 - 一日三餐恋</title>
     <style>
         :root {
@@ -434,15 +431,15 @@
             <div class="couple-stats">
                 <div class="stat">
                     <div class="stat-value">42</div>
-                    <div class="stat-label">共同用餐</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">28</div>
-                    <div class="stat-label">共同下厨</div>
+                    <div class="stat-label">美食记忆</div>
                 </div>
                 <div class="stat">
                     <div class="stat-value">16</div>
-                    <div class="stat-label">美食探索</div>
+                    <div class="stat-label">爱的食谱</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">珍藏时刻</div>
                 </div>
             </div>
         </div>
@@ -497,8 +494,8 @@
                 notes: '兔兔今天早起做的爱心早餐，搭配新鲜牛奶，熊大特别喜欢吃。吐司烤得刚刚好,鸡蛋煎成了爱心形状💕',
                 images: [
                     'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop',
-                    'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop',
-                    'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop'
+                    'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&h=220&fit=crop',
+                    'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=220&fit=crop'
                 ],
                 anniversary: null,
                 recipes: ['爱心煎蛋三明治', '法式吐司']
@@ -511,7 +508,7 @@
                 notes: '午休时间一起探索新店，三文鱼很新鲜，环境也很不错。店员服务态度特别好，下次还想来试试他们的招牌寿司。',
                 images: [
                     'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop',
-                    'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop'
+                    'https://images.unsplash.com/photo-1563612116625-3012372fccce?w=400&h=220&fit=crop'
                 ],
                 anniversary: null,
                 recipes: null
@@ -523,10 +520,9 @@
                 cook: '👩‍🍳👨‍🍳 一起下厨',
                 notes: '为了庆祝情人节，我们精心准备了烛光晚餐。从超市买了新鲜的牛排和红酒，一起动手做了一顿浪漫大餐。',
                 images: [
-                    'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop',
-                    'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop',
-                    'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop',
-                    'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=220&fit=crop'
+                    'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=220&fit=crop',
+                    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=220&fit=crop',
+                    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=220&fit=crop'
                 ],
                 anniversary: '💖 在一起100天',
                 recipes: ['煎牛排', '凯撒沙拉', '提拉米苏']
@@ -668,17 +664,15 @@
             alert('跳转到纪念日详情页面');
         });
         
-        // 查看全部按钮点击 - 跳转到记录页面
+        // 查看全部按钮点击
         document.getElementById('seeAllLink').addEventListener('click', function(e) {
             e.preventDefault();
             alert('跳转到记录页面');
-            // 实际项目中使用: window.location.href = 'records.html';
         });
         
-        // 底部导航栏 - 记录按钮点击
+        // 底部导航栏
         document.getElementById('recordNav').addEventListener('click', function() {
             alert('跳转到记录页面');
-            // 实际项目中使用: window.location.href = 'records.html';
         });
     </script>
 </body>
