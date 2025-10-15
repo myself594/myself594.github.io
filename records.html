@@ -39,26 +39,6 @@
             box-shadow: var(--shadow);
         }
         
-        .header {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-        
-        .back-btn {
-            font-size: 24px;
-            cursor: pointer;
-            color: #999;
-            transition: color 0.3s;
-        }
-        
-        .back-btn:hover {
-            color: var(--primary);
-        }
-        
         /* 筛选区域 */
         .filters-wrapper {
             margin-bottom: 20px;
@@ -557,10 +537,6 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="back-btn" onclick="history.back()">←</div>
-        </div>
-        
         <!-- 筛选触发按钮 -->
         <div class="filters-wrapper">
             <div class="filter-trigger" id="filterTrigger">
