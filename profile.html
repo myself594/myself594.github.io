@@ -17,7 +17,12 @@
             --accent: #FFD166;
             --light: #FFF9F0;
             --dark: #4A4A4A;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --danger: #FF4757;
+            --success: #2ECC71;
+            --border-radius: 12px;
+            --border-radius-small: 8px;
         }
         
         * {
@@ -40,45 +45,18 @@
             background-color: white;
             min-height: 100vh;
             box-shadow: var(--shadow);
-            padding-bottom: 80px;
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .nav-icons {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            font-size: 20px;
         }
         
         .profile-header {
             text-align: center;
-            padding: 20px 0;
+            padding: 20px 0 24px;
         }
         
         .profile-avatar {
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            margin: 0 auto 15px;
+            margin: 0 auto 16px;
             border: 3px solid var(--primary);
             position: relative;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -87,12 +65,13 @@
             justify-content: center;
             font-size: 40px;
             color: white;
+            box-shadow: var(--shadow);
         }
         
         .profile-avatar-edit {
             position: absolute;
-            bottom: 5px;
-            right: 5px;
+            bottom: 4px;
+            right: 4px;
             width: 30px;
             height: 30px;
             border-radius: 50%;
@@ -103,13 +82,21 @@
             justify-content: center;
             font-size: 14px;
             cursor: pointer;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-light);
+            border: 2px solid white;
+            transition: all 0.3s;
+        }
+        
+        .profile-avatar-edit:hover {
+            transform: scale(1.1);
+            background-color: var(--primary);
+            color: white;
         }
         
         .profile-name {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -120,341 +107,363 @@
             font-size: 16px;
             color: var(--primary);
             cursor: pointer;
-        }
-        
-        .profile-relationship {
-            color: #666;
-            margin-bottom: 15px;
-        }
-        
-        .profile-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: linear-gradient(135deg, rgba(255, 107, 139, 0.05), rgba(255, 160, 122, 0.05));
-            border-radius: 15px;
-        }
-        
-        .profile-stat {
-            text-align: center;
-        }
-        
-        .profile-stat-value {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .profile-stat-label {
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .profile-section {
-            margin: 25px 0;
-        }
-        
-        .profile-section-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .see-all {
-            font-size: 14px;
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        .badges-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-        
-        .badge-item {
-            background-color: white;
-            border-radius: 15px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: var(--shadow);
+            padding: 6px;
+            border-radius: 6px;
             transition: all 0.3s;
         }
         
-        .badge-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        .profile-name-edit:hover {
+            background-color: rgba(255, 107, 139, 0.1);
+            transform: scale(1.1);
         }
         
-        .badge-icon {
-            font-size: 30px;
-            margin-bottom: 8px;
+        .relationship-info {
+            margin-bottom: 24px;
         }
         
-        .badge-name {
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 5px;
+        .relationship-status {
+            font-size: 15px;
+            color: var(--success);
+            margin-bottom: 6px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
-        .badge-desc {
-            font-size: 10px;
+        .relationship-status.disconnected {
+            color: #999;
+        }
+        
+        .relationship-date {
+            font-size: 13px;
             color: #666;
+            margin-bottom: 14px;
         }
         
-        .badge-item.unlocked {
-            background: linear-gradient(135deg, rgba(255, 107, 139, 0.1), rgba(255, 160, 122, 0.1));
+        .relationship-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
         }
         
-        .badge-item.locked {
-            opacity: 0.5;
-            filter: grayscale(1);
+        .btn-small {
+            padding: 10px 14px;
+            border: none;
+            border-radius: var(--border-radius-small);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
         }
         
-        .profile-menu {
-            display: grid;
-            gap: 15px;
+        .btn-small.secondary {
+            background-color: rgba(255, 107, 139, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(255, 107, 139, 0.2);
+        }
+        
+        .btn-small.secondary:hover {
+            background-color: rgba(255, 107, 139, 0.15);
+            transform: translateY(-1px);
+        }
+        
+        .btn-small.danger {
+            background-color: rgba(255, 71, 87, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(255, 71, 87, 0.2);
+        }
+        
+        .btn-small.danger:hover {
+            background-color: var(--danger);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        .btn-small.primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(255, 107, 139, 0.3);
+        }
+        
+        .btn-small.primary:hover {
+            background-color: #ff5577;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 107, 139, 0.4);
+        }
+        
+        .menu-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
         }
         
         .menu-item {
             display: flex;
             align-items: center;
-            padding: 15px;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
+            padding: 16px 18px;
             cursor: pointer;
             transition: all 0.3s;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
         }
         
         .menu-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 107, 139, 0.04);
+        }
+        
+        .menu-item:active {
+            transform: scale(0.98);
         }
         
         .menu-icon {
             width: 40px;
             height: 40px;
-            border-radius: 10px;
+            border-radius: var(--border-radius-small);
             background-color: rgba(255, 107, 139, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
+            margin-right: 14px;
             color: var(--primary);
             font-size: 18px;
+            transition: all 0.3s;
+        }
+        
+        .menu-item:hover .menu-icon {
+            background-color: rgba(255, 107, 139, 0.15);
+            transform: scale(1.05);
         }
         
         .menu-text {
             flex: 1;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--dark);
         }
         
         .menu-arrow {
             color: #ccc;
-        }
-        
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: white;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 10px 0;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            max-width: 480px;
-            margin: 0 auto;
-            z-index: 100;
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #999;
-            font-size: 12px;
-            cursor: pointer;
-            flex: 1;
+            font-size: 16px;
             transition: all 0.3s;
         }
         
-        .nav-item.active {
+        .menu-item:hover .menu-arrow {
             color: var(--primary);
+            transform: translateX(2px);
         }
         
-        .nav-item .nav-icon {
-            font-size: 20px;
-            margin-bottom: 5px;
-            width: auto;
-            height: auto;
+        .menu-item.danger .menu-icon {
+            background-color: rgba(255, 71, 87, 0.1);
+            color: var(--danger);
         }
         
-        .add-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            flex: 1;
+        .menu-item.danger:hover .menu-icon {
+            background-color: rgba(255, 71, 87, 0.15);
         }
         
-        .add-nav-button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            box-shadow: 0 6px 20px rgba(255, 107, 139, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 28px;
-            margin-top: -30px;
-            transition: transform 0.3s;
+        .menu-item.danger .menu-text {
+            color: var(--danger);
         }
         
-        .add-nav-button:hover {
-            transform: scale(1.1);
+        .menu-item.danger:hover .menu-arrow {
+            color: var(--danger);
         }
         
-        .add-nav-label {
-            margin-top: 5px;
-            font-size: 12px;
-            color: var(--primary);
-            font-weight: 500;
+        .menu-item.relationship {
+            background-color: rgba(255, 107, 139, 0.02);
+        }
+        
+        .menu-item.relationship:hover {
+            background-color: rgba(255, 107, 139, 0.06);
+        }
+        
+        .menu-item.relationship .menu-icon {
+            background-color: rgba(255, 107, 139, 0.15);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">个人中心</div>
-            <div class="nav-icons">
-                <div class="nav-icon">⚙️</div>
-            </div>
-        </div>
-        
         <div class="profile-header">
             <div class="profile-avatar">
                 🐰
-                <div class="profile-avatar-edit">✏️</div>
+                <div class="profile-avatar-edit" onclick="editAvatar()">✏️</div>
             </div>
             <div class="profile-name">
-                <span>兔兔</span>
-                <span class="profile-name-edit">✏️</span>
+                <span id="userName">兔兔</span>
+                <span class="profile-name-edit" onclick="editName()">✏️</span>
             </div>
-            <div class="profile-relationship">与熊大在一起 128 天</div>
             
-            <div class="profile-stats">
-                <div class="profile-stat">
-                    <div class="profile-stat-value">42</div>
-                    <div class="profile-stat-label">用餐记录</div>
+            <div class="relationship-info">
+                <div class="relationship-status connected" id="relationshipStatus">
+                    💕 已与熊大绑定
                 </div>
-                <div class="profile-stat">
-                    <div class="profile-stat-value">28</div>
-                    <div class="profile-stat-label">下厨记录</div>
+                <div class="relationship-date" id="relationshipDate">
+                    在一起时间：2024年6月10日
                 </div>
-                <div class="profile-stat">
-                    <div class="profile-stat-value">128</div>
-                    <div class="profile-stat-label">连续记录</div>
+                <div class="relationship-actions" id="relationshipActions">
+                    <button class="btn-small secondary" onclick="editRelationshipDate()">修改日期</button>
+                    <button class="btn-small danger" onclick="unbindRelationship()">解除绑定</button>
                 </div>
             </div>
         </div>
         
-        <div class="profile-section">
-            <div class="profile-section-title">
-                <h2>美食成就</h2>
-                <a href="#" class="see-all">查看全部</a>
+        <div class="menu-container">
+            <div class="menu-item relationship" onclick="showRelationshipSettings()">
+                <div class="menu-icon">💕</div>
+                <div class="menu-text">情侣设置</div>
+                <div class="menu-arrow">›</div>
             </div>
-            <div class="badges-grid">
-                <div class="badge-item unlocked">
-                    <div class="badge-icon">🏆</div>
-                    <div class="badge-name">美食家</div>
-                    <div class="badge-desc">记录100次用餐</div>
-                </div>
-                <div class="badge-item unlocked">
-                    <div class="badge-icon">👨‍🍳</div>
-                    <div class="badge-name">厨艺大师</div>
-                    <div class="badge-desc">完成50次下厨</div>
-                </div>
-                <div class="badge-item unlocked">
-                    <div class="badge-icon">🌍</div>
-                    <div class="badge-name">美食探索家</div>
-                    <div class="badge-desc">探索10个城市</div>
-                </div>
-                <div class="badge-item locked">
-                    <div class="badge-icon">👑</div>
-                    <div class="badge-name">甜蜜情侣</div>
-                    <div class="badge-desc">共同用餐100次</div>
-                </div>
-                <div class="badge-item locked">
-                    <div class="badge-icon">📅</div>
-                    <div class="badge-name">持之以恒</div>
-                    <div class="badge-desc">连续记录365天</div>
-                </div>
-                <div class="badge-item locked">
-                    <div class="badge-icon">📸</div>
-                    <div class="badge-name">美食摄影师</div>
-                    <div class="badge-desc">上传200张照片</div>
-                </div>
+            
+            <div class="menu-item" onclick="showNicknameSettings()">
+                <div class="menu-icon">✏️</div>
+                <div class="menu-text">昵称设置</div>
+                <div class="menu-arrow">›</div>
             </div>
-        </div>
-        
-        <div class="profile-section">
-            <div class="profile-menu">
-                <div class="menu-item">
-                    <div class="menu-icon">📝</div>
-                    <div class="menu-text">用餐记录</div>
-                    <div class="menu-arrow">></div>
-                </div>
-                
-                <div class="menu-item">
-                    <div class="menu-icon">📖</div>
-                    <div class="menu-text">情侣菜谱</div>
-                    <div class="menu-arrow">></div>
-                </div>
-                
-                <div class="menu-item">
-                    <div class="menu-icon">📊</div>
-                    <div class="menu-text">数据统计</div>
-                    <div class="menu-arrow">></div>
-                </div>
-                
-                <div class="menu-item">
-                    <div class="menu-icon">🗺️</div>
-                    <div class="menu-text">美食轨迹</div>
-                    <div class="menu-arrow">></div>
-                </div>
-                
-                <div class="menu-item">
-                    <div class="menu-icon">📅</div>
-                    <div class="menu-text">纪念日管理</div>
-                    <div class="menu-arrow">></div>
-                </div>
+            
+            <div class="menu-item" onclick="showAboutUs()">
+                <div class="menu-icon">ℹ️</div>
+                <div class="menu-text">关于我们</div>
+                <div class="menu-arrow">›</div>
+            </div>
+            
+            <div class="menu-item" onclick="showFeedback()">
+                <div class="menu-icon">💬</div>
+                <div class="menu-text">意见反馈</div>
+                <div class="menu-arrow">›</div>
+            </div>
+            
+            <div class="menu-item" onclick="contactService()">
+                <div class="menu-icon">🎧</div>
+                <div class="menu-text">联系客服</div>
+                <div class="menu-arrow">›</div>
+            </div>
+            
+            <div class="menu-item danger" onclick="logout()">
+                <div class="menu-icon">🚪</div>
+                <div class="menu-text">退出登录</div>
+                <div class="menu-arrow">›</div>
             </div>
         </div>
     </div>
-    
-    <div class="bottom-nav">
-        <div class="nav-item">
-            <div class="nav-icon">🏠</div>
-            <div>首页</div>
-        </div>
-        <div class="add-nav-item">
-            <div class="add-nav-button">+</div>
-            <div class="add-nav-label">添加</div>
-        </div>
-        <div class="nav-item active">
-            <div class="nav-icon">👤</div>
-            <div>我的</div>
-        </div>
-    </div>
+
+    <script>
+        // 模拟数据状态
+        let isConnected = true;
+        let partnerName = '熊大';
+        let relationshipStartDate = '2024-06-10';
+        let userName = '兔兔';
+
+        // 编辑头像
+        function editAvatar() {
+            alert('头像编辑功能开发中...');
+        }
+
+        // 编辑昵称
+        function editName() {
+            const newName = prompt('请输入新的昵称:', userName);
+            if (newName && newName.trim()) {
+                userName = newName.trim();
+                document.getElementById('userName').textContent = userName;
+            }
+        }
+
+        // 情侣设置页面
+        function showRelationshipSettings() {
+            alert('情侣设置页面开发中...\n可以在这里管理关系状态、纪念日等');
+        }
+
+        // 昵称设置页面
+        function showNicknameSettings() {
+            alert('昵称设置页面开发中...');
+        }
+
+        // 修改在一起日期
+        function editRelationshipDate() {
+            const newDate = prompt('请输入在一起的日期 (格式: YYYY-MM-DD):', relationshipStartDate);
+            if (newDate && newDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                relationshipStartDate = newDate;
+                updateRelationshipDisplay();
+            } else if (newDate) {
+                alert('日期格式不正确，请使用 YYYY-MM-DD 格式');
+            }
+        }
+
+        // 解除绑定
+        function unbindRelationship() {
+            if (confirm('确定要解除与' + partnerName + '的绑定吗？')) {
+                isConnected = false;
+                updateRelationshipDisplay();
+            }
+        }
+
+        // 邀请绑定
+        function inviteBind() {
+            const inviteCode = 'LOVE' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            alert('邀请码已生成：' + inviteCode + '\n请将此邀请码分享给您的伴侣');
+        }
+
+        // 更新关系显示状态
+        function updateRelationshipDisplay() {
+            const statusElement = document.getElementById('relationshipStatus');
+            const dateElement = document.getElementById('relationshipDate');
+            const actionsElement = document.getElementById('relationshipActions');
+
+            if (isConnected) {
+                statusElement.innerHTML = '💕 已与' + partnerName + '绑定';
+                statusElement.className = 'relationship-status connected';
+                dateElement.textContent = '在一起时间：' + formatDate(relationshipStartDate);
+                actionsElement.innerHTML = `
+                    <button class="btn-small secondary" onclick="editRelationshipDate()">修改日期</button>
+                    <button class="btn-small danger" onclick="unbindRelationship()">解除绑定</button>
+                `;
+            } else {
+                statusElement.innerHTML = '💔 暂未绑定情侣';
+                statusElement.className = 'relationship-status disconnected';
+                dateElement.textContent = '邀请您的伴侣一起使用吧';
+                actionsElement.innerHTML = `
+                    <button class="btn-small primary" onclick="inviteBind()">邀请绑定</button>
+                `;
+            }
+        }
+
+        // 格式化日期显示
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+        }
+
+        // 关于我们
+        function showAboutUs() {
+            alert('关于一日三餐恋\n\n版本：1.0.0\n用爱记录每一餐，用心感受每一天');
+        }
+
+        // 意见反馈
+        function showFeedback() {
+            alert('意见反馈功能开发中...\n您可以通过邮箱联系我们：feedback@mealslove.com');
+        }
+
+        // 联系客服
+        function contactService() {
+            alert('客服联系方式：\n\n客服热线：400-123-4567\n工作时间：9:00-18:00\n客服邮箱：service@mealslove.com');
+        }
+
+        // 退出登录
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                alert('已退出登录');
+                // 这里可以添加实际的登出逻辑
+            }
+        }
+
+        // 初始化页面
+        updateRelationshipDisplay();
+    </script>
 </body>
 </html>
