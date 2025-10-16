@@ -277,6 +277,95 @@
             box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.1);
         }
         
+        .date-filter-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .date-range-inputs {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .date-input-group {
+            flex: 1;
+        }
+        
+        .date-separator {
+            color: #999;
+            font-size: 14px;
+            padding: 0 4px;
+        }
+        
+        .date-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            font-size: 14px;
+            background-color: #f5f5f5;
+            color: #666;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .date-input::placeholder {
+            color: #999;
+            font-size: 12px;
+        }
+        
+        .date-input:hover {
+            border-color: var(--primary);
+            background-color: white;
+        }
+        
+        .date-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.1);
+            color: var(--dark);
+        }
+        
+        .date-quick-select {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        
+        .quick-select-btn {
+            padding: 8px 16px;
+            background: #f5f5f5;
+            border: 1px solid #e8e8e8;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        
+        .quick-select-btn:last-child {
+            border-right: 1px solid #e8e8e8;
+        }
+        
+        .quick-select-btn:hover {
+            background: #ebebeb;
+            border-color: var(--primary);
+            color: var(--dark);
+        }
+        
+        .quick-select-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 2px 8px rgba(255, 107, 139, 0.3);
+        }
+        
         .drawer-footer {
             display: flex;
             gap: 12px;
@@ -564,12 +653,23 @@
             
             <div class="drawer-content">
                 <div class="filter-section">
-                    <div class="filter-section-title">时间范围</div>
-                    <div class="filter-chips">
-                        <button class="filter-chip active" data-filter="time" data-value="all">全部</button>
-                        <button class="filter-chip" data-filter="time" data-value="today">今天</button>
-                        <button class="filter-chip" data-filter="time" data-value="week">本周</button>
-                        <button class="filter-chip" data-filter="time" data-value="month">本月</button>
+                    <div class="filter-section-title">日期筛选</div>
+                    <div class="date-filter-container">
+                        <div class="date-quick-select">
+                            <button class="quick-select-btn active" data-range="all">全部</button>
+                            <button class="quick-select-btn" data-range="today">今天</button>
+                            <button class="quick-select-btn" data-range="week">本周</button>
+                            <button class="quick-select-btn" data-range="month">本月</button>
+                        </div>
+                        <div class="date-range-inputs">
+                            <div class="date-input-group">
+                                <input type="date" class="date-input" id="startDate" placeholder="开始日期">
+                            </div>
+                            <span class="date-separator">-</span>
+                            <div class="date-input-group">
+                                <input type="date" class="date-input" id="endDate" placeholder="结束日期">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -715,7 +815,8 @@
         let filteredData = [...recordsData];
         const carousels = {};
         const filters = {
-            time: 'all',
+            startDate: '',
+            endDate: '',
             mealtime: 'all',
             type: 'all',
             recipe: 'all',
@@ -780,6 +881,61 @@
                 closeDrawer();
             });
             
+            // 日期输入
+            document.getElementById('startDate').addEventListener('change', function() {
+                filters.startDate = this.value;
+                // 手动选择日期时，清除快捷按钮的active状态
+                document.querySelectorAll('.quick-select-btn').forEach(b => b.classList.remove('active'));
+                updateFilterCount();
+            });
+            
+            document.getElementById('endDate').addEventListener('change', function() {
+                filters.endDate = this.value;
+                // 手动选择日期时，清除快捷按钮的active状态
+                document.querySelectorAll('.quick-select-btn').forEach(b => b.classList.remove('active'));
+                updateFilterCount();
+            });
+            
+            // 快速选择日期
+            document.querySelectorAll('.quick-select-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const range = this.dataset.range;
+                    const today = new Date();
+                    const startDateInput = document.getElementById('startDate');
+                    const endDateInput = document.getElementById('endDate');
+                    
+                    // 更新按钮active状态
+                    document.querySelectorAll('.quick-select-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    if (range === 'all') {
+                        startDateInput.value = '';
+                        endDateInput.value = '';
+                        filters.startDate = '';
+                        filters.endDate = '';
+                    } else if (range === 'today') {
+                        const dateStr = today.toISOString().split('T')[0];
+                        startDateInput.value = dateStr;
+                        endDateInput.value = dateStr;
+                        filters.startDate = dateStr;
+                        filters.endDate = dateStr;
+                    } else if (range === 'week') {
+                        const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+                        startDateInput.value = weekAgo.toISOString().split('T')[0];
+                        endDateInput.value = today.toISOString().split('T')[0];
+                        filters.startDate = weekAgo.toISOString().split('T')[0];
+                        filters.endDate = today.toISOString().split('T')[0];
+                    } else if (range === 'month') {
+                        const monthAgo = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+                        startDateInput.value = monthAgo.toISOString().split('T')[0];
+                        endDateInput.value = today.toISOString().split('T')[0];
+                        filters.startDate = monthAgo.toISOString().split('T')[0];
+                        filters.endDate = today.toISOString().split('T')[0];
+                    }
+                    updateFilterCount();
+                });
+            });
+            
             // 按钮筛选
             document.querySelectorAll('.filter-chip').forEach(chip => {
                 chip.addEventListener('click', function() {
@@ -829,18 +985,26 @@
         
         // 重置筛选
         function resetFilters() {
-            filters.time = 'all';
+            filters.startDate = '';
+            filters.endDate = '';
             filters.mealtime = 'all';
             filters.type = 'all';
             filters.recipe = 'all';
             filters.anniversary = 'all';
             
             // 重置UI
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
             document.querySelectorAll('.filter-chip').forEach(chip => {
                 chip.classList.toggle('active', chip.dataset.value === 'all');
             });
             document.getElementById('recipeFilter').value = 'all';
             document.getElementById('anniversaryFilter').value = 'all';
+            
+            // 重置快捷按钮为"全部"
+            document.querySelectorAll('.quick-select-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.range === 'all');
+            });
             
             updateFilterCount();
             applyFilters();
@@ -852,10 +1016,18 @@
             const activeFilters = [];
             
             // 收集激活的筛选
-            if (filters.time !== 'all') {
-                const chip = document.querySelector(`[data-filter="time"][data-value="${filters.time}"]`);
-                activeFilters.push({ type: 'time', label: chip.textContent, value: filters.time });
+            if (filters.startDate || filters.endDate) {
+                let dateLabel = '';
+                if (filters.startDate && filters.endDate) {
+                    dateLabel = `${filters.startDate} 至 ${filters.endDate}`;
+                } else if (filters.startDate) {
+                    dateLabel = `${filters.startDate} 起`;
+                } else {
+                    dateLabel = `至 ${filters.endDate}`;
+                }
+                activeFilters.push({ type: 'date', label: dateLabel, value: 'date' });
             }
+            
             if (filters.mealtime !== 'all') {
                 const chip = document.querySelector(`[data-filter="mealtime"][data-value="${filters.mealtime}"]`);
                 activeFilters.push({ type: 'mealtime', label: chip.textContent, value: filters.mealtime });
@@ -907,16 +1079,25 @@
         
         // 删除单个筛选
         function removeFilter(type) {
-            filters[type] = 'all';
-            
-            // 更新UI
-            if (type === 'time' || type === 'mealtime' || type === 'type') {
+            if (type === 'date') {
+                filters.startDate = '';
+                filters.endDate = '';
+                document.getElementById('startDate').value = '';
+                document.getElementById('endDate').value = '';
+                // 恢复"全部"按钮的active状态
+                document.querySelectorAll('.quick-select-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.range === 'all');
+                });
+            } else if (type === 'mealtime' || type === 'type') {
+                filters[type] = 'all';
                 document.querySelectorAll(`[data-filter="${type}"]`).forEach(chip => {
                     chip.classList.toggle('active', chip.dataset.value === 'all');
                 });
             } else if (type === 'recipe') {
+                filters.recipe = 'all';
                 document.getElementById('recipeFilter').value = 'all';
             } else if (type === 'anniversary') {
+                filters.anniversary = 'all';
                 document.getElementById('anniversaryFilter').value = 'all';
             }
             
@@ -934,20 +1115,19 @@
             
             // 筛选数据
             filteredData = recordsData.filter(record => {
-                // 时间筛选
-                if (filters.time !== 'all') {
-                    const now = new Date();
+                // 日期筛选
+                if (filters.startDate || filters.endDate) {
                     const recordDate = new Date(record.fullDate);
                     
-                    if (filters.time === 'today') {
-                        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                        if (recordDate < today) return false;
-                    } else if (filters.time === 'week') {
-                        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-                        if (recordDate < weekAgo) return false;
-                    } else if (filters.time === 'month') {
-                        const monthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-                        if (recordDate < monthAgo) return false;
+                    if (filters.startDate) {
+                        const startDate = new Date(filters.startDate);
+                        if (recordDate < startDate) return false;
+                    }
+                    
+                    if (filters.endDate) {
+                        const endDate = new Date(filters.endDate);
+                        endDate.setHours(23, 59, 59, 999);
+                        if (recordDate > endDate) return false;
                     }
                 }
                 
