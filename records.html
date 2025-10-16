@@ -920,16 +920,23 @@
                         filters.startDate = dateStr;
                         filters.endDate = dateStr;
                     } else if (range === 'week') {
-                        const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-                        startDateInput.value = weekAgo.toISOString().split('T')[0];
+                        // 获取本周一（当前周的开始）
+                        const dayOfWeek = today.getDay();
+                        const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // 周日是0，需要特殊处理
+                        const monday = new Date(today);
+                        monday.setDate(today.getDate() - diff);
+                        
+                        startDateInput.value = monday.toISOString().split('T')[0];
                         endDateInput.value = today.toISOString().split('T')[0];
-                        filters.startDate = weekAgo.toISOString().split('T')[0];
+                        filters.startDate = monday.toISOString().split('T')[0];
                         filters.endDate = today.toISOString().split('T')[0];
                     } else if (range === 'month') {
-                        const monthAgo = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-                        startDateInput.value = monthAgo.toISOString().split('T')[0];
+                        // 获取本月1号（当前月的开始）
+                        const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                        
+                        startDateInput.value = firstDayOfMonth.toISOString().split('T')[0];
                         endDateInput.value = today.toISOString().split('T')[0];
-                        filters.startDate = monthAgo.toISOString().split('T')[0];
+                        filters.startDate = firstDayOfMonth.toISOString().split('T')[0];
                         filters.endDate = today.toISOString().split('T')[0];
                     }
                     updateFilterCount();
