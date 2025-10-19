@@ -46,6 +46,38 @@
             background-color: white;
             min-height: 100vh;
             box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .settings-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 107, 139, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .settings-btn:hover {
+            background-color: rgba(255, 107, 139, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        .settings-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .settings-btn.active:hover {
+            background-color: #ff5577;
         }
         
         .profile-header {
@@ -66,12 +98,72 @@
             font-size: 40px;
             color: white;
             box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .profile-avatar.editable {
+            cursor: pointer;
+        }
+        
+        .profile-avatar.editable:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 139, 0.3);
+        }
+        
+        .profile-avatar.editable::after {
+            content: '✏️';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            box-shadow: var(--shadow);
+            opacity: 1;
+            transition: all 0.3s ease;
         }
         
         .profile-name {
             font-size: 22px;
             font-weight: 700;
             color: var(--dark);
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .profile-name.editable {
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: var(--border-radius-small);
+            background-color: rgba(255, 107, 139, 0.08);
+        }
+        
+        .profile-name.editable:hover {
+            background-color: rgba(255, 107, 139, 0.15);
+            color: var(--primary);
+        }
+        
+        .profile-name.editable::after {
+            content: '点击修改';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 1;
+            pointer-events: none;
         }
         
         .menu-container {
@@ -334,8 +426,13 @@
 </head>
 <body>
     <div class="container">
+        <!-- 右上角设置按钮 -->
+        <div class="settings-btn" onclick="toggleEditMode()" id="settingsBtn" title="编辑模式">
+            ⚙️
+        </div>
+        
         <div class="profile-header">
-            <div class="profile-avatar">
+            <div class="profile-avatar" id="profileAvatar">
                 🐰
             </div>
             <div class="profile-name" id="userName">
@@ -360,32 +457,6 @@
                     <div class="menu-sub-item" id="bindAction" onclick="showBindModal()">
                         <div class="menu-sub-icon">🔗</div>
                         <div class="menu-sub-text">解除绑定</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="menu-item" onclick="toggleMenu('profile')">
-                <div class="menu-header">
-                    <div class="menu-icon">👤</div>
-                    <div class="menu-text">昵称头像</div>
-                    <div class="menu-arrow">›</div>
-                </div>
-                <div class="menu-content" id="profileContent">
-                    <div class="menu-sub-item" onclick="editMyNickname()">
-                        <div class="menu-sub-icon">🏷️</div>
-                        <div class="menu-sub-text">修改我的昵称</div>
-                    </div>
-                    <div class="menu-sub-item" onclick="editPartnerNickname()">
-                        <div class="menu-sub-icon">💝</div>
-                        <div class="menu-sub-text">修改对方昵称</div>
-                    </div>
-                    <div class="menu-sub-item" onclick="editMyAvatar()">
-                        <div class="menu-sub-icon">😊</div>
-                        <div class="menu-sub-text">修改我的头像</div>
-                    </div>
-                    <div class="menu-sub-item" onclick="editPartnerAvatar()">
-                        <div class="menu-sub-icon">💖</div>
-                        <div class="menu-sub-text">修改对方头像</div>
                     </div>
                 </div>
             </div>
@@ -456,6 +527,41 @@
         let relationshipStartDate = null; // 初始化为null，表示未设置
         let userName = '兔兔';
         let partnerNickname = '熊大';
+        let isEditMode = false; // 编辑模式状态
+
+        // 切换编辑模式
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            const settingsBtn = document.getElementById('settingsBtn');
+            const profileAvatar = document.getElementById('profileAvatar');
+            const profileName = document.getElementById('userName');
+            
+            if (isEditMode) {
+                // 进入编辑模式
+                settingsBtn.classList.add('active');
+                settingsBtn.title = '退出编辑';
+                profileAvatar.classList.add('editable');
+                profileName.classList.add('editable');
+                
+                // 添加点击事件
+                profileAvatar.onclick = editMyAvatar;
+                profileName.onclick = editMyNickname;
+                profileAvatar.title = '点击修改头像';
+                profileName.title = '点击修改昵称';
+            } else {
+                // 退出编辑模式
+                settingsBtn.classList.remove('active');
+                settingsBtn.title = '编辑模式';
+                profileAvatar.classList.remove('editable');
+                profileName.classList.remove('editable');
+                
+                // 移除点击事件
+                profileAvatar.onclick = null;
+                profileName.onclick = null;
+                profileAvatar.removeAttribute('title');
+                profileName.removeAttribute('title');
+            }
+        }
 
         // 手风琴菜单切换
         function toggleMenu(menuId) {
@@ -604,18 +710,19 @@
         }
 
         // 修改我的昵称
-        function editMyNickname() {
+        function editMyNickname(event) {
+            if (event) event.stopPropagation();
             const newName = prompt('请输入新的昵称:', userName);
             if (newName && newName.trim()) {
                 userName = newName.trim();
                 document.getElementById('userName').textContent = userName;
                 alert('昵称修改成功');
             }
-            event.stopPropagation();
         }
 
         // 修改对方昵称
-        function editPartnerNickname() {
+        function editPartnerNickname(event) {
+            if (event) event.stopPropagation();
             if (!isConnected) {
                 alert('请先绑定情侣关系');
                 return;
@@ -627,23 +734,22 @@
                 updateBindStatus(); // 更新显示
                 alert('对方昵称修改成功：' + partnerNickname);
             }
-            event.stopPropagation();
         }
 
         // 修改我的头像
-        function editMyAvatar() {
+        function editMyAvatar(event) {
+            if (event) event.stopPropagation();
             alert('头像修改功能开发中...\n您可以选择表情符号或上传自定义头像');
-            event.stopPropagation();
         }
 
         // 修改对方头像
-        function editPartnerAvatar() {
+        function editPartnerAvatar(event) {
+            if (event) event.stopPropagation();
             if (!isConnected) {
                 alert('请先绑定情侣关系');
                 return;
             }
             alert('对方头像修改功能开发中...\n您可以为对方设置专属头像');
-            event.stopPropagation();
         }
 
         // 纪念日管理
