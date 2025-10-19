@@ -49,7 +49,7 @@
         
         .profile-header {
             text-align: center;
-            padding: 20px 0 24px;
+            padding: 20px 0 30px;
         }
         
         .profile-avatar {
@@ -58,7 +58,6 @@
             border-radius: 50%;
             margin: 0 auto 16px;
             border: 3px solid var(--primary);
-            position: relative;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
@@ -68,129 +67,10 @@
             box-shadow: var(--shadow);
         }
         
-        .profile-avatar-edit {
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: white;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            cursor: pointer;
-            box-shadow: var(--shadow-light);
-            border: 2px solid white;
-            transition: all 0.3s;
-        }
-        
-        .profile-avatar-edit:hover {
-            transform: scale(1.1);
-            background-color: var(--primary);
-            color: white;
-        }
-        
         .profile-name {
             font-size: 22px;
             font-weight: 700;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .profile-name-edit {
-            font-size: 16px;
-            color: var(--primary);
-            cursor: pointer;
-            padding: 6px;
-            border-radius: 6px;
-            transition: all 0.3s;
-        }
-        
-        .profile-name-edit:hover {
-            background-color: rgba(255, 107, 139, 0.1);
-            transform: scale(1.1);
-        }
-        
-        .relationship-info {
-            margin-bottom: 24px;
-        }
-        
-        .relationship-status {
-            font-size: 15px;
-            color: var(--success);
-            margin-bottom: 6px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .relationship-status.disconnected {
-            color: #999;
-        }
-        
-        .relationship-date {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 14px;
-        }
-        
-        .relationship-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        
-        .btn-small {
-            padding: 10px 14px;
-            border: none;
-            border-radius: var(--border-radius-small);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-small.secondary {
-            background-color: rgba(255, 107, 139, 0.1);
-            color: var(--primary);
-            border: 1px solid rgba(255, 107, 139, 0.2);
-        }
-        
-        .btn-small.secondary:hover {
-            background-color: rgba(255, 107, 139, 0.15);
-            transform: translateY(-1px);
-        }
-        
-        .btn-small.danger {
-            background-color: rgba(255, 71, 87, 0.1);
-            color: var(--danger);
-            border: 1px solid rgba(255, 71, 87, 0.2);
-        }
-        
-        .btn-small.danger:hover {
-            background-color: var(--danger);
-            color: white;
-            transform: translateY(-1px);
-        }
-        
-        .btn-small.primary {
-            background-color: var(--primary);
-            color: white;
-            box-shadow: 0 2px 8px rgba(255, 107, 139, 0.3);
-        }
-        
-        .btn-small.primary:hover {
-            background-color: #ff5577;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(255, 107, 139, 0.4);
+            color: var(--dark);
         }
         
         .menu-container {
@@ -201,9 +81,6 @@
         }
         
         .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 16px 18px;
             cursor: pointer;
             transition: all 0.3s;
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
@@ -217,8 +94,14 @@
             background-color: rgba(255, 107, 139, 0.04);
         }
         
-        .menu-item:active {
-            transform: scale(0.98);
+        .menu-item.danger:hover {
+            background-color: rgba(255, 71, 87, 0.04);
+        }
+        
+        .menu-header {
+            display: flex;
+            align-items: center;
+            padding: 16px 18px;
         }
         
         .menu-icon {
@@ -235,11 +118,6 @@
             transition: all 0.3s;
         }
         
-        .menu-item:hover .menu-icon {
-            background-color: rgba(255, 107, 139, 0.15);
-            transform: scale(1.05);
-        }
-        
         .menu-text {
             flex: 1;
             font-weight: 600;
@@ -253,18 +131,43 @@
             transition: all 0.3s;
         }
         
-        .menu-item:hover .menu-arrow {
+        .menu-item.expanded .menu-arrow {
+            transform: rotate(90deg);
             color: var(--primary);
-            transform: translateX(2px);
+        }
+        
+        .menu-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: rgba(255, 107, 139, 0.02);
+        }
+        
+        .menu-content.expanded {
+            max-height: 300px;
+        }
+        
+        .menu-sub-item {
+            padding: 12px 18px 12px 72px;
+            border-top: 1px solid rgba(0, 0, 0, 0.03);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: var(--dark);
+        }
+        
+        .menu-sub-item:hover {
+            background-color: rgba(255, 107, 139, 0.06);
+            color: var(--primary);
+        }
+        
+        .menu-sub-item:first-child {
+            border-top: none;
         }
         
         .menu-item.danger .menu-icon {
             background-color: rgba(255, 71, 87, 0.1);
             color: var(--danger);
-        }
-        
-        .menu-item.danger:hover .menu-icon {
-            background-color: rgba(255, 71, 87, 0.15);
         }
         
         .menu-item.danger .menu-text {
@@ -275,16 +178,109 @@
             color: var(--danger);
         }
         
-        .menu-item.relationship {
-            background-color: rgba(255, 107, 139, 0.02);
+        .status-indicator {
+            font-size: 12px;
+            color: #999;
         }
         
-        .menu-item.relationship:hover {
-            background-color: rgba(255, 107, 139, 0.06);
+        .status-indicator.connected {
+            color: var(--success);
         }
         
-        .menu-item.relationship .menu-icon {
-            background-color: rgba(255, 107, 139, 0.15);
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 50% auto;
+            padding: 24px;
+            border-radius: var(--border-radius);
+            width: 85%;
+            max-width: 350px;
+            transform: translateY(-50%);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+            color: var(--dark);
+        }
+        
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius-small);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 107, 139, 0.2);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: var(--border-radius-small);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .modal-btn.primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .modal-btn.primary:hover {
+            background-color: #ff5577;
+        }
+        
+        .modal-btn.secondary {
+            background-color: #f5f5f5;
+            color: var(--dark);
+        }
+        
+        .modal-btn.secondary:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .modal-btn.danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .modal-btn.danger:hover {
+            background-color: #e03e2b;
+        }
+        
+        .modal-text {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--dark);
+            line-height: 1.5;
         }
     </style>
 </head>
@@ -293,62 +289,95 @@
         <div class="profile-header">
             <div class="profile-avatar">
                 🐰
-                <div class="profile-avatar-edit" onclick="editAvatar()">✏️</div>
             </div>
-            <div class="profile-name">
-                <span id="userName">兔兔</span>
-                <span class="profile-name-edit" onclick="editName()">✏️</span>
-            </div>
-            
-            <div class="relationship-info">
-                <div class="relationship-status connected" id="relationshipStatus">
-                    💕 已与熊大绑定
-                </div>
-                <div class="relationship-date" id="relationshipDate">
-                    在一起时间：2024年6月10日
-                </div>
-                <div class="relationship-actions" id="relationshipActions">
-                    <button class="btn-small secondary" onclick="editRelationshipDate()">修改日期</button>
-                    <button class="btn-small danger" onclick="unbindRelationship()">解除绑定</button>
-                </div>
+            <div class="profile-name" id="userName">
+                兔兔
             </div>
         </div>
         
         <div class="menu-container">
-            <div class="menu-item relationship" onclick="showRelationshipSettings()">
-                <div class="menu-icon">💕</div>
-                <div class="menu-text">情侣设置</div>
-                <div class="menu-arrow">›</div>
+            <div class="menu-item" onclick="toggleMenu('relationship')">
+                <div class="menu-header">
+                    <div class="menu-icon">💕</div>
+                    <div class="menu-text">情侣设置</div>
+                    <div class="status-indicator connected" id="relationshipStatus">与熊大绑定</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-content" id="relationshipContent">
+                    <div class="menu-sub-item" onclick="showDateModal()">修改在一起日期</div>
+                    <div class="menu-sub-item" id="bindAction" onclick="showBindModal()">解除绑定</div>
+                </div>
             </div>
             
-            <div class="menu-item" onclick="showNicknameSettings()">
-                <div class="menu-icon">✏️</div>
-                <div class="menu-text">昵称设置</div>
-                <div class="menu-arrow">›</div>
+            <div class="menu-item" onclick="toggleMenu('profile')">
+                <div class="menu-header">
+                    <div class="menu-icon">👤</div>
+                    <div class="menu-text">昵称头像</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-content" id="profileContent">
+                    <div class="menu-sub-item" onclick="editMyNickname()">修改我的昵称</div>
+                    <div class="menu-sub-item" onclick="editPartnerNickname()">修改对方昵称</div>
+                    <div class="menu-sub-item" onclick="editMyAvatar()">修改我的头像</div>
+                    <div class="menu-sub-item" onclick="editPartnerAvatar()">修改对方头像</div>
+                </div>
             </div>
             
-            <div class="menu-item" onclick="showAboutUs()">
-                <div class="menu-icon">ℹ️</div>
-                <div class="menu-text">关于我们</div>
-                <div class="menu-arrow">›</div>
+            <div class="menu-item" onclick="showAnniversaryManager()">
+                <div class="menu-header">
+                    <div class="menu-icon">📅</div>
+                    <div class="menu-text">纪念日管理</div>
+                    <div class="menu-arrow">›</div>
+                </div>
             </div>
             
             <div class="menu-item" onclick="showFeedback()">
-                <div class="menu-icon">💬</div>
-                <div class="menu-text">意见反馈</div>
-                <div class="menu-arrow">›</div>
+                <div class="menu-header">
+                    <div class="menu-icon">💬</div>
+                    <div class="menu-text">意见反馈</div>
+                    <div class="menu-arrow">›</div>
+                </div>
             </div>
             
             <div class="menu-item" onclick="contactService()">
-                <div class="menu-icon">🎧</div>
-                <div class="menu-text">联系客服</div>
-                <div class="menu-arrow">›</div>
+                <div class="menu-header">
+                    <div class="menu-icon">🎧</div>
+                    <div class="menu-text">联系客服</div>
+                    <div class="menu-arrow">›</div>
+                </div>
             </div>
             
             <div class="menu-item danger" onclick="logout()">
-                <div class="menu-icon">🚪</div>
-                <div class="menu-text">退出登录</div>
-                <div class="menu-arrow">›</div>
+                <div class="menu-header">
+                    <div class="menu-icon">🚪</div>
+                    <div class="menu-text">退出登录</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改日期弹窗 -->
+    <div id="dateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">修改在一起日期</div>
+            <div class="modal-text" id="currentDateText">当前日期：2024年6月10日</div>
+            <input type="date" id="dateInput" class="modal-input" />
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" onclick="closeDateModal()">取消</button>
+                <button class="modal-btn primary" onclick="confirmDateChange()">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 绑定/解绑弹窗 -->
+    <div id="bindModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title" id="bindModalTitle">解除绑定</div>
+            <div class="modal-text" id="bindModalText">确定要解除与熊大的绑定吗？解除后将无法查看共同记录。</div>
+            <div class="modal-buttons" id="bindModalButtons">
+                <button class="modal-btn secondary" onclick="closeBindModal()">取消</button>
+                <button class="modal-btn danger" onclick="confirmUnbind()">确认解除</button>
             </div>
         </div>
     </div>
@@ -359,89 +388,159 @@
         let partnerName = '熊大';
         let relationshipStartDate = '2024-06-10';
         let userName = '兔兔';
+        let partnerNickname = '熊大';
 
-        // 编辑头像
-        function editAvatar() {
-            alert('头像编辑功能开发中...');
+        // 手风琴菜单切换
+        function toggleMenu(menuId) {
+            const menuItem = document.querySelector(`#${menuId}Content`).parentElement;
+            const content = document.getElementById(`${menuId}Content`);
+            const arrow = menuItem.querySelector('.menu-arrow');
+            
+            // 关闭其他展开的菜单
+            document.querySelectorAll('.menu-item').forEach(item => {
+                if (item !== menuItem && item.classList.contains('expanded')) {
+                    item.classList.remove('expanded');
+                    const otherContent = item.querySelector('.menu-content');
+                    const otherArrow = item.querySelector('.menu-arrow');
+                    if (otherContent) {
+                        otherContent.classList.remove('expanded');
+                    }
+                }
+            });
+            
+            // 切换当前菜单
+            menuItem.classList.toggle('expanded');
+            content.classList.toggle('expanded');
+            
+            // 阻止事件冒泡
+            event.stopPropagation();
         }
 
-        // 编辑昵称
-        function editName() {
+        // 显示修改日期弹窗
+        function showDateModal() {
+            document.getElementById('dateInput').value = relationshipStartDate;
+            document.getElementById('currentDateText').textContent = `当前日期：${formatDate(relationshipStartDate)}`;
+            document.getElementById('dateModal').style.display = 'block';
+            event.stopPropagation();
+        }
+
+        // 关闭修改日期弹窗
+        function closeDateModal() {
+            document.getElementById('dateModal').style.display = 'none';
+        }
+
+        // 确认修改日期
+        function confirmDateChange() {
+            const newDate = document.getElementById('dateInput').value;
+            if (newDate) {
+                relationshipStartDate = newDate;
+                alert('日期修改成功：' + formatDate(relationshipStartDate));
+                closeDateModal();
+            } else {
+                alert('请选择日期');
+            }
+        }
+
+        // 显示绑定/解绑弹窗
+        function showBindModal() {
+            const modal = document.getElementById('bindModal');
+            const title = document.getElementById('bindModalTitle');
+            const text = document.getElementById('bindModalText');
+            const buttons = document.getElementById('bindModalButtons');
+            
+            if (isConnected) {
+                title.textContent = '解除绑定';
+                text.textContent = `确定要解除与${partnerName}的绑定吗？解除后将无法查看共同记录。`;
+                buttons.innerHTML = `
+                    <button class="modal-btn secondary" onclick="closeBindModal()">取消</button>
+                    <button class="modal-btn danger" onclick="confirmUnbind()">确认解除</button>
+                `;
+            } else {
+                title.textContent = '邀请绑定';
+                const inviteCode = 'LOVE' + Math.random().toString(36).substr(2, 6).toUpperCase();
+                text.textContent = `您的邀请码：${inviteCode}\n请将此邀请码分享给您的伴侣`;
+                buttons.innerHTML = `
+                    <button class="modal-btn primary" onclick="closeBindModal()">知道了</button>
+                `;
+            }
+            
+            modal.style.display = 'block';
+            event.stopPropagation();
+        }
+
+        // 关闭绑定弹窗
+        function closeBindModal() {
+            document.getElementById('bindModal').style.display = 'none';
+        }
+
+        // 确认解除绑定
+        function confirmUnbind() {
+            isConnected = false;
+            updateBindStatus();
+            closeBindModal();
+            alert('已解除绑定');
+        }
+
+        // 更新绑定状态显示
+        function updateBindStatus() {
+            const statusElement = document.getElementById('relationshipStatus');
+            const bindActionElement = document.getElementById('bindAction');
+            
+            if (isConnected) {
+                statusElement.textContent = `与${partnerName}绑定`;
+                statusElement.className = 'status-indicator connected';
+                bindActionElement.textContent = '解除绑定';
+            } else {
+                statusElement.textContent = '未绑定';
+                statusElement.className = 'status-indicator';
+                bindActionElement.textContent = '邀请绑定';
+            }
+        }
+
+        // 修改我的昵称
+        function editMyNickname() {
             const newName = prompt('请输入新的昵称:', userName);
             if (newName && newName.trim()) {
                 userName = newName.trim();
                 document.getElementById('userName').textContent = userName;
+                alert('昵称修改成功');
             }
+            event.stopPropagation();
         }
 
-        // 情侣设置页面
-        function showRelationshipSettings() {
-            alert('情侣设置页面开发中...\n可以在这里管理关系状态、纪念日等');
-        }
-
-        // 昵称设置页面
-        function showNicknameSettings() {
-            alert('昵称设置页面开发中...');
-        }
-
-        // 修改在一起日期
-        function editRelationshipDate() {
-            const newDate = prompt('请输入在一起的日期 (格式: YYYY-MM-DD):', relationshipStartDate);
-            if (newDate && newDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                relationshipStartDate = newDate;
-                updateRelationshipDisplay();
-            } else if (newDate) {
-                alert('日期格式不正确，请使用 YYYY-MM-DD 格式');
+        // 修改对方昵称
+        function editPartnerNickname() {
+            if (!isConnected) {
+                alert('请先绑定情侣关系');
+                return;
             }
-        }
-
-        // 解除绑定
-        function unbindRelationship() {
-            if (confirm('确定要解除与' + partnerName + '的绑定吗？')) {
-                isConnected = false;
-                updateRelationshipDisplay();
+            const newName = prompt('请输入对方的昵称:', partnerNickname);
+            if (newName && newName.trim()) {
+                partnerNickname = newName.trim();
+                alert('对方昵称修改成功：' + partnerNickname);
             }
+            event.stopPropagation();
         }
 
-        // 邀请绑定
-        function inviteBind() {
-            const inviteCode = 'LOVE' + Math.random().toString(36).substr(2, 6).toUpperCase();
-            alert('邀请码已生成：' + inviteCode + '\n请将此邀请码分享给您的伴侣');
+        // 修改我的头像
+        function editMyAvatar() {
+            alert('头像修改功能开发中...\n您可以选择表情符号或上传自定义头像');
+            event.stopPropagation();
         }
 
-        // 更新关系显示状态
-        function updateRelationshipDisplay() {
-            const statusElement = document.getElementById('relationshipStatus');
-            const dateElement = document.getElementById('relationshipDate');
-            const actionsElement = document.getElementById('relationshipActions');
-
-            if (isConnected) {
-                statusElement.innerHTML = '💕 已与' + partnerName + '绑定';
-                statusElement.className = 'relationship-status connected';
-                dateElement.textContent = '在一起时间：' + formatDate(relationshipStartDate);
-                actionsElement.innerHTML = `
-                    <button class="btn-small secondary" onclick="editRelationshipDate()">修改日期</button>
-                    <button class="btn-small danger" onclick="unbindRelationship()">解除绑定</button>
-                `;
-            } else {
-                statusElement.innerHTML = '💔 暂未绑定情侣';
-                statusElement.className = 'relationship-status disconnected';
-                dateElement.textContent = '邀请您的伴侣一起使用吧';
-                actionsElement.innerHTML = `
-                    <button class="btn-small primary" onclick="inviteBind()">邀请绑定</button>
-                `;
+        // 修改对方头像
+        function editPartnerAvatar() {
+            if (!isConnected) {
+                alert('请先绑定情侣关系');
+                return;
             }
+            alert('对方头像修改功能开发中...\n您可以为对方设置专属头像');
+            event.stopPropagation();
         }
 
-        // 格式化日期显示
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
-        }
-
-        // 关于我们
-        function showAboutUs() {
-            alert('关于一日三餐恋\n\n版本：1.0.0\n用爱记录每一餐，用心感受每一天');
+        // 纪念日管理
+        function showAnniversaryManager() {
+            alert('纪念日管理功能开发中...\n您可以在这里添加和管理重要的纪念日');
         }
 
         // 意见反馈
@@ -462,8 +561,27 @@
             }
         }
 
+        // 格式化日期显示
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+        }
+
         // 初始化页面
-        updateRelationshipDisplay();
+        updateBindStatus();
+
+        // 点击弹窗背景关闭弹窗
+        window.onclick = function(event) {
+            const dateModal = document.getElementById('dateModal');
+            const bindModal = document.getElementById('bindModal');
+            
+            if (event.target === dateModal) {
+                closeDateModal();
+            }
+            if (event.target === bindModal) {
+                closeBindModal();
+            }
+        }
     </script>
 </body>
 </html>
